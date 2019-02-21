@@ -1,0 +1,48 @@
+﻿@model Group_APT.Models.Examination
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Examination</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Paper_Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Paper_Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Time)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Location_Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Location_Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.QuestionAmount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuestionAmount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SelectionType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SelectionType)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Paper_Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
