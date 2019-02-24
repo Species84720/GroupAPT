@@ -1,7 +1,26 @@
-﻿@model Group_APT.Models.Student
+﻿@using System.Data.SqlClient
+@using Microsoft.EntityFrameworkCore.Storage
+@model Group_APT.Models.Student
 
 @{
     ViewData["Title"] = "Details";
+
+    List<SelectListItem> listunits = new List<SelectListItem>();
+    using (SqlConnection connection = new SqlConnection(@"Server=(localdb)\mssqllocaldb;Database=Group_APT.NewDb;Trusted_Connection=True;ConnectRetryCount=0"))
+    {
+        connection.Open();
+        string query = "SELECT StudentUnitRelationships.Code, Name FROM dbo.StudentUnitRelationships JOIN dbo.Units ON StudentUnitRelationships.Code=Units.Code WHERE UniversityStudentId='" + Model.UniversityStudentId + "'";
+        using (SqlCommand command = new SqlCommand(query, connection))
+        {
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    listunits.Add(new SelectListItem() { Text = reader.GetString(0) + " - " + reader.GetString(1) });
+                }
+            }
+        }
+    }
 }
 
 <h1>Details</h1>
@@ -40,6 +59,16 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.StudentImageLocation)
         </dd>
+    </dl>
+    
+    <h4>Units Taken</h4>
+    <dl class="row">
+        @foreach (var item in listunits)
+        {
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.Text)
+            </dd>
+        }
     </dl>
 </div>
 <div>

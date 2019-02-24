@@ -11,6 +11,18 @@
     <h4>StudentUnit_Relationship</h4>
     <hr />
     <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StudentRelation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StudentRelation.UniversityStudentId)
+        </dd class>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UnitRelation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UnitRelation.Code)
+        </dd class>
     </dl>
     
     <form asp-action="Delete">

@@ -14,10 +14,10 @@ namespace Group_APT.Models
 
         public string UniversityStudentId { get; set; }
         [ForeignKey("UniversityStudentId")]
-        public Student StudentRelation { get; set; }
+        public virtual Student StudentRelation { get; set; }
 
         public string Code { get; set; }
         [ForeignKey("Code")]
-        public Unit UnitRelation { get; set; }
+        public virtual Unit UnitRelation { get; set; }
     }
 }

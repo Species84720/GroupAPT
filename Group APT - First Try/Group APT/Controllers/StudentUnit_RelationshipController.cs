@@ -9,19 +9,20 @@ using Group_APT.Models;
 
 namespace Group_APT.Controllers
 {
-    public class StudentUnit_RelationshipsController : Controller
+    public class StudentUnit_RelationshipController : Controller
     {
         private readonly ExaminationContext _context;
 
-        public StudentUnit_RelationshipsController(ExaminationContext context)
+        public StudentUnit_RelationshipController(ExaminationContext context)
         {
             _context = context;
         }
 
-    // GET: StudentUnit_Relationship
-    public async Task<IActionResult> Index()
+        // GET: StudentUnit_Relationship
+        public async Task<IActionResult> Index()
         {
-            return View(await _context.StudentUnitRelationships.ToListAsync());
+            var examinationContext = _context.StudentUnitRelationships.Include(s => s.StudentRelation).Include(s => s.UnitRelation);
+            return View(await examinationContext.ToListAsync());
         }
 
         // GET: StudentUnit_Relationship/Details/5
@@ -33,6 +34,8 @@ namespace Group_APT.Controllers
             }
 
             var studentUnit_Relationship = await _context.StudentUnitRelationships
+                .Include(s => s.StudentRelation)
+                .Include(s => s.UnitRelation)
                 .FirstOrDefaultAsync(m => m.RelationId == id);
             if (studentUnit_Relationship == null)
             {
@@ -45,6 +48,8 @@ namespace Group_APT.Controllers
         // GET: StudentUnit_Relationship/Create
         public IActionResult Create()
         {
+            ViewData["UniversityStudentId"] = new SelectList(_context.Students, "UniversityStudentId", "UniversityStudentId");
+            ViewData["Code"] = new SelectList(_context.Units, "Code", "Code");
             return View();
         }
 
@@ -61,6 +66,8 @@ namespace Group_APT.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UniversityStudentId"] = new SelectList(_context.Students, "UniversityStudentId", "UniversityStudentId", studentUnit_Relationship.UniversityStudentId);
+            ViewData["Code"] = new SelectList(_context.Units, "Code", "Code", studentUnit_Relationship.Code);
             return View(studentUnit_Relationship);
         }
 
@@ -77,6 +84,8 @@ namespace Group_APT.Controllers
             {
                 return NotFound();
             }
+            ViewData["UniversityStudentId"] = new SelectList(_context.Students, "UniversityStudentId", "UniversityStudentId", studentUnit_Relationship.UniversityStudentId);
+            ViewData["Code"] = new SelectList(_context.Units, "Code", "Code", studentUnit_Relationship.Code);
             return View(studentUnit_Relationship);
         }
 
@@ -85,7 +94,7 @@ namespace Group_APT.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RelationId")] StudentUnit_Relationship studentUnit_Relationship)
+        public async Task<IActionResult> Edit(int id, [Bind("RelationId,UniversityStudentId,Code")] StudentUnit_Relationship studentUnit_Relationship)
         {
             if (id != studentUnit_Relationship.RelationId)
             {
@@ -112,6 +121,8 @@ namespace Group_APT.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UniversityStudentId"] = new SelectList(_context.Students, "UniversityStudentId", "UniversityStudentId", studentUnit_Relationship.UniversityStudentId);
+            ViewData["Code"] = new SelectList(_context.Units, "Code", "Code", studentUnit_Relationship.Code);
             return View(studentUnit_Relationship);
         }
 
@@ -124,6 +135,8 @@ namespace Group_APT.Controllers
             }
 
             var studentUnit_Relationship = await _context.StudentUnitRelationships
+                .Include(s => s.StudentRelation)
+                .Include(s => s.UnitRelation)
                 .FirstOrDefaultAsync(m => m.RelationId == id);
             if (studentUnit_Relationship == null)
             {
