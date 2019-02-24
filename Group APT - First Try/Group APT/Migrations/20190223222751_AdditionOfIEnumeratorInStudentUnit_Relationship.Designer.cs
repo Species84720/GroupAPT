@@ -4,14 +4,16 @@ using Group_APT.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Group_APT.Migrations
 {
     [DbContext(typeof(ExaminationContext))]
-    partial class ExaminationContextModelSnapshot : ModelSnapshot
+    [Migration("20190223222751_AdditionOfIEnumeratorInStudentUnit_Relationship")]
+    partial class AdditionOfIEnumeratorInStudentUnit_Relationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,9 +66,13 @@ namespace Group_APT.Migrations
 
                     b.Property<string>("StudentImageLocation");
 
+                    b.Property<int?>("StudentUnit_RelationshipRelationId");
+
                     b.Property<string>("Surname");
 
                     b.HasKey("UniversityStudentId");
+
+                    b.HasIndex("StudentUnit_RelationshipRelationId");
 
                     b.ToTable("Students");
                 });
@@ -77,15 +83,15 @@ namespace Group_APT.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Code");
+                    b.Property<string>("StudentRelationUniversityStudentId");
 
-                    b.Property<string>("UniversityStudentId");
+                    b.Property<string>("UnitRelationCode");
 
                     b.HasKey("RelationId");
 
-                    b.HasIndex("Code");
+                    b.HasIndex("StudentRelationUniversityStudentId");
 
-                    b.HasIndex("UniversityStudentId");
+                    b.HasIndex("UnitRelationCode");
 
                     b.ToTable("StudentUnitRelationships");
                 });
@@ -97,20 +103,38 @@ namespace Group_APT.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("StudentUnit_RelationshipRelationId");
+
                     b.HasKey("Code");
+
+                    b.HasIndex("StudentUnit_RelationshipRelationId");
 
                     b.ToTable("Units");
                 });
 
+            modelBuilder.Entity("Group_APT.Models.Student", b =>
+                {
+                    b.HasOne("Group_APT.Models.StudentUnit_Relationship")
+                        .WithMany("Students")
+                        .HasForeignKey("StudentUnit_RelationshipRelationId");
+                });
+
             modelBuilder.Entity("Group_APT.Models.StudentUnit_Relationship", b =>
                 {
-                    b.HasOne("Group_APT.Models.Unit", "UnitRelation")
-                        .WithMany()
-                        .HasForeignKey("Code");
-
                     b.HasOne("Group_APT.Models.Student", "StudentRelation")
                         .WithMany()
-                        .HasForeignKey("UniversityStudentId");
+                        .HasForeignKey("StudentRelationUniversityStudentId");
+
+                    b.HasOne("Group_APT.Models.Unit", "UnitRelation")
+                        .WithMany()
+                        .HasForeignKey("UnitRelationCode");
+                });
+
+            modelBuilder.Entity("Group_APT.Models.Unit", b =>
+                {
+                    b.HasOne("Group_APT.Models.StudentUnit_Relationship")
+                        .WithMany("Units")
+                        .HasForeignKey("StudentUnit_RelationshipRelationId");
                 });
 #pragma warning restore 612, 618
         }

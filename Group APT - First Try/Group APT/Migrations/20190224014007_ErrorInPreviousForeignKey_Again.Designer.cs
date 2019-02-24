@@ -4,14 +4,16 @@ using Group_APT.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Group_APT.Migrations
 {
     [DbContext(typeof(ExaminationContext))]
-    partial class ExaminationContextModelSnapshot : ModelSnapshot
+    [Migration("20190224014007_ErrorInPreviousForeignKey_Again")]
+    partial class ErrorInPreviousForeignKey_Again
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

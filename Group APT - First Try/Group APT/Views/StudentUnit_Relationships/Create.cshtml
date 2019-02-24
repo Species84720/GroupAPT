@@ -1,0 +1,74 @@
+﻿@using System.Data.SqlClient
+@model Group_APT.Models.StudentUnit_Relationship
+
+@{
+    ViewData["Title"] = "Create";
+
+    List<SelectListItem> liststudent = new List<SelectListItem>();
+    List<SelectListItem> listunit = new List<SelectListItem>();
+
+    using (SqlConnection connection = new SqlConnection(@"Server=(localdb)\mssqllocaldb;Database=Group_APT.NewDb;Trusted_Connection=True;ConnectRetryCount=0"))
+    {
+        connection.Open();
+        string query = "SELECT UniversityStudentId, Name, Surname FROM dbo.Students";
+        using (SqlCommand command = new SqlCommand(query, connection))
+        {
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    liststudent.Add(new SelectListItem() { Text = reader.GetString(0) + ", " + reader.GetString(1) + " " + reader.GetString(2), Value = reader.GetString(0) });
+                }
+            }
+        }
+        query = "SELECT Code, Name FROM dbo.Units";
+        using (SqlCommand command = new SqlCommand(query, connection))
+        {
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    listunit.Add(new SelectListItem() { Text = reader.GetString(0) + ", " + reader.GetString(1), Value = reader.GetString(0) });
+                }
+            }
+        }
+    }
+}
+
+<h1>Create</h1>
+
+<h4>StudentUnit_Relationship</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.LabelFor(x => Model.UniversityStudentId, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.DropDownList("UniversityStudentId", liststudent, "Select a student", new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.UniversityStudentId, "", new { @class = "text-danger" })
+                @*
+                <label asp-for="UniversityStudentId" class="control-label"></label>
+                <input asp-for="UniversityStudentId" class="form-control" />
+                <span asp-validation-for="UniversityStudentId" class="text-danger"></span>
+                *@
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => Model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.DropDownList("Code", listunit, "Select a Unit", new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Code, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

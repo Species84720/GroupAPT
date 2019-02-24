@@ -4,14 +4,16 @@ using Group_APT.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Group_APT.Migrations
 {
     [DbContext(typeof(ExaminationContext))]
-    partial class ExaminationContextModelSnapshot : ModelSnapshot
+    [Migration("20190222172512_Addition_Of_StudentUnit_Relationship")]
+    partial class Addition_Of_StudentUnit_Relationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,15 +79,15 @@ namespace Group_APT.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Code");
+                    b.Property<string>("StudentRelationUniversityStudentId");
 
-                    b.Property<string>("UniversityStudentId");
+                    b.Property<string>("UnitRelationCode");
 
                     b.HasKey("RelationId");
 
-                    b.HasIndex("Code");
+                    b.HasIndex("StudentRelationUniversityStudentId");
 
-                    b.HasIndex("UniversityStudentId");
+                    b.HasIndex("UnitRelationCode");
 
                     b.ToTable("StudentUnitRelationships");
                 });
@@ -104,13 +106,13 @@ namespace Group_APT.Migrations
 
             modelBuilder.Entity("Group_APT.Models.StudentUnit_Relationship", b =>
                 {
-                    b.HasOne("Group_APT.Models.Unit", "UnitRelation")
-                        .WithMany()
-                        .HasForeignKey("Code");
-
                     b.HasOne("Group_APT.Models.Student", "StudentRelation")
                         .WithMany()
-                        .HasForeignKey("UniversityStudentId");
+                        .HasForeignKey("StudentRelationUniversityStudentId");
+
+                    b.HasOne("Group_APT.Models.Unit", "UnitRelation")
+                        .WithMany()
+                        .HasForeignKey("UnitRelationCode");
                 });
 #pragma warning restore 612, 618
         }
