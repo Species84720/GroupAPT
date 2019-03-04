@@ -36,7 +36,11 @@ namespace Group_APT
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=Group_APT.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
+            /*
+    "ConnectionStrings": {
+      "MyConnectionString": "data source=(localdb)\\MSSQLLocalDB;initial catalog=Examination_Database;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"
+    },*/
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=Examination_Database;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<ExaminationContext>(options => options.UseSqlServer(connection));
             // BloggingContext requires
             // using EFGetStarted.AspNetCore.NewDb.Models;
