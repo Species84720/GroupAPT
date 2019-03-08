@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace Group_APT.Models
 {
-    public class Student
+    public class Invigilation
     {
-        [Key] public string StudentId { get; set; }
+        [Key] public string InvigilatorId { get; set; }
 
         [Required] public string UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual User RelatedUser { get; set; }
 
-        public string FacialImage { get; set; }
+        [Required] public string ExamId { get; set; }
+        [ForeignKey("ExamId")]
+        public virtual ExamSession RelatedExamSession { get; set; }
     }
 }

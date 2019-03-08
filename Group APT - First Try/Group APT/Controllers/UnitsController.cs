@@ -53,7 +53,7 @@ namespace Group_APT.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Code,Name")] Unit unit)
+        public async Task<IActionResult> Create([Bind("Code,Name")] Subject unit)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace Group_APT.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Code,Name")] Unit unit)
+        public async Task<IActionResult> Edit(string id, [Bind("Code,Name")] Subject unit)
         {
             if (id != unit.Code)
             {

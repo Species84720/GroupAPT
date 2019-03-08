@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Group_APT.Models
 {
-    public class Unit
+    public class Department
     {
         [Key]
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public string DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
     }
 }
