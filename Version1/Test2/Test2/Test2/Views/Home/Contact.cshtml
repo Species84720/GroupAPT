@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Contact";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+ 
+@if (Request.IsAuthenticated)
+{
+    <div> User detected to be Authenticated</div>
+    
+     if (User.IsInRole("Admin"))   //Dislays content including partial View Based on Role
+    {
+       
+          <div> User detected to be an Admin. You should see partial view</div>
+
+        <div>User Name:   @User.Identity.Name </div>
+    <br />
+        <div>User   ID:   @User.Identity.GetUserId()</div>
+    
+
+    @Html.Partial("_MyPartial")
+
+    }
+    }
+
+    <address>
+        One Microsoft Way<br />
+        Redmond, WA 98052-6399<br />
+        <abbr title="Phone">P:</abbr>
+        425.555.0100
+    </address>
+
+    <address>
+        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
+        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+    </address>

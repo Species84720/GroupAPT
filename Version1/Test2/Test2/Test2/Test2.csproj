@@ -174,7 +174,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -200,43 +199,11 @@
     <Compile Include="Migrations\201903050935332_RolesListWithAccount.Designer.cs">
       <DependentUpon>201903050935332_RolesListWithAccount.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201903071126346_changeddb.cs" />
-    <Compile Include="Migrations\201903071126346_changeddb.Designer.cs">
-      <DependentUpon>201903071126346_changeddb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903071446394_ChangedDefaulttables.cs" />
-    <Compile Include="Migrations\201903071446394_ChangedDefaulttables.Designer.cs">
-      <DependentUpon>201903071446394_ChangedDefaulttables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903071501474_RenamingUserTable.cs" />
-    <Compile Include="Migrations\201903071501474_RenamingUserTable.Designer.cs">
-      <DependentUpon>201903071501474_RenamingUserTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903071533033_changeback.cs" />
-    <Compile Include="Migrations\201903071533033_changeback.Designer.cs">
-      <DependentUpon>201903071533033_changeback.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903071623326_RenameAspNetTables.cs" />
-    <Compile Include="Migrations\201903071623326_RenameAspNetTables.Designer.cs">
-      <DependentUpon>201903071623326_RenameAspNetTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903081417491_TryingDepartmentSelfJoin.cs" />
-    <Compile Include="Migrations\201903081417491_TryingDepartmentSelfJoin.Designer.cs">
-      <DependentUpon>201903081417491_TryingDepartmentSelfJoin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903081448170_DepartmentJoinAllUsers.cs" />
-    <Compile Include="Migrations\201903081448170_DepartmentJoinAllUsers.Designer.cs">
-      <DependentUpon>201903081448170_DepartmentJoinAllUsers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903081451145_DepartmentInAllUsersToString.cs" />
-    <Compile Include="Migrations\201903081451145_DepartmentInAllUsersToString.Designer.cs">
-      <DependentUpon>201903081451145_DepartmentInAllUsersToString.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\DBModels\Department.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UserType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -273,7 +240,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -297,7 +264,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_MyPartial.cshtml" />
-    <Content Include="Views\Dashboard\Admin.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\UserType\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -331,30 +299,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903050935332_RolesListWithAccount.resx">
       <DependentUpon>201903050935332_RolesListWithAccount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903071126346_changeddb.resx">
-      <DependentUpon>201903071126346_changeddb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903071446394_ChangedDefaulttables.resx">
-      <DependentUpon>201903071446394_ChangedDefaulttables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903071501474_RenamingUserTable.resx">
-      <DependentUpon>201903071501474_RenamingUserTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903071533033_changeback.resx">
-      <DependentUpon>201903071533033_changeback.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903071623326_RenameAspNetTables.resx">
-      <DependentUpon>201903071623326_RenameAspNetTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903081417491_TryingDepartmentSelfJoin.resx">
-      <DependentUpon>201903081417491_TryingDepartmentSelfJoin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903081448170_DepartmentJoinAllUsers.resx">
-      <DependentUpon>201903081448170_DepartmentJoinAllUsers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903081451145_DepartmentInAllUsersToString.resx">
-      <DependentUpon>201903081451145_DepartmentInAllUsersToString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
