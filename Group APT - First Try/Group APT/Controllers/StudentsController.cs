@@ -21,7 +21,8 @@ namespace Group_APT.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Students.ToListAsync());
+            var examinationContext = _context.Students.Include(s => s.RelatedUser);
+            return View(await examinationContext.ToListAsync());
         }
 
         // GET: Students/Details/5
@@ -33,7 +34,8 @@ namespace Group_APT.Controllers
             }
 
             var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.UniversityStudentId== id);
+                .Include(s => s.RelatedUser)
+                .FirstOrDefaultAsync(m => m.StudentId == id);
             if (student == null)
             {
                 return NotFound();
@@ -45,6 +47,7 @@ namespace Group_APT.Controllers
         // GET: Students/Create
         public IActionResult Create()
         {
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "UserId");
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace Group_APT.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UniversityStudentId,Name,Surname,StudentId,StudentImageLocation")] Student student)
+        public async Task<IActionResult> Create([Bind("StudentId,UserId,FacialImage")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +64,7 @@ namespace Group_APT.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "UserId", student.UserId);
             return View(student);
         }
 
@@ -77,6 +81,7 @@ namespace Group_APT.Controllers
             {
                 return NotFound();
             }
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "UserId", student.UserId);
             return View(student);
         }
 
@@ -85,9 +90,9 @@ namespace Group_APT.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("UniversityStudentId,Name,Surname,StudentId,StudentImageLocation")] Student student)
+        public async Task<IActionResult> Edit(string id, [Bind("StudentId,UserId,FacialImage")] Student student)
         {
-            if (id != student.UniversityStudentId)
+            if (id != student.StudentId)
             {
                 return NotFound();
             }
@@ -101,7 +106,7 @@ namespace Group_APT.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.UniversityStudentId))
+                    if (!StudentExists(student.StudentId))
                     {
                         return NotFound();
                     }
@@ -112,6 +117,7 @@ namespace Group_APT.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "UserId", student.UserId);
             return View(student);
         }
 
@@ -124,7 +130,8 @@ namespace Group_APT.Controllers
             }
 
             var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.UniversityStudentId== id);
+                .Include(s => s.RelatedUser)
+                .FirstOrDefaultAsync(m => m.StudentId == id);
             if (student == null)
             {
                 return NotFound();
@@ -146,7 +153,7 @@ namespace Group_APT.Controllers
 
         private bool StudentExists(string id)
         {
-            return _context.Students.Any(e => e.UniversityStudentId== id);
+            return _context.Students.Any(e => e.StudentId == id);
         }
     }
 }

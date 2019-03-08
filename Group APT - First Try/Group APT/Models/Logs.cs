@@ -13,7 +13,7 @@ namespace Group_APT.Models
 
         [Required] public string TargetedRole { get; set; }
         [ForeignKey("TargetedRole")]
-        public virtual Role RelatedRole { get; set; }
+        //public virtual Role RelatedRole { get; set; }
 
         public string LogText { get; set; }
         [Required] public DateTime LogDateTime { get; set; }

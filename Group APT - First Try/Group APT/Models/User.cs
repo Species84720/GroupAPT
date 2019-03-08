@@ -14,7 +14,7 @@ namespace Group_APT.Models
         [Required] public string Name { get; set; }
         [Required] public string Surname { get; set; }
         [Required] public string UserType { get; set; }
-        [Index(IsUnique = true)] public string Email { get; set; }
+        public string Email { get; set; }
         [Required] public string Password { get; set; }
         
         [Required] public string DepartmentId { get; set; }

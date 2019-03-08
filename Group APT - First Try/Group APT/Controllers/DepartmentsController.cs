@@ -9,22 +9,22 @@ using Group_APT.Models;
 
 namespace Group_APT.Controllers
 {
-    public class LecturersController : Controller
+    public class DepartmentsController : Controller
     {
         private readonly ExaminationContext _context;
 
-        public LecturersController(ExaminationContext context)
+        public DepartmentsController(ExaminationContext context)
         {
             _context = context;
         }
 
-        // GET: Lecturers
+        // GET: Departments
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Lecturers.ToListAsync());
+            return View(await _context.Department.ToListAsync());
         }
 
-        // GET: Lecturers/Details/5
+        // GET: Departments/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace Group_APT.Controllers
                 return NotFound();
             }
 
-            var lecturer = await _context.Lecturers
-                .FirstOrDefaultAsync(m => m.UniversityLecturerId == id);
-            if (lecturer == null)
+            var department = await _context.Department
+                .FirstOrDefaultAsync(m => m.DepartmentId == id);
+            if (department == null)
             {
                 return NotFound();
             }
 
-            return View(lecturer);
+            return View(department);
         }
 
-        // GET: Lecturers/Create
+        // GET: Departments/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Lecturers/Create
+        // POST: Departments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UniversityLecturerId,Name,Surname,LecturerId")] Lecturer lecturer)
+        public async Task<IActionResult> Create([Bind("DepartmentId,DepartmentName")] Department department)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(lecturer);
+                _context.Add(department);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(lecturer);
+            return View(department);
         }
 
-        // GET: Lecturers/Edit/5
+        // GET: Departments/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace Group_APT.Controllers
                 return NotFound();
             }
 
-            var lecturer = await _context.Lecturers.FindAsync(id);
-            if (lecturer == null)
+            var department = await _context.Department.FindAsync(id);
+            if (department == null)
             {
                 return NotFound();
             }
-            return View(lecturer);
+            return View(department);
         }
 
-        // POST: Lecturers/Edit/5
+        // POST: Departments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("UniversityLecturerId,Name,Surname,LecturerId")] Lecturer lecturer)
+        public async Task<IActionResult> Edit(string id, [Bind("DepartmentId,DepartmentName")] Department department)
         {
-            if (id != lecturer.UniversityLecturerId)
+            if (id != department.DepartmentId)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace Group_APT.Controllers
             {
                 try
                 {
-                    _context.Update(lecturer);
+                    _context.Update(department);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LecturerExists(lecturer.UniversityLecturerId))
+                    if (!DepartmentExists(department.DepartmentId))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace Group_APT.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(lecturer);
+            return View(department);
         }
 
-        // GET: Lecturers/Delete/5
+        // GET: Departments/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace Group_APT.Controllers
                 return NotFound();
             }
 
-            var lecturer = await _context.Lecturers
-                .FirstOrDefaultAsync(m => m.UniversityLecturerId== id);
-            if (lecturer == null)
+            var department = await _context.Department
+                .FirstOrDefaultAsync(m => m.DepartmentId == id);
+            if (department == null)
             {
                 return NotFound();
             }
 
-            return View(lecturer);
+            return View(department);
         }
 
-        // POST: Lecturers/Delete/5
+        // POST: Departments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var lecturer = await _context.Lecturers.FindAsync(id);
-            _context.Lecturers.Remove(lecturer);
+            var department = await _context.Department.FindAsync(id);
+            _context.Department.Remove(department);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LecturerExists(string id)
+        private bool DepartmentExists(string id)
         {
-            return _context.Lecturers.Any(e => e.UniversityLecturerId== id);
+            return _context.Department.Any(e => e.DepartmentId == id);
         }
     }
 }
