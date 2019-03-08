@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Security;
@@ -15,6 +16,8 @@ namespace Test2.Models
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public string DepartmentId { get; set; }
+        [ForeignKey("DepartmentId")]
+        public virtual Department RelatedDepartment { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -37,7 +40,7 @@ namespace Test2.Models
 
         //public DbSet<Type> Types { get; set; }
 
-        public DbSet<Department> Departments { get; set; }
+        //public DbSet<Department> Departments { get; set; }
 
 
         public static ApplicationDbContext Create()

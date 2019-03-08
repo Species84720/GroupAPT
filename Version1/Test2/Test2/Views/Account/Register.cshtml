@@ -63,7 +63,8 @@
     <div class="form-group">
         @Html.LabelFor(m => m.DepartmentId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.DepartmentId, new { @class = "form-control" })
+            @*Html.TextBoxFor(m => m.DepartmentId, new { @class = "form-control" })*@
+            @Html.DropDownListFor(m => m.DepartmentId, ViewBag.DepartmentList as SelectList, "Select Department", new { @class = "form-control" })
         </div>
     </div>
 

@@ -9,12 +9,15 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.WebSockets;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler.Encoder;
 using Test2.Migrations;
 using Test2.Models;
+using Test2.Models.DBModels;
+using Database = Test2.Models.Database;
 
 namespace Test2.Controllers
 {
@@ -25,8 +28,7 @@ namespace Test2.Controllers
        
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
-
+        private readonly Database _departments = new Database();
 
         public AccountController()
         {
@@ -158,7 +160,7 @@ namespace Test2.Controllers
         {
             List<string> Roles = new List<string>() { "Student", "Examiner", "Invigilator", "Clerk", "Admin" };
             ViewBag.Rolelist = Roles;
-
+            ViewBag.DepartmentList = new SelectList(_departments.Departments, "DepartmentId", "DepartmentId");
 
             return View(new RegisterViewModel());
         }

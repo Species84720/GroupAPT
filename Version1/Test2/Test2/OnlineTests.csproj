@@ -232,8 +232,13 @@
     <Compile Include="Migrations\201903081451145_DepartmentInAllUsersToString.Designer.cs">
       <DependentUpon>201903081451145_DepartmentInAllUsersToString.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903081943257_DepartmentIdAsForeignKeyInIdentityModels.cs" />
+    <Compile Include="Migrations\201903081943257_DepartmentIdAsForeignKeyInIdentityModels.Designer.cs">
+      <DependentUpon>201903081943257_DepartmentIdAsForeignKeyInIdentityModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Database.cs" />
     <Compile Include="Models\DBModels\Department.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -355,6 +360,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903081451145_DepartmentInAllUsersToString.resx">
       <DependentUpon>201903081451145_DepartmentInAllUsersToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903081943257_DepartmentIdAsForeignKeyInIdentityModels.resx">
+      <DependentUpon>201903081943257_DepartmentIdAsForeignKeyInIdentityModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
