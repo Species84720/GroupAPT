@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Security;
 using System.Web.UI.WebControls;
-using Test2.Models.DBModels;
 
 namespace Test2.Models
 {
@@ -77,28 +76,17 @@ namespace Test2.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-                [Display(Name = "Name")]
+        [Required]
+        [Display(Name = "Name")]
         public string UserName { get; set; }
 
-        [Required]
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
+        public IEnumerable<string> UserRoles { get; set; }
+        //{ "Student", "Examiner", "Invigilator", "Clerk", "Admin" };
+           
 
-        [Required]
-        [Display(Name = "Surname")]
-        public string Surname { get; set; }
-
-
-        [Display(Name = "Department")]
-        public string DepartmentId { get; set; }
-        [ForeignKey("DepartmentId")]
-        public Department Department { get; set; }
-
-        [Required]
         [Display(Name = "Role")]
         public string Role { get; set; }
-
-       // List<string> Roles = new List<string> ;
+        
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
