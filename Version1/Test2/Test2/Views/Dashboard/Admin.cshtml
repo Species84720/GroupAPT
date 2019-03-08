@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Admin";
+}
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Admin Dashboard</h2>
+        <div>
+            Users:
+            <ul>
+                <li>@Html.ActionLink("Create New User", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            </ul>
+            <br />
+        </div>
+
+        <div>
+            Departments:
+            <br />
+        </div>
+        <div>
+            Exam Sessions:
+            <br />
+        </div>
+        <div>
+            Logs:
+            <br />
+        </div>
+
+    </div>
+
+</div>
+
+
+
+@if (Request.IsAuthenticated)
+{
+    <div> User detected to be Authenticated</div>
+    <br />
+    if (User.IsInRole("Student"))   //Dislays content including partial View Based on Role
+    {
+        //Code to render or redirect to student dashboard here
+    }
+
+
+
+    if (User.IsInRole("Admin"))   //Dislays content including partial View Based on Role
+    {
+
+
+
+        <br />
+        <div> User detected to be an Admin. You should see partial view</div>
+
+         
+        <br />
+        <div>UserId:   @User.Identity.GetUserId() </div>
+        <br />
+        <div>UserName:   @User.Identity.GetUserName() </div>
+
+
+        @Html.Partial("_MyPartial")
+
+    }
+}
