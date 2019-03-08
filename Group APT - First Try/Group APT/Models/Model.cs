@@ -15,8 +15,8 @@ namespace Group_APT.Models
 
         public DbSet<Student> Students { get; set; }
         public DbSet<Lecturer> Lecturers { get; set; }
-        public DbSet<Unit> Units { get; set; }
+        public DbSet<Subject> Units { get; set; }
         public DbSet<Examination> Examinations { get; set; }
-        public DbSet<StudentUnit_Relationship> StudentUnitRelationships { get; set; }
+        public DbSet<Enrollment> StudentUnitRelationships { get; set; }
     }
 }

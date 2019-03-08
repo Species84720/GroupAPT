@@ -58,7 +58,7 @@ namespace Group_APT.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RelationId,UniversityStudentId,Code")] StudentUnit_Relationship studentUnit_Relationship)
+        public async Task<IActionResult> Create([Bind("RelationId,UniversityStudentId,Code")] Enrollment studentUnit_Relationship)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace Group_APT.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RelationId,UniversityStudentId,Code")] StudentUnit_Relationship studentUnit_Relationship)
+        public async Task<IActionResult> Edit(int id, [Bind("RelationId,UniversityStudentId,Code")] Enrollment studentUnit_Relationship)
         {
             if (id != studentUnit_Relationship.RelationId)
             {
