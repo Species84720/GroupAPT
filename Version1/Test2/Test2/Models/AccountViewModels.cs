@@ -90,7 +90,7 @@ namespace Test2.Models
 
 
         [Display(Name = "Department")]
-        public string DepartmentId { get; set; }
+        public int DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         public Department Department { get; set; }
 

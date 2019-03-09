@@ -15,7 +15,7 @@ namespace Test2.Models
     {
         public string FirstName { get; set; }
         public string Surname { get; set; }
-        public string DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         public virtual Department RelatedDepartment { get; set; }
 

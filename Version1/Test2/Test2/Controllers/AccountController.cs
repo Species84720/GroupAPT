@@ -160,7 +160,7 @@ namespace Test2.Controllers
         {
             List<string> Roles = new List<string>() { "Student", "Examiner", "Invigilator", "Clerk", "Admin" };
             ViewBag.Rolelist = Roles;
-            ViewBag.DepartmentList = new SelectList(_departments.Departments, "DepartmentId", "DepartmentId");
+            ViewBag.DepartmentList = new SelectList(_departments.Departments, "DepartmentId", "DepartmentName");
 
             return View(new RegisterViewModel());
         }

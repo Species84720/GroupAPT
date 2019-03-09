@@ -11,12 +11,16 @@ namespace Test2.Models.DBModels
     public class Department
     {
         [Key]
-        [DisplayName("Department")]
-        public string DepartmentId { get; set; }
-        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int DepartmentId { get; set; }
 
-        public string DepartmentParent { get; set; }
-        [ForeignKey("DepartmentParent")]
+        [Required]
+        [DisplayName("Deparment Name")]
+        public string DepartmentName { get; set; }
+
+        [DisplayName("Sub-Deparment of")]
+        public int? DepartmentParentId { get; set; }
+        [ForeignKey("DepartmentParentId")]
         public virtual List<Department> Children { get; set; }
     }
 }

@@ -236,6 +236,14 @@
     <Compile Include="Migrations\201903081943257_DepartmentIdAsForeignKeyInIdentityModels.Designer.cs">
       <DependentUpon>201903081943257_DepartmentIdAsForeignKeyInIdentityModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903090940282_AddedIntKeyToDepartment.cs" />
+    <Compile Include="Migrations\201903090940282_AddedIntKeyToDepartment.Designer.cs">
+      <DependentUpon>201903090940282_AddedIntKeyToDepartment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903091036470_SeemsNecessary.cs" />
+    <Compile Include="Migrations\201903091036470_SeemsNecessary.Designer.cs">
+      <DependentUpon>201903091036470_SeemsNecessary.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Database.cs" />
@@ -363,6 +371,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903081943257_DepartmentIdAsForeignKeyInIdentityModels.resx">
       <DependentUpon>201903081943257_DepartmentIdAsForeignKeyInIdentityModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903090940282_AddedIntKeyToDepartment.resx">
+      <DependentUpon>201903090940282_AddedIntKeyToDepartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903091036470_SeemsNecessary.resx">
+      <DependentUpon>201903091036470_SeemsNecessary.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
