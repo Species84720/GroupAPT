@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Group_APT.Models;
 
 namespace Test2.Models.DBModels
 {
@@ -22,5 +23,7 @@ namespace Test2.Models.DBModels
         public int? DepartmentParentId { get; set; }
         [ForeignKey("DepartmentParentId")]
         public virtual List<Department> Children { get; set; }
+
+        public virtual List<Subject> Subjects { get; set; }//Departments have multiple subjects
     }
 }
