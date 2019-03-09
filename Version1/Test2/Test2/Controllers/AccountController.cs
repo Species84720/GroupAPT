@@ -28,7 +28,7 @@ namespace Test2.Controllers
        
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private readonly Database _departments = new Database();
+        private readonly ApplicationDbContext _departments = new ApplicationDbContext();
 
         public AccountController()
         {

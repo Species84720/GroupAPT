@@ -38,9 +38,7 @@ namespace Test2.Models
         {
         }
 
-        //public DbSet<Type> Types { get; set; }
-
-        //public DbSet<Department> Departments { get; set; }
+         
 
 
         public static ApplicationDbContext Create()
@@ -54,9 +52,13 @@ namespace Test2.Models
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<ApplicationUser>().ToTable("AllUsers");
-            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRole");
+            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.UserId, r.RoleId }).ToTable("UserRole");
             modelBuilder.Entity<IdentityRole>().ToTable("Role");
+
+            
+
         } //changes  default name of database tables
-        
+
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.Department> Departments { get; set; }
     }
 }

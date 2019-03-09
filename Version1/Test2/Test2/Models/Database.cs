@@ -7,6 +7,23 @@ using Test2.Models.DBModels;
 
 namespace Test2.Models
 {
+
+
+    /*
+     *
+     *
+     *This file is redundant and can be deleted
+     *
+     *
+     */
+
+
+
+
+
+
+
+
     public class Database : DbContext
     {
         public Database() : base("DefaultConnection")
