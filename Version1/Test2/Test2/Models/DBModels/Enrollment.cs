@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Group_APT.Models
+namespace Test2.Models.DBModels
 {
     public class Enrollment
     {
@@ -21,8 +21,8 @@ namespace Group_APT.Models
 
         [Required]
         [DisplayName("Subject Code")]
-        public string SubjectCode { get; set; }
-        [ForeignKey("SubjectCode")]
+        public string SubjectId { get; set; }
+        [ForeignKey("SubjectId")]
         public Subject RelatedSubject { get; set; }
 
         [DisplayName("Result")]

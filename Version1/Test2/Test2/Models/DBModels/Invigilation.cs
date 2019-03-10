@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Test2.Models;
 
-namespace Group_APT.Models
+namespace Test2.Models.DBModels
 {
     public class Invigilation
     {

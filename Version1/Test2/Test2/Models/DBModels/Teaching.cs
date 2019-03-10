@@ -4,26 +4,27 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-//using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Test2.Models;
 
-namespace Group_APT.Models
+
+namespace Test2.Models.DBModels
 {
     public class Teaching
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+       [Key]
+       [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TeachingId { get; set; }
+        
+         
+        
+        public string ExaminerId { get; set; }
+        [ForeignKey("ExaminerId")]
+        public ApplicationUser Examiner { get; set; }
+        
+        public string SubjectId { get; set; }
+        [ForeignKey("SubjectId")]
+        public Subject Examinable { get; set; }
 
-        [Required] public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public ApplicationUser RelatedUser { get; set; }
+       
 
-        [Required] public string SubjectCode { get; set; }
-        [ForeignKey("SubjectCode")]
-        public  Subject RelatedSubject { get; set; }
-
-        public virtual ApplicationUser User { get; set; }
-        public virtual Subject Subject { get; set; }
     }
 }

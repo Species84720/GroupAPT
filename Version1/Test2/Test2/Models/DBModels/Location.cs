@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Group_APT.Models
+namespace Test2.Models.DBModels
 {
     public class Location
     {
