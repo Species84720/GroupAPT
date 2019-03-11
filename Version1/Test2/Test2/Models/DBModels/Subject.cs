@@ -5,15 +5,15 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using Test2.Models.DBModels;
+using Test2.Models;
 
-namespace Group_APT.Models
+namespace Test2.Models.DBModels
 {
     public class Subject
     {
         [Key]
         [DisplayName("Subject Code")]
-        public string SubjectCode { get; set; }
+        public string SubjectId { get; set; }
 
         [Required]
         [DisplayName("Subject Title")]
@@ -31,6 +31,7 @@ namespace Group_APT.Models
        // public virtual ICollection<ExamSession> ExamSessions { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
         public virtual ICollection<Topic> Topics { get; set; }
+        public virtual ICollection<Teaching> Teachings { get; set; }
 
     }
 }

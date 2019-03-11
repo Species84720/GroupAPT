@@ -253,6 +253,22 @@
     <Compile Include="Migrations\201903091551253_FixingSomeIssues.Designer.cs">
       <DependentUpon>201903091551253_FixingSomeIssues.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903100710005_FixedNameSpace.cs" />
+    <Compile Include="Migrations\201903100710005_FixedNameSpace.Designer.cs">
+      <DependentUpon>201903100710005_FixedNameSpace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903100736138_AddTeachingChoices.cs" />
+    <Compile Include="Migrations\201903100736138_AddTeachingChoices.Designer.cs">
+      <DependentUpon>201903100736138_AddTeachingChoices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903100744106_Teaching.cs" />
+    <Compile Include="Migrations\201903100744106_Teaching.Designer.cs">
+      <DependentUpon>201903100744106_Teaching.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903100806110_Teaching2.cs" />
+    <Compile Include="Migrations\201903100806110_Teaching2.Designer.cs">
+      <DependentUpon>201903100806110_Teaching2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Database.cs" />
@@ -410,6 +426,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903091551253_FixingSomeIssues.resx">
       <DependentUpon>201903091551253_FixingSomeIssues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903100710005_FixedNameSpace.resx">
+      <DependentUpon>201903100710005_FixedNameSpace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903100736138_AddTeachingChoices.resx">
+      <DependentUpon>201903100736138_AddTeachingChoices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903100744106_Teaching.resx">
+      <DependentUpon>201903100744106_Teaching.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903100806110_Teaching2.resx">
+      <DependentUpon>201903100806110_Teaching2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

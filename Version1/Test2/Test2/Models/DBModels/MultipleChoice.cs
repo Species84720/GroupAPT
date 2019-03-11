@@ -6,9 +6,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Group_APT.Models
+namespace Test2.Models.DBModels
 {
-    public class MultipleChoice4
+    public class MultipleChoice
     {
 
         public enum PossibleAnswer : byte {A=1 , B , C , D};
@@ -17,9 +17,11 @@ namespace Group_APT.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ChoiceId { get; set; }
 
+        /*
         [Required] public string QuestionId { get; set; }
-        [ForeignKey("QuestionId")]
-        public virtual Question RelatedQuestion { get; set; }
+       [ForeignKey("QuestionId")]
+        public virtual Question Question { get; set; }
+        */
 
         [Required]
         [DisplayName("Text for First Choice")]
@@ -40,6 +42,11 @@ namespace Group_APT.Models
         [Required]
         [DisplayName("Correct Choice")]
         public PossibleAnswer CorrectChoice { get; set; }
+
+        [Required]
+        public virtual Question Question { get; set; }
     }
+
+
 
 }

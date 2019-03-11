@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using Test2.Models;
+ 
 
-namespace Group_APT.Models
+namespace Test2.Models.DBModels
 {
     public class Student
     {
@@ -15,8 +15,7 @@ namespace Group_APT.Models
 
         [Required]
 		public string UserId { get; set; }
-		
-        [ForeignKey("UserId")]
+		[ForeignKey("UserId")]
         public ApplicationUser RelatedUser { get; set; }
 
         public string FacialImageDirectory { get; set; }
