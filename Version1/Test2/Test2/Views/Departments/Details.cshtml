@@ -1,4 +1,5 @@
-﻿@model Test2.Models.DBModels.Department
+﻿@using Test2.Models.DBModels
+@model Test2.Models.DBModels.Department
 
 @{
     ViewBag.Title = "Details";
@@ -24,7 +25,10 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DepartmentParentId)
+            @{
+                List<Department> list = ViewBag.DepartmentList;
+            }
+            @Html.DisplayFor(model => list.Find(x => x.DepartmentId == model.DepartmentParentId).DepartmentName)
         </dd>
 
     </dl>

@@ -18,8 +18,9 @@ namespace Test2.Controllers.DBControllers
 
         // GET: Departments
         public async Task<ActionResult> Index()
-        { 
-            
+        {
+            List<Department> list = db.Departments.ToList();
+            ViewBag.DepartmentList = list;
             return View(await db.Departments.ToListAsync());
         }
 
@@ -35,12 +36,15 @@ namespace Test2.Controllers.DBControllers
             {
                 return HttpNotFound();
             }
+            List<Department> list = db.Departments.ToList();
+            ViewBag.DepartmentList = list;
             return View(department);
         }
 
         // GET: Departments/Create
         public ActionResult Create()
         {
+            ViewBag.DepartmentList = new SelectList(db.Departments, "DepartmentId", "DepartmentName");
             return View();
         }
 
@@ -73,6 +77,8 @@ namespace Test2.Controllers.DBControllers
             {
                 return HttpNotFound();
             }
+            
+            ViewBag.DepartmentList = new SelectList(db.Departments.Where(x=> x.DepartmentId != id), "DepartmentId", "DepartmentName");
             return View(department);
         }
 
@@ -104,6 +110,8 @@ namespace Test2.Controllers.DBControllers
             {
                 return HttpNotFound();
             }
+            List<Department> list = db.Departments.ToList();
+            ViewBag.DepartmentList = list;
             return View(department);
         }
 

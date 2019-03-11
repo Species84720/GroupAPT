@@ -28,9 +28,10 @@
             @Html.DisplayFor(modelItem => item.DepartmentName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DepartmentParentId)
-            
-            
+            @{
+                List<Department> list = ViewBag.DepartmentList;
+            }
+            @Html.DisplayFor(modelItem => list.Find(x => x.DepartmentId == item.DepartmentParentId).DepartmentName)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.DepartmentId }) |

@@ -28,7 +28,7 @@ namespace Test2.Controllers
        
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private readonly ApplicationDbContext _departments = new ApplicationDbContext();
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -160,7 +160,7 @@ namespace Test2.Controllers
         {
             List<string> Roles = new List<string>() { "Student", "Examiner", "Invigilator", "Clerk", "Admin" };
             ViewBag.Rolelist = Roles;
-            ViewBag.DepartmentList = new SelectList(_departments.Departments, "DepartmentId", "DepartmentName");
+            ViewBag.DepartmentList = new SelectList(db.Departments, "DepartmentId", "DepartmentName");
 
             return View(new RegisterViewModel());
         }
