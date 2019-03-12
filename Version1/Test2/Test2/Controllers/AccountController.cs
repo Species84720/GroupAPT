@@ -176,14 +176,33 @@ namespace Test2.Controllers
             List<string> Roles = new List<string>() { "Student", "Examiner", "Invigilator", "Clerk", "Admin" };
             ViewBag.Rolelist = Roles;
 
+            ViewBag.DepartmentList = new SelectList(db.Departments, "DepartmentId", "DepartmentName");
+
             if (ModelState.IsValid)
             {
-                Random random = new Random();
-                int randomNumber = random.Next(0,10000);
+                int todate = DateTime.Now.Year;
 
-                string IssuedUserName = model.FirstName[0]+model.Surname+randomNumber;
+                string yy = todate.ToString();
+
+                string IssuedNickName1 = model.FirstName[0].ToString();
+                string IssuedNickName = IssuedNickName1 + model.FirstName[1] + model.FirstName[2] + model.Surname[0] + model.Surname[1] + model.Surname[2] + "";
                 
-                var user = new ApplicationUser { UserName = IssuedUserName, DepartmentId=model.DepartmentId, FirstName = model.FirstName, Surname = model.Surname, Email = model.Email };
+                IssuedNickName = IssuedNickName + yy[2] + yy[3]; //adds the 2 numbers of the year I hope
+
+                // Avoiding UserName being the same in the next bit of code
+                List<ApplicationUser> someusers = new List<ApplicationUser>();
+                someusers = db.Users.ToList();  // gets a list of all users
+
+                IEnumerable<ApplicationUser> similarName = from s in someusers
+                                                           where s.NickName == IssuedNickName
+                                                           select s;
+                int anumber = similarName.Count();  //counts how many have a similar nick name
+
+                string IssuedUserName = IssuedNickName; //Generates the UserName
+
+                if (anumber>0) IssuedUserName=IssuedUserName+ "." +anumber.ToString(); //contignecy to avoid UserName being similar
+
+                var user = new ApplicationUser { UserName =IssuedUserName, NickName = IssuedNickName, DepartmentId=model.DepartmentId, FirstName = model.FirstName, Surname = model.Surname, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -199,7 +218,20 @@ namespace Test2.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    if (role == "Student")
+                    {
+                        //if this added user was a student we create a matching student in Students Table
+                        var student = new Student
+                        {
+                            StudentId = IssuedUserName,
+                            UserId = user.Id
+                            // no image being captured here (Should it be here?)
+                    };
+                         
+                        db.Students.Add(student);
+                        await db.SaveChangesAsync();
 
+                    }
                     return RedirectToAction("Admin", "Dashboard");
                 }
                 AddErrors(result);

@@ -80,6 +80,10 @@ namespace Test2.Models
                 [Display(Name = "Name")]
         public string UserName { get; set; }
 
+        [Display(Name = "Nick")]
+        public string NickName { get; set; }
+
+
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }

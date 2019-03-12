@@ -15,6 +15,7 @@ namespace Test2.Models
     {
         public string FirstName { get; set; }
         public string Surname { get; set; }
+        public string NickName { get; set; }
         public int? DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         public virtual Department RelatedDepartment { get; set; }
@@ -60,5 +61,11 @@ namespace Test2.Models
         } //changes  default name of database tables
 
         public System.Data.Entity.DbSet<Test2.Models.DBModels.Department> Departments { get; set; }
+
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.Student> Students { get; set; }
+
+        // if any scaffold adds an ApplicationUser DbSet here remove it.
+        // in the new Controller change all references for ApplicationUsers to just Users
+        // public System.Data.Entity.DbSet<Test2.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
