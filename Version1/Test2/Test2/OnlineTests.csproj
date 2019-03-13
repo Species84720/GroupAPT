@@ -289,9 +289,9 @@
     <Compile Include="Migrations\201903131526022_fixingLocationIDHopefully.Designer.cs">
       <DependentUpon>201903131526022_fixingLocationIDHopefully.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201903131648354_fixingIntKeys.cs" />
-    <Compile Include="Migrations\201903131648354_fixingIntKeys.Designer.cs">
-      <DependentUpon>201903131648354_fixingIntKeys.cs</DependentUpon>
+    <Compile Include="Migrations\201903131733403_attemptingMultiChoice.cs" />
+    <Compile Include="Migrations\201903131733403_attemptingMultiChoice.Designer.cs">
+      <DependentUpon>201903131733403_attemptingMultiChoice.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -495,8 +495,8 @@
     <EmbeddedResource Include="Migrations\201903131526022_fixingLocationIDHopefully.resx">
       <DependentUpon>201903131526022_fixingLocationIDHopefully.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903131648354_fixingIntKeys.resx">
-      <DependentUpon>201903131648354_fixingIntKeys.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201903131733403_attemptingMultiChoice.resx">
+      <DependentUpon>201903131733403_attemptingMultiChoice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

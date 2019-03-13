@@ -15,7 +15,7 @@ namespace Test2.Models.DBModels
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ChoiceId { get; set; }
+        public int MultipleChoiceId { get; set; }
 
         /*
         [Required] public string QuestionId { get; set; }

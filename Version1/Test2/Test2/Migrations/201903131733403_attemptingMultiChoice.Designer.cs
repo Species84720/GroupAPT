@@ -7,13 +7,13 @@ namespace Test2.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class fixingIntKeys : IMigrationMetadata
+    public sealed partial class attemptingMultiChoice : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(fixingIntKeys));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(attemptingMultiChoice));
         
         string IMigrationMetadata.Id
         {
-            get { return "201903131648354_fixingIntKeys"; }
+            get { return "201903131733403_attemptingMultiChoice"; }
         }
         
         string IMigrationMetadata.Source
