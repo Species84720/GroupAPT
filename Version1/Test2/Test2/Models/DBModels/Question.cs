@@ -36,7 +36,7 @@ namespace Test2.Models.DBModels
         [Required] public QuestionType QuestionFormat { get; set; } 
 
          
-      //  public virtual MultipleChoice Choices { get; set; }
+      // public virtual MultipleChoice Choices { get; set; }
 
     }
 }

@@ -47,6 +47,7 @@ namespace Test2.Models.DBModels
         public int QuestionId { get; set; }
         [ForeignKey("QuestionId")]
         public virtual Question RelatedQuestion { get; set; }
+
     }
 
 

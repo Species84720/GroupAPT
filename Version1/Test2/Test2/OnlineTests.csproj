@@ -289,6 +289,10 @@
     <Compile Include="Migrations\201903131526022_fixingLocationIDHopefully.Designer.cs">
       <DependentUpon>201903131526022_fixingLocationIDHopefully.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903131648354_fixingIntKeys.cs" />
+    <Compile Include="Migrations\201903131648354_fixingIntKeys.Designer.cs">
+      <DependentUpon>201903131648354_fixingIntKeys.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Database.cs" />
@@ -490,6 +494,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903131526022_fixingLocationIDHopefully.resx">
       <DependentUpon>201903131526022_fixingLocationIDHopefully.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903131648354_fixingIntKeys.resx">
+      <DependentUpon>201903131648354_fixingIntKeys.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -35,7 +35,7 @@ namespace Test2.Migrations
             AddForeignKey("dbo.Questions", "TopicId", "dbo.Topics", "TopicId");
             AddForeignKey("dbo.ExamSessions", "LocationId", "dbo.Locations", "LocationId");
             AddForeignKey("dbo.PaperQuestions", "QuestionId", "dbo.Questions", "QuestionId", cascadeDelete: true);
-            DropTable("dbo.MultipleChoices");
+             
         }
         
         public override void Down()
