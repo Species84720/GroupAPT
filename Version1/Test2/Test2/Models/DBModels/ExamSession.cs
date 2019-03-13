@@ -18,7 +18,7 @@ namespace Test2.Models.DBModels
         public virtual Subject RelatedSubject { get; set; }
 
         [DisplayName("Location")]
-        public string LocationId { get; set; }
+        public int? LocationId { get; set; }
         [ForeignKey("LocationId")]
         public virtual Location RelatedLocation { get; set; }
 

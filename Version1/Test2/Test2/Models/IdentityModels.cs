@@ -64,6 +64,12 @@ namespace Test2.Models
 
         public System.Data.Entity.DbSet<Test2.Models.DBModels.Student> Students { get; set; }
 
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.Enrollment> Enrollments { get; set; }
+
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.Subject> Subjects { get; set; }
+
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.Location> Locations { get; set; }
+
         // if any scaffold adds an ApplicationUser DbSet here remove it.
         // in the new Controller change all references for ApplicationUsers to just Users
         // public System.Data.Entity.DbSet<Test2.Models.ApplicationUser> ApplicationUsers { get; set; }

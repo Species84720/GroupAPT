@@ -44,7 +44,9 @@ namespace Test2.Models.DBModels
         public PossibleAnswer CorrectChoice { get; set; }
 
         [Required]
-        public virtual Question Question { get; set; }
+        public int QuestionId { get; set; }
+        [ForeignKey("QuestionId")]
+        public virtual Question RelatedQuestion { get; set; }
     }
 
 

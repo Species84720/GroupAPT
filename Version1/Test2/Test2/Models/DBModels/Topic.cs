@@ -9,7 +9,9 @@ namespace Test2.Models.DBModels
 {
     public class Topic
     {
-        [Key] public string TopicId { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int TopicId { get; set; }
         [Required] public string TopicName { get; set; }
 
         [Required] public string SubjectId { get; set; }

@@ -15,7 +15,7 @@ namespace Test2.Models.DBModels
         [ForeignKey("ExamId")]
         public virtual ExamSession RelatedExamSession { get; set; }
 
-        [Required] public string QuestionId { get; set; }
+        [Required] public int QuestionId { get; set; }
         [ForeignKey("QuestionId")]
         public virtual Question RelatedQuestion { get; set; }
 

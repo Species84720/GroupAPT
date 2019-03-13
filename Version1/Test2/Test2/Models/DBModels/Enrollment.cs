@@ -10,13 +10,13 @@ namespace Test2.Models.DBModels
 {
     public class Enrollment
     {
-        public enum Status { Dubious, Confirmed, Denied, Unchecked }
+        public enum Status { Unchecked, Dubious, Confirmed, Denied }
         public enum Assessment { Pending, Passed, Failed, Compensated, Absent }
 
         [Key] public string EnrollmentId { get; set; }
 
-        [Required] public string UserId { get; set; }
-        [ForeignKey("UserId")]
+        [Required] public string StudentId { get; set; }
+        [ForeignKey("StudentId")]
         public Student RelatedStudent { get; set; }
 
         [Required]
@@ -26,9 +26,9 @@ namespace Test2.Models.DBModels
         public Subject RelatedSubject { get; set; }
 
         [DisplayName("Result")]
-        public byte ExamMark { get; set; }
+        public byte? ExamMark { get; set; }
 
-        public int SeatNumber { get; set; } //Default=0 
+        public int? SeatNumber { get; set; } //Default=0 
         public Status SessionStatus { get; set; } //Default = Unchecked
         public Assessment FinalAssessment { get; set; } //Default = Pending
 

@@ -11,7 +11,8 @@ namespace Test2.Models.DBModels
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string LocationId { get; set; }
+        public int LocationId { get; set; }
+
         public string Campus { get; set; }
         public string Building { get; set; }
         public string Floor { get; set; }

@@ -12,7 +12,9 @@ namespace Test2.Models.DBModels
         public enum QuestionUse { AllContexts, Exam, Homework, ClassWork, ClassTest }
         public enum QuestionType { WrittenAnswer, MultipleChoice, Image }
 
-        [Key] public string QuestionId { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int QuestionId { get; set; }
 
         [Required] public string SubjectId { get; set; }
         [ForeignKey("SubjectId")]
@@ -24,17 +26,17 @@ namespace Test2.Models.DBModels
         public virtual User RelatedUser { get; set; }
         */
 
-        [Required] public string TopicId { get; set; }
+        public int? TopicId { get; set; }
         [ForeignKey("TopicId")]
         public virtual Topic RelatedTopic { get; set; }
 
-        [Required] public QuestionUse QuestionUsage { get; set; }
+        public QuestionUse QuestionUsage { get; set; }
         [Required] public string QuestionText { get; set; }
-          public string SampleAnswer { get; set; }
+         public string SampleAnswer { get; set; }
         [Required] public QuestionType QuestionFormat { get; set; } 
 
          
-        public virtual MultipleChoice Choices { get; set; }
+      //  public virtual MultipleChoice Choices { get; set; }
 
     }
 }

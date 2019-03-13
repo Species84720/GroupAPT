@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Test2.Models.DBModels.Enrollment>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedStudent.StudentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedSubject.SubjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExamMark)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SeatNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SessionStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FinalAssessment)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RelatedStudent.StudentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExamMark)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SeatNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SessionStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinalAssessment)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EnrollmentId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EnrollmentId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EnrollmentId })
+        </td>
+    </tr>
+}
+
+</table>

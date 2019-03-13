@@ -19,9 +19,9 @@ namespace Test2.Models.DBModels
         [DisplayName("Subject Title")]
         public string SubjectName { get; set; }
 
+        [DisplayName("Department")]
         [Required] public int DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
-        [DisplayName("Department")]
         public Department RelatedDepartment { get; set; }
 
         [Required]
