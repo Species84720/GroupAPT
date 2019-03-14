@@ -41,7 +41,7 @@ namespace Test2.Controllers.DBControllers
         // GET: StudentAnswers/Create
         public ActionResult Create()
         {
-            ViewBag.CorrectorId = new SelectList(db.ApplicationUsers, "Id", "FirstName");
+            ViewBag.CorrectorId = new SelectList(db.Users, "Id", "FirstName");
             ViewBag.EnrollmentId = new SelectList(db.Enrollments, "EnrollmentId", "StudentId");
             ViewBag.PaperQuestionId = new SelectList(db.PaperQuestions, "PaperQuestionId", "ExamId");
             return View();
@@ -61,7 +61,7 @@ namespace Test2.Controllers.DBControllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CorrectorId = new SelectList(db.ApplicationUsers, "Id", "FirstName", studentAnswer.CorrectorId);
+            ViewBag.CorrectorId = new SelectList(db.Users, "Id", "FirstName", studentAnswer.CorrectorId);
             ViewBag.EnrollmentId = new SelectList(db.Enrollments, "EnrollmentId", "StudentId", studentAnswer.EnrollmentId);
             ViewBag.PaperQuestionId = new SelectList(db.PaperQuestions, "PaperQuestionId", "ExamId", studentAnswer.PaperQuestionId);
             return View(studentAnswer);
@@ -79,7 +79,7 @@ namespace Test2.Controllers.DBControllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CorrectorId = new SelectList(db.ApplicationUsers, "Id", "FirstName", studentAnswer.CorrectorId);
+            ViewBag.CorrectorId = new SelectList(db.Users, "Id", "FirstName", studentAnswer.CorrectorId);
             ViewBag.EnrollmentId = new SelectList(db.Enrollments, "EnrollmentId", "StudentId", studentAnswer.EnrollmentId);
             ViewBag.PaperQuestionId = new SelectList(db.PaperQuestions, "PaperQuestionId", "ExamId", studentAnswer.PaperQuestionId);
             return View(studentAnswer);
@@ -98,7 +98,7 @@ namespace Test2.Controllers.DBControllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.CorrectorId = new SelectList(db.ApplicationUsers, "Id", "FirstName", studentAnswer.CorrectorId);
+            ViewBag.CorrectorId = new SelectList(db.Users, "Id", "FirstName", studentAnswer.CorrectorId);
             ViewBag.EnrollmentId = new SelectList(db.Enrollments, "EnrollmentId", "StudentId", studentAnswer.EnrollmentId);
             ViewBag.PaperQuestionId = new SelectList(db.PaperQuestions, "PaperQuestionId", "ExamId", studentAnswer.PaperQuestionId);
             return View(studentAnswer);

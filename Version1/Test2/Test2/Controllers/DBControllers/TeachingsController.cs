@@ -42,7 +42,7 @@ namespace Test2.Controllers.DBControllers
         public ActionResult Create()
         {
             ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName");
-            ViewBag.ExaminerId = new SelectList(db.ApplicationUsers, "Id", "FirstName");
+            ViewBag.ExaminerId = new SelectList(db.Users, "Id", "FirstName");
             return View();
         }
 
@@ -61,7 +61,7 @@ namespace Test2.Controllers.DBControllers
             }
 
             ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", teaching.SubjectId);
-            ViewBag.ExaminerId = new SelectList(db.ApplicationUsers, "Id", "FirstName", teaching.ExaminerId);
+            ViewBag.ExaminerId = new SelectList(db.Users, "Id", "FirstName", teaching.ExaminerId);
             return View(teaching);
         }
 
@@ -78,7 +78,7 @@ namespace Test2.Controllers.DBControllers
                 return HttpNotFound();
             }
             ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", teaching.SubjectId);
-            ViewBag.ExaminerId = new SelectList(db.ApplicationUsers, "Id", "FirstName", teaching.ExaminerId);
+            ViewBag.ExaminerId = new SelectList(db.Users, "Id", "FirstName", teaching.ExaminerId);
             return View(teaching);
         }
 
@@ -96,7 +96,7 @@ namespace Test2.Controllers.DBControllers
                 return RedirectToAction("Index");
             }
             ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", teaching.SubjectId);
-            ViewBag.ExaminerId = new SelectList(db.ApplicationUsers, "Id", "FirstName", teaching.ExaminerId);
+            ViewBag.ExaminerId = new SelectList(db.Users, "Id", "FirstName", teaching.ExaminerId);
             return View(teaching);
         }
 

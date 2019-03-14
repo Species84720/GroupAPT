@@ -7,13 +7,13 @@ namespace Test2.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class FixingIntKeyAutoIncrement : IMigrationMetadata
+    public sealed partial class IfNecessary : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FixingIntKeyAutoIncrement));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(IfNecessary));
         
         string IMigrationMetadata.Id
         {
-            get { return "201903131802105_FixingIntKeyAutoIncrement"; }
+            get { return "201903141301094_IfNecessary"; }
         }
         
         string IMigrationMetadata.Source

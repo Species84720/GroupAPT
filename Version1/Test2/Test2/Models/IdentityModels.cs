@@ -80,7 +80,7 @@ namespace Test2.Models
 
         public System.Data.Entity.DbSet<Test2.Models.DBModels.StudentAnswer> StudentAnswers { get; set; }
 
-        public System.Data.Entity.DbSet<Test2.Models.ApplicationUser> ApplicationUsers { get; set; }
+       // public System.Data.Entity.DbSet<Test2.Models.ApplicationUser> ApplicationUsers { get; set; }
 
         public System.Data.Entity.DbSet<Test2.Models.DBModels.Teaching> Teachings { get; set; }
 

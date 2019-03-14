@@ -302,9 +302,9 @@
     <Compile Include="Migrations\201903131733403_attemptingMultiChoice.Designer.cs">
       <DependentUpon>201903131733403_attemptingMultiChoice.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201903131802105_FixingIntKeyAutoIncrement.cs" />
-    <Compile Include="Migrations\201903131802105_FixingIntKeyAutoIncrement.Designer.cs">
-      <DependentUpon>201903131802105_FixingIntKeyAutoIncrement.cs</DependentUpon>
+    <Compile Include="Migrations\201903141301094_IfNecessary.cs" />
+    <Compile Include="Migrations\201903141301094_IfNecessary.Designer.cs">
+      <DependentUpon>201903141301094_IfNecessary.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -560,8 +560,8 @@
     <EmbeddedResource Include="Migrations\201903131733403_attemptingMultiChoice.resx">
       <DependentUpon>201903131733403_attemptingMultiChoice.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903131802105_FixingIntKeyAutoIncrement.resx">
-      <DependentUpon>201903131802105_FixingIntKeyAutoIncrement.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201903141301094_IfNecessary.resx">
+      <DependentUpon>201903141301094_IfNecessary.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
