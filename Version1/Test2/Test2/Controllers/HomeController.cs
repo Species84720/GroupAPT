@@ -13,11 +13,7 @@ namespace Test2.Controllers
         {
             return View();
         }
-
-        public ActionResult Admin()
-        {
-            return View();
-        }
+         
 
         [Authorize]
         public ActionResult Dashboard()
@@ -27,7 +23,7 @@ namespace Test2.Controllers
 
                 if (User.IsInRole("Student"))
                 {
-                    //Code to redirect to student dashboard here
+                     return RedirectToAction("Learner", "Dashboard");
                 }
 
 
@@ -35,9 +31,31 @@ namespace Test2.Controllers
                 {
                     return RedirectToAction("Admin", "Dashboard");
                 }
+
+
+                if (User.IsInRole("Examiner"))
+                {
+                    return RedirectToAction("Examiner", "Dashboard");
+                }
+
+                if (User.IsInRole("Clerk"))
+                {
+                    return RedirectToAction("Management", "Dashboard");
+                }
+
+
+                if (User.IsInRole("Invigilator"))
+                {
+                    return RedirectToAction("Invigilator", "Dashboard");
+                }
+
+
+                return RedirectToAction("Index", "Home");
             }
 
-            ViewBag.Message = "Your application description page.";
+
+
+
 
             return View();
         }

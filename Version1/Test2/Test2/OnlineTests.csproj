@@ -177,9 +177,18 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DBControllers\DepartmentsController.cs" />
     <Compile Include="Controllers\DBControllers\EnrollmentsController.cs" />
+    <Compile Include="Controllers\DBControllers\ExamSessionsController.cs" />
+    <Compile Include="Controllers\DBControllers\InvigilationsController.cs" />
     <Compile Include="Controllers\DBControllers\LocationsController.cs" />
+    <Compile Include="Controllers\DBControllers\MultipleChoicesController.cs" />
+    <Compile Include="Controllers\DBControllers\PaperQuestionsController.cs" />
+    <Compile Include="Controllers\DBControllers\QuestionsController.cs" />
+    <Compile Include="Controllers\DBControllers\ShotsController.cs" />
+    <Compile Include="Controllers\DBControllers\StudentAnswersController.cs" />
     <Compile Include="Controllers\DBControllers\StudentsController.cs" />
     <Compile Include="Controllers\DBControllers\SubjectsController.cs" />
+    <Compile Include="Controllers\DBControllers\TeachingsController.cs" />
+    <Compile Include="Controllers\DBControllers\TopicsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -293,6 +302,10 @@
     <Compile Include="Migrations\201903131733403_attemptingMultiChoice.Designer.cs">
       <DependentUpon>201903131733403_attemptingMultiChoice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903131802105_FixingIntKeyAutoIncrement.cs" />
+    <Compile Include="Migrations\201903131802105_FixingIntKeyAutoIncrement.Designer.cs">
+      <DependentUpon>201903131802105_FixingIntKeyAutoIncrement.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Database.cs" />
@@ -398,6 +411,55 @@
     <Content Include="Views\Locations\Details.cshtml" />
     <Content Include="Views\Locations\Edit.cshtml" />
     <Content Include="Views\Locations\Index.cshtml" />
+    <Content Include="Views\Dashboard\Learner.cshtml" />
+    <Content Include="Views\Dashboard\Management.cshtml" />
+    <Content Include="Views\Dashboard\Examiner.cshtml" />
+    <Content Include="Views\Dashboard\Invigilator.cshtml" />
+    <Content Include="Views\Topics\Create.cshtml" />
+    <Content Include="Views\Topics\Delete.cshtml" />
+    <Content Include="Views\Topics\Details.cshtml" />
+    <Content Include="Views\Topics\Edit.cshtml" />
+    <Content Include="Views\Topics\Index.cshtml" />
+    <Content Include="Views\Questions\Create.cshtml" />
+    <Content Include="Views\Questions\Delete.cshtml" />
+    <Content Include="Views\Questions\Details.cshtml" />
+    <Content Include="Views\Questions\Edit.cshtml" />
+    <Content Include="Views\Questions\Index.cshtml" />
+    <Content Include="Views\ExamSessions\Create.cshtml" />
+    <Content Include="Views\ExamSessions\Delete.cshtml" />
+    <Content Include="Views\ExamSessions\Details.cshtml" />
+    <Content Include="Views\ExamSessions\Edit.cshtml" />
+    <Content Include="Views\ExamSessions\Index.cshtml" />
+    <Content Include="Views\PaperQuestions\Create.cshtml" />
+    <Content Include="Views\PaperQuestions\Delete.cshtml" />
+    <Content Include="Views\PaperQuestions\Details.cshtml" />
+    <Content Include="Views\PaperQuestions\Edit.cshtml" />
+    <Content Include="Views\PaperQuestions\Index.cshtml" />
+    <Content Include="Views\StudentAnswers\Create.cshtml" />
+    <Content Include="Views\StudentAnswers\Delete.cshtml" />
+    <Content Include="Views\StudentAnswers\Details.cshtml" />
+    <Content Include="Views\StudentAnswers\Edit.cshtml" />
+    <Content Include="Views\StudentAnswers\Index.cshtml" />
+    <Content Include="Views\Teachings\Create.cshtml" />
+    <Content Include="Views\Teachings\Delete.cshtml" />
+    <Content Include="Views\Teachings\Details.cshtml" />
+    <Content Include="Views\Teachings\Edit.cshtml" />
+    <Content Include="Views\Teachings\Index.cshtml" />
+    <Content Include="Views\MultipleChoices\Create.cshtml" />
+    <Content Include="Views\MultipleChoices\Delete.cshtml" />
+    <Content Include="Views\MultipleChoices\Details.cshtml" />
+    <Content Include="Views\MultipleChoices\Edit.cshtml" />
+    <Content Include="Views\MultipleChoices\Index.cshtml" />
+    <Content Include="Views\Invigilations\Create.cshtml" />
+    <Content Include="Views\Invigilations\Delete.cshtml" />
+    <Content Include="Views\Invigilations\Details.cshtml" />
+    <Content Include="Views\Invigilations\Edit.cshtml" />
+    <Content Include="Views\Invigilations\Index.cshtml" />
+    <Content Include="Views\Shots\Create.cshtml" />
+    <Content Include="Views\Shots\Delete.cshtml" />
+    <Content Include="Views\Shots\Details.cshtml" />
+    <Content Include="Views\Shots\Edit.cshtml" />
+    <Content Include="Views\Shots\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -497,6 +559,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903131733403_attemptingMultiChoice.resx">
       <DependentUpon>201903131733403_attemptingMultiChoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903131802105_FixingIntKeyAutoIncrement.resx">
+      <DependentUpon>201903131802105_FixingIntKeyAutoIncrement.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

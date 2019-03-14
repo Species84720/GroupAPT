@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Learner's Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Learner</h2>
+
+
+<br />
+<div>UserId:   @User.Identity.GetUserId() </div>
+<br />
+<div>UserName:   @User.Identity.GetUserName() </div>
+
+
+
+@Html.Partial("_MyPartial")
+

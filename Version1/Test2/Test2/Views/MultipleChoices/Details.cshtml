@@ -1,0 +1,67 @@
+﻿@model Test2.Models.DBModels.MultipleChoice
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MultipleChoice</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RelatedQuestion.SubjectId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RelatedQuestion.SubjectId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionText1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionText1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionText2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionText2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionText3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionText3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionText4)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionText4)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CorrectChoice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CorrectChoice)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MultipleChoiceId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

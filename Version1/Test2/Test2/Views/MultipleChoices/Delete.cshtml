@@ -1,0 +1,73 @@
+﻿@model Test2.Models.DBModels.MultipleChoice
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MultipleChoice</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RelatedQuestion.SubjectId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RelatedQuestion.SubjectId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionText1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionText1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionText2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionText2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionText3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionText3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionText4)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionText4)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CorrectChoice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CorrectChoice)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

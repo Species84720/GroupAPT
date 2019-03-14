@@ -1,0 +1,123 @@
+﻿@model Test2.Models.DBModels.ExamSession
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ExamSession</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RelatedLocation.Campus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RelatedLocation.Campus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RelatedSubject.SubjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RelatedSubject.SubjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExamDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExamDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExamEndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExamEndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuestionAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuestionAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccessCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccessCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CodeIssueDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodeIssueDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FullyCorrected)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullyCorrected)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxMark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxMark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinMark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MinMark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvgMark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvgMark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumOfParticipants)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumOfParticipants)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumOfFails)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumOfFails)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ExamId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,35 @@
+﻿@model Test2.Models.DBModels.Invigilation
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Invigilation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RelatedExamSession.SubjectId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RelatedExamSession.SubjectId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RelatedUser.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RelatedUser.FirstName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.InvigilationId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

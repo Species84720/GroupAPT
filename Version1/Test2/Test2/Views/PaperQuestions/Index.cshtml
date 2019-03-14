@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Test2.Models.DBModels.PaperQuestion>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedExamSession.SubjectId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedQuestion.SubjectId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberInPaper)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MarksAllocated)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RelatedExamSession.SubjectId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RelatedQuestion.SubjectId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberInPaper)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MarksAllocated)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PaperQuestionId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PaperQuestionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PaperQuestionId })
+        </td>
+    </tr>
+}
+
+</table>

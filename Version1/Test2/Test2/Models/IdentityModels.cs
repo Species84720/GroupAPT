@@ -70,6 +70,26 @@ namespace Test2.Models
 
         public System.Data.Entity.DbSet<Test2.Models.DBModels.Location> Locations { get; set; }
 
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.Topic> Topics { get; set; }
+
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.Question> Questions { get; set; }
+
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.ExamSession> ExamSessions { get; set; }
+
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.PaperQuestion> PaperQuestions { get; set; }
+
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.StudentAnswer> StudentAnswers { get; set; }
+
+        public System.Data.Entity.DbSet<Test2.Models.ApplicationUser> ApplicationUsers { get; set; }
+
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.Teaching> Teachings { get; set; }
+
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.MultipleChoice> MultipleChoices { get; set; }
+
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.Invigilation> Invigilations { get; set; }
+
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.Shot> Shots { get; set; }
+
         // if any scaffold adds an ApplicationUser DbSet here remove it.
         // in the new Controller change all references for ApplicationUsers to just Users
         // public System.Data.Entity.DbSet<Test2.Models.ApplicationUser> ApplicationUsers { get; set; }

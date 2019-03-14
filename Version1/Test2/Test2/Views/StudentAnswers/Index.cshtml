@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Test2.Models.DBModels.StudentAnswer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedCorrector.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedEnrollment.StudentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedPaperQuestion.ExamId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Answer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExaminerComments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MarksGained)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CorrectedDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CommittedByStudent)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RelatedCorrector.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RelatedEnrollment.StudentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RelatedPaperQuestion.ExamId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Answer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExaminerComments)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MarksGained)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CorrectedDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CommittedByStudent)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AnswerId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AnswerId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AnswerId })
+        </td>
+    </tr>
+}
+
+</table>

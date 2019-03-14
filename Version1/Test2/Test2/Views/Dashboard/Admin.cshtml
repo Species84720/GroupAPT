@@ -18,8 +18,8 @@
         </div>
 
         <div>
-          Departments:  @Html.ActionLink("Manage Departments", "Index", "Departments", routeValues: null, htmlAttributes: new { id = "registerLink" })
-             <br />
+            Departments:  @Html.ActionLink("Manage Departments", "Index", "Departments", routeValues: null, htmlAttributes: new { id = "registerLink" })
+            <br />
         </div>
         <div>
             Exam Sessions:
@@ -40,22 +40,14 @@
 {
     <div> User detected to be Authenticated</div>
     <br />
-    if (User.IsInRole("Student"))   //Dislays content including partial View Based on Role
-    {
-        //Code to render or redirect to student dashboard here
-    }
-
+   
 
 
     if (User.IsInRole("Admin"))   //Dislays content including partial View Based on Role
     {
-
-
-
-        <br />
+      <br />
         <div> User detected to be an Admin. You should see partial view</div>
-
-         
+        
         <br />
         <div>UserId:   @User.Identity.GetUserId() </div>
         <br />

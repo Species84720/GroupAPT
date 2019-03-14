@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Test2.Models.DBModels.Invigilation>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedExamSession.SubjectId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedUser.FirstName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RelatedExamSession.SubjectId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RelatedUser.FirstName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.InvigilationId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.InvigilationId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.InvigilationId })
+        </td>
+    </tr>
+}
+
+</table>

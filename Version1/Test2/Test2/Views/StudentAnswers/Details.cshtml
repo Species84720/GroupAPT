@@ -1,0 +1,83 @@
+﻿@model Test2.Models.DBModels.StudentAnswer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StudentAnswer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RelatedCorrector.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RelatedCorrector.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RelatedEnrollment.StudentId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RelatedEnrollment.StudentId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RelatedPaperQuestion.ExamId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RelatedPaperQuestion.ExamId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Answer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Answer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExaminerComments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExaminerComments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MarksGained)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MarksGained)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CorrectedDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CorrectedDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CommittedByStudent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CommittedByStudent)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AnswerId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Test2.Models.DBModels.Shot>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedEnrollment.StudentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShotTiming)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageTitle)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RelatedEnrollment.StudentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShotTiming)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImageLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImageTitle)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ShotId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ShotId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ShotId })
+        </td>
+    </tr>
+}
+
+</table>
