@@ -23,24 +23,35 @@ namespace Test2.Models.DBModels
         public virtual Location RelatedLocation { get; set; }
 
         [DisplayName("Exam Start Date-Time")]
-        public DateTime ExamDateTime { get; set; }
+        public DateTime? ExamDateTime { get; set; }
 
         [DisplayName("Exam End Date-Time")]
-        public DateTime ExamEndTime { get; set; }
+        public DateTime? ExamEndTime { get; set; }
 
         [DisplayName("Number of Questions")]
+        [DefaultValue(0)]
         public int QuestionAmount { get; set; }
 
         [StringLength(6)]
         public string AccessCode { get; set; }
-        public DateTime CodeIssueDateTime { get; set; }
+        public DateTime? CodeIssueDateTime { get; set; }
 
+        [DefaultValue(0)]
         public bool FullyCorrected { get; set; }
 
+        [DefaultValue(0)]
         public byte MaxMark { get; set; }
+
+        [DefaultValue(0)]
         public byte MinMark { get; set; }
+
+        [DefaultValue(0)]
         public float AvgMark { get; set; }
+
+        [DefaultValue(0)]
         public int NumOfParticipants { get; set; }
+
+        [DefaultValue(0)]
         public int NumOfFails { get; set; }
 
         public virtual ICollection<Invigilation> Invigilations { get; set; } //because Invigilation is between this and User

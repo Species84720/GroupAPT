@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace Test2.Models.DBModels
         [ForeignKey("QuestionId")]
         public virtual Question RelatedQuestion { get; set; }
 
-        [Required] public byte NumberInPaper { get; set; }
+        [DefaultValue(0)]
+        public byte NumberInPaper { get; set; }
         [Required] public byte MarksAllocated { get; set; }
 
 

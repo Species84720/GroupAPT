@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -28,10 +29,13 @@ namespace Test2.Models.DBModels
 
         public string Answer { get; set; }
         public string ExaminerComments { get; set; }
-        public byte MarksGained { get; set; }
-        public DateTime CorrectedDateTime { get; set; }
 
-        [Required] public bool CommittedByStudent { get; set; }
+        [DefaultValue(0)]
+        public byte MarksGained { get; set; }
+        public DateTime? CorrectedDateTime { get; set; }
+
+        [DefaultValue(0)]
+        public bool CommittedByStudent { get; set; }
 
 
 

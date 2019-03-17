@@ -306,6 +306,10 @@
     <Compile Include="Migrations\201903141301094_IfNecessary.Designer.cs">
       <DependentUpon>201903141301094_IfNecessary.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903171559153_fixesForExam.cs" />
+    <Compile Include="Migrations\201903171559153_fixesForExam.Designer.cs">
+      <DependentUpon>201903171559153_fixesForExam.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Database.cs" />
@@ -562,6 +566,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903141301094_IfNecessary.resx">
       <DependentUpon>201903141301094_IfNecessary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903171559153_fixesForExam.resx">
+      <DependentUpon>201903171559153_fixesForExam.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
