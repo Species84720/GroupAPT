@@ -42,7 +42,7 @@ namespace Test2.Controllers.DBControllers
         public ActionResult Create()
         {
             ViewBag.ExamId = new SelectList(db.ExamSessions, "ExamId", "SubjectId");
-            ViewBag.QuestionId = new SelectList(db.Questions, "QuestionId", "SubjectId");
+            ViewBag.QuestionId = new SelectList(db.Questions, "QuestionId", "QuestionText");
             return View();
         }
 
