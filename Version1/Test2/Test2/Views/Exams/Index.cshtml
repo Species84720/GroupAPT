@@ -1,46 +1,83 @@
-﻿@using Test2.Models.DBModels
+﻿@using System.Web.DynamicData
+@using Test2.Models.DBModels
 @model IEnumerable<Test2.Models.DBModels.PaperQuestion>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@{
+    List<PaperQuestion> paperQuestions = ViewBag.PaperQuestions;
+    List<Question> questions = ViewBag.Questions;
+}
 <script>
     function show(x) {
         document.getElementById('QuestionTextShown').innerHTML = x;
     }
+
+    function buttonAction(elmnt, question) {
+
+        var x = document.getElementsByClassName("QuestionButton");
+        var i;
+        for (i = 0; i < x.length; i++) {
+            x[i].style.color = 'white';
+            x[i].style.borderColor = 'white';
+            x[i].style.fontWeight = "600";
+            x[i].style.backgroundColor = "lightslategray";
+        }
+
+        elmnt.style.color = 'green';
+        elmnt.style.borderColor = 'lightgreen';
+        elmnt.style.fontWeight = "900";
+        elmnt.style.backgroundColor = "lightcyan";
+
+     
+    show(question);
+    }
+     
+
 </script>
 
 <h2>Index</h2>
+
 
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.RelatedQuestion.QuestionId)
         </th>
-        <th width ="70%">
+        <th width="70%">
             @Html.DisplayNameFor(model => model.RelatedQuestion.QuestionText)
         </th>
     </tr>
-    
-    @{
-        List<PaperQuestion> paperQuestions = ViewBag.PaperQuestions;
-        List<Question> questions = ViewBag.Questions;
+
+
+
+
+
+    @foreach (var item in paperQuestions)
+    {
+        <tr>
+            <th>
+
+                <button id="@item.NumberInPaper" class='QuestionButton' style="width: 100%; float: right" OnClick="buttonAction(this,'@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()')">
+                    @Html.DisplayFor(modelItem => item.NumberInPaper)
+                </button>
+                
+            </th>
+
+            @if (item.NumberInPaper == 1)
+            {
+                <th rowspan=@paperQuestions.Count()>
+                    <p id="QuestionTextShown">
+                        Please click a question from the menu on the left to answer it!
+                    </p>
+                </th>
+            }
+
+        </tr>
     }
 
-    <tr>
-        <th>
-            @foreach (var item in paperQuestions)
-            {
-            <button style="width: 100%; float: right" OnClick ="show('@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()')">
-                @Html.DisplayFor(modelItem => item.NumberInPaper)
-            </button>
-            }
-        </th>
-        <th>
-            <p id ="QuestionTextShown">
-                test
-            </p>
-        </th>
-    </tr>
+
+
+
 </table>

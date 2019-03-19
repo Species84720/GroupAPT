@@ -29,7 +29,7 @@ namespace Test2.Controllers.DBControllers
 
             ViewBag.PaperQuestions = db.PaperQuestions.Where(x => x.ExamId == id).ToList();
             ViewBag.Questions = db.Questions.ToList();
-
+            
             return View();
         }
     }
