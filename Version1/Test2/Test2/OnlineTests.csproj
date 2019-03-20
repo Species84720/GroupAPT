@@ -177,6 +177,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DBControllers\DepartmentsController.cs" />
     <Compile Include="Controllers\DBControllers\EnrollmentsController.cs" />
+    <Compile Include="Controllers\DBControllers\ExamsController.cs" />
     <Compile Include="Controllers\DBControllers\ExamSessionsController.cs" />
     <Compile Include="Controllers\DBControllers\InvigilationsController.cs" />
     <Compile Include="Controllers\DBControllers\LocationsController.cs" />
@@ -464,6 +465,7 @@
     <Content Include="Views\Shots\Details.cshtml" />
     <Content Include="Views\Shots\Edit.cshtml" />
     <Content Include="Views\Shots\Index.cshtml" />
+    <Content Include="Views\Exams\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

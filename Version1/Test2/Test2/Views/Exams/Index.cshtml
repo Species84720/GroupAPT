@@ -1,0 +1,238 @@
+﻿@using System.Web.DynamicData
+@using Microsoft.AspNet.Identity
+@using Test2.Models.DBModels
+@model IEnumerable<Test2.Models.DBModels.PaperQuestion>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    List<PaperQuestion> paperQuestions = ViewBag.PaperQuestions;
+    List<Question> questions = ViewBag.Questions;
+    List<StudentAnswer> answers = ViewBag.Answers;
+    List<MultipleChoice> multichoices = ViewBag.MultiChoices;
+
+    string examId = (string) ViewData["ExamId"];
+    string[] examIdSplit = examId.Split('-');
+
+    string user = User.Identity.GetUserName();
+}
+
+<style>
+    .QuestionButton {
+        color: white;
+        border-Color: white;
+        font-Weight: 600;
+        background-Color: lightslategray;
+    }
+</style>
+
+<script>
+    function show(x, number, paperQuestionId, a) {
+        //getting the question answer
+        var answer = document.getElementById('Answer ' + number).innerHTML;
+
+        //hide the starting exam note and show the questions
+        document.getElementById('examStart').hidden = true;
+        document.getElementById('QuestionTextShown').hidden = false;
+        document.getElementById('QuestionAnswer').hidden = false;
+        document.getElementById('saveButton').hidden = false;
+        document.getElementById('submitButton').hidden = false;
+        document.getElementById('CurrentQuestion').innerHTML = paperQuestionId;
+
+        document.getElementById('QuestionTextShown').innerHTML = x;
+        document.getElementById('QuestionAnswer').name = number;
+        document.getElementById('QuestionAnswer').value = answer;
+    }
+
+    function showChoices(a, b, c, d) {
+        document.getElementById('Choice 1').hidden = false;
+        document.getElementById('Choice 2').hidden = false;
+        document.getElementById('Choice 3').hidden = false;
+        document.getElementById('Choice 4').hidden = false;
+        document.getElementById('Choice1').hidden = false;
+        document.getElementById('Choice2').hidden = false;
+        document.getElementById('Choice3').hidden = false;
+        document.getElementById('Choice4').hidden = false;
+        document.getElementById('Choice1').innerHTML = a;
+        document.getElementById('Choice2').innerHTML = b;
+        document.getElementById('Choice3').innerHTML = c;
+        document.getElementById('Choice4').innerHTML = d;
+        document.getElementById('QuestionAnswer').hidden = true;
+    }
+
+    function submit() {
+        //getting the answer and number of question at the moment
+        var answer;
+        if (document.getElementById('Choice1').hidden === false) {
+            answer = $("input[name='Choice']:checked").val();
+        }
+        else
+        {
+            answer = document.getElementById('QuestionAnswer').value;
+        }
+        var number = document.getElementById('QuestionAnswer').name;
+
+        //setting the answer
+        document.getElementById('Answer ' + number).innerHTML = answer;
+
+        //sending the answer to the database
+        var enrollment = '@User.Identity.GetUserName()' + "-" + '@examIdSplit[0]';
+        var paperQuestion = document.getElementById('CurrentQuestion').innerHTML;
+        var studentAnswer = { EnrollmentId: enrollment, PaperQuestionId: paperQuestion, Answer: answer, CommittedByStudent: true };
+        $.ajax({
+            type: "POST",
+            url: '/Exams/Index/@ViewData["ExamId"]',
+            data: studentAnswer,
+            datatype: "html"
+        });
+        document.getElementById('Answer ' + number).name = "submitted";
+
+        //going to the next question
+        number = Number(number) + Number(1);
+        var nextQuestion = document.getElementById(number);
+        if (nextQuestion != null) {
+            document.getElementById(number).click();
+        } else {
+            document.getElementById('examStart').hidden = false;
+            document.getElementById('QuestionTextShown').hidden = true;
+            document.getElementById('QuestionAnswer').hidden = true;
+            document.getElementById('saveButton').hidden = true;
+            document.getElementById('submitButton').hidden = true;
+            document.getElementById('examStart').innerHTML = "You have finished the exam!";
+        }
+    }
+
+    function save() {
+        //getting the answer and number of question at the moment
+        var answer;
+        if (document.getElementById('Choice1').hidden === false) {
+            answer = $("input[name='Choice']:checked").val();
+        }
+        else {
+            answer = document.getElementById('QuestionAnswer').value;
+        }
+        var number = document.getElementById('QuestionAnswer').name;
+
+        //setting the answer and the question
+        document.getElementById('Answer ' + number).innerHTML = answer;
+
+        //sending the answer to the database
+        if (document.getElementById('Choice1').hidden === false) {
+            answer = $("input[name='Choice']:checked").val();
+        }
+        var enrollment = '@User.Identity.GetUserName()' + "-" + '@examIdSplit[0]';
+        var paperQuestion = document.getElementById('CurrentQuestion').innerHTML;
+        var submitted = false;
+        if (document.getElementById('Answer ' + number).name === "submitted") {
+            submitted = true;
+        }
+
+        var studentAnswer = { EnrollmentId: enrollment, PaperQuestionId: paperQuestion, Answer: answer, CommittedByStudent: submitted };
+        $.ajax({
+            type: "POST",
+            url: '/Exams/Index/@ViewData["ExamId"]',
+            data: studentAnswer,
+            datatype: "html",
+            //success: 
+        });
+    }
+
+    function buttonAction(elmnt, question, number, paperQuestionId, a, b, c, d) {
+
+        var x = document.getElementsByClassName("QuestionButton");
+        var i;
+        for (i = 0; i < x.length; i++) {
+            x[i].style.color = 'white';
+            x[i].style.borderColor = 'white';
+            x[i].style.fontWeight = "600";
+            x[i].style.backgroundColor = "lightslategray";
+        }
+
+        elmnt.style.color = 'green';
+        elmnt.style.borderColor = 'lightgreen';
+        elmnt.style.fontWeight = "900";
+        elmnt.style.backgroundColor = "lightcyan";
+
+        //showing the question
+        show(question, number, paperQuestionId, a);
+
+        if (a !== " ") {
+            showChoices(a, b, c, d);
+            document.getElementById('Choice ' + document.getElementById('QuestionAnswer').value).click();
+        } else {
+            document.getElementById('Choice 1').hidden = true;
+            document.getElementById('Choice 2').hidden = true;
+            document.getElementById('Choice 3').hidden = true;
+            document.getElementById('Choice 4').hidden = true;
+            document.getElementById('Choice1').hidden = true;
+            document.getElementById('Choice2').hidden = true;
+            document.getElementById('Choice3').hidden = true;
+            document.getElementById('Choice4').hidden = true;
+        }
+    }
+</script>
+
+<h2>@ViewData["ExamId"]</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedQuestion.QuestionId)
+        </th>
+        <th width="70%">
+            @Html.DisplayNameFor(model => model.RelatedQuestion.QuestionText)
+        </th>
+    </tr>
+    
+    <tr>
+        <th>
+            @foreach (var item in paperQuestions)
+            {
+                <button id="@item.NumberInPaper" class='QuestionButton' style="width: 100%; float: left"@{
+                                                                                                            if ((questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionFormat.ToString()) != "MultipleChoice")
+                                                                                                            {
+                                                                                                                <text>
+                                                                                                                    OnClick = "buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, @item.PaperQuestionId, ' ', ' ', ' ', ' ')";
+                                                                                                                </text>
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                <text>
+                                                                                                                    OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, @item.PaperQuestionId, '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText1', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText2', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText3', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText4')";
+                                                                                                                </text>
+                                                                                                            }
+                                                                                                        }>
+                    <p hidden id="Answer @item.NumberInPaper" name="">@{
+                                                                          if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+                                                                          {
+                                                                              @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().Answer.ToString();
+                                                                          }
+                                                                      }</p>
+                    @Html.DisplayFor(modelItem => item.NumberInPaper)
+                </button>
+            }
+        </th>
+        <th>
+            <p id="examStart">Please choose the appropriate Question on the left. Good luck and May the odds be ever in your favour!</p>
+            <p hidden id="QuestionTextShown"></p>
+            <textarea hidden style="width: 100%; float: left; height: 100px" id="QuestionAnswer" name=""></textarea>
+
+            <!--pargaraphs that show the multiple choice options-->
+            <input hidden id="Choice 1" type="radio" name="Choice" value="1"><h hidden id="Choice1"></h><br>
+            <input hidden id="Choice 2" type="radio" name="Choice" value="2"><h hidden id="Choice2"></h><br>
+            <input hidden id="Choice 3" type="radio" name="Choice" value="3"><h hidden id="Choice3"></h><br>
+            <input hidden id="Choice 4" type="radio" name="Choice" value="4"><h hidden id="Choice4"></h><br>
+        </th>
+    </tr>
+</table>
+
+<button hidden id="saveButton" style="float: left; width: 20%" OnClick="save()">
+    Save
+</button>
+
+<button hidden id="submitButton" style="float: right; width: 20%" OnClick="submit()">
+    <p hidden id="CurrentQuestion"></p>
+    Submit
+</button>
