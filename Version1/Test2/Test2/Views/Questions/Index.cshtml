@@ -7,6 +7,8 @@
 
 <h2>Index</h2>
 
+
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -54,9 +56,9 @@
             @Html.DisplayFor(modelItem => item.QuestionFormat)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.QuestionId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.QuestionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.QuestionId })
+            @Html.ActionLink("Edit", "Edit", "Questions", new { id=item.QuestionId }) |
+            @Html.ActionLink("Details", "Details", "Questions", new { id=item.QuestionId }) |
+            @Html.ActionLink("Delete", "Delete", "Questions", new { id=item.QuestionId })
         </td>
     </tr>
 }

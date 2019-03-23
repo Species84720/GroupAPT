@@ -13,16 +13,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.RelatedExamSession.SubjectId)
+           # in Paper
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RelatedQuestion.QuestionId)
+          Subject
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NumberInPaper)
+           Question
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MarksAllocated)
+          Marks
         </th>
         <th></th>
     </tr>
@@ -30,21 +30,23 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.NumberInPaper)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.RelatedExamSession.SubjectId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RelatedQuestion.QuestionId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumberInPaper)
+            @Html.DisplayFor(modelItem => item.RelatedQuestion.QuestionText)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.MarksAllocated)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PaperQuestionId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PaperQuestionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PaperQuestionId })
+            @Html.ActionLink("Up", "Up", new { id = item.PaperQuestionId }) |
+            @Html.ActionLink("Down", "Down", new { id = item.PaperQuestionId }) |
+            @Html.ActionLink("Edit", "Edit", new { id = item.PaperQuestionId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.PaperQuestionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.PaperQuestionId })
         </td>
     </tr>
 }

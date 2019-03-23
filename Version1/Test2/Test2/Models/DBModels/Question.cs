@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,23 +21,24 @@ namespace Test2.Models.DBModels
         [ForeignKey("SubjectId")]
         public virtual Subject RelatedSubject { get; set; }
 
-        /*
-        [Required] public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public virtual User RelatedUser { get; set; }
-        */
+         
 
+        [DisplayName("Topic")]
         public int? TopicId { get; set; }
         [ForeignKey("TopicId")]
         public virtual Topic RelatedTopic { get; set; }
 
+        [DisplayName("Usage")]
         public QuestionUse QuestionUsage { get; set; }
+
+        [DisplayName("Text")]
         [Required] public string QuestionText { get; set; }
-         public string SampleAnswer { get; set; }
+
+        [DisplayName("Sample Answer")]
+        public string SampleAnswer { get; set; }
         [Required] public QuestionType QuestionFormat { get; set; } 
 
-         
-      // public virtual MultipleChoice Choices { get; set; }
+          
 
     }
 }

@@ -39,9 +39,15 @@ namespace Test2.Controllers.DBControllers
         }
 
         // GET: MultipleChoices/Create
-        public ActionResult Create()
+        public ActionResult Create(int?  questionid)
         {
-            ViewBag.QuestionId = new SelectList(db.Questions, "QuestionId", "SubjectId");
+            if (questionid==null)
+            {
+                return RedirectToAction("EditQuestions", "Examiner");
+            }
+
+            ViewBag.QuestionText = (from q in db.Questions where q.QuestionId==questionid select q.QuestionText).FirstOrDefault();
+            ViewBag.QuestionId = questionid;
             return View();
         }
 
@@ -52,14 +58,22 @@ namespace Test2.Controllers.DBControllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "MultipleChoiceId,OptionText1,OptionText2,OptionText3,OptionText4,CorrectChoice,QuestionId")] MultipleChoice multipleChoice)
         {
+
+
             if (ModelState.IsValid)
             {
                 db.MultipleChoices.Add(multipleChoice);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("EditQuestions", "Examiner");
             }
 
-            ViewBag.QuestionId = new SelectList(db.Questions, "QuestionId", "SubjectId", multipleChoice.QuestionId);
+            ViewBag.QuestionId = multipleChoice.QuestionId;
+            int qid = multipleChoice.QuestionId;
+
+            string ques = (from q in db.Questions where (q.QuestionId == qid) select q.QuestionText).FirstOrDefault();
+            ViewBag.QuestionText = ques;
+
+            
             return View(multipleChoice);
         }
 
@@ -75,7 +89,8 @@ namespace Test2.Controllers.DBControllers
             {
                 return HttpNotFound();
             }
-            ViewBag.QuestionId = new SelectList(db.Questions, "QuestionId", "SubjectId", multipleChoice.QuestionId);
+            ViewBag.QuestionText = (from q in db.Questions where q.QuestionId == multipleChoice.MultipleChoiceId select q.QuestionText).FirstOrDefault();
+            ViewBag.QuestionId = (from q in db.Questions where q.QuestionId == multipleChoice.MultipleChoiceId select q.QuestionId).FirstOrDefault();
             return View(multipleChoice);
         }
 
@@ -90,9 +105,9 @@ namespace Test2.Controllers.DBControllers
             {
                 db.Entry(multipleChoice).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("EditQuestions", "Examiner");
             }
-            ViewBag.QuestionId = new SelectList(db.Questions, "QuestionId", "SubjectId", multipleChoice.QuestionId);
+            ViewBag.QuestionId =multipleChoice.QuestionId;
             return View(multipleChoice);
         }
 
@@ -119,7 +134,7 @@ namespace Test2.Controllers.DBControllers
             MultipleChoice multipleChoice = await db.MultipleChoices.FindAsync(id);
             db.MultipleChoices.Remove(multipleChoice);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("EditQuestions", "Examiner");
         }
 
         protected override void Dispose(bool disposing)

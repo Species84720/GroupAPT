@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Test2.Models;
 using Test2.Models.DBModels;
 
@@ -39,9 +40,18 @@ namespace Test2.Controllers.DBControllers
         }
 
         // GET: Topics/Create
+        [Authorize(Roles="Examiner")]
         public ActionResult Create()
         {
-            ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName");
+
+            // limiting choices of Subject to those of Examiner
+            string TeacherId = User.Identity.GetUserId();
+
+            List<string> specificsubjects = new List<string>(from t in db.Teachings where t.ExaminerId == TeacherId select t.SubjectId);
+            IEnumerable<Subject> subjectlist = new List<Subject>(from s in db.Subjects where specificsubjects.Contains(s.SubjectId) select s);
+
+
+            ViewBag.SubjectId = new SelectList(subjectlist, "SubjectId", "SubjectName");
             return View();
         }
 
@@ -56,10 +66,19 @@ namespace Test2.Controllers.DBControllers
             {
                 db.Topics.Add(topic);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("EditQuestions", "Examiner");
             }
 
-            ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", topic.SubjectId);
+
+            // limiting choices of Subject to those of Examiner
+            string TeacherId = User.Identity.GetUserId();
+
+            List<string> specificsubjects = new List<string>(from t in db.Teachings where t.ExaminerId == TeacherId select t.SubjectId);
+            IEnumerable<Subject> subjectlist = new List<Subject>(from s in db.Subjects where specificsubjects.Contains(s.SubjectId) select s);
+
+
+            ViewBag.SubjectId = new SelectList(subjectlist,"SubjectId", "SubjectName", topic.SubjectId);
+
             return View(topic);
         }
 
