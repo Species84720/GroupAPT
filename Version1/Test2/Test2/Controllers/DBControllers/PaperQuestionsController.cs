@@ -57,7 +57,7 @@ namespace Test2.Controllers.DBControllers
             paperQuestion.NumberInPaper = nextNumber;
 
             db.PaperQuestions.Add(paperQuestion);
-            db.SaveChangesAsync();
+            db.SaveChanges();
 
             
 
