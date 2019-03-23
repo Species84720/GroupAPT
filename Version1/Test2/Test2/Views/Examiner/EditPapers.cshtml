@@ -12,8 +12,9 @@
                                                                     
 
     <div class="row">
+
         <div style="align-self: right; float: left; width: 40%; background: #EFFEFF ">
-            <h4 style="  background: #EEEEFF ">Available Questions</h4>
+            <h4 style="  background: #AAFFFF ">Available Questions</h4>
 
 
             <table class="table">
@@ -33,10 +34,11 @@
                             @Html.DisplayFor(modelItem => item.RelatedTopic.TopicName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.QuestionText)  @Html.ActionLink("Include", "Create", "PaperQuestions", new { questionid = item.QuestionId, examid = Model.Session, subject = Model.Subject }, new { })
+                            @Html.DisplayFor(modelItem => item.QuestionText) 
                         </td>
-                        
-                         
+                        <td>
+                            @Html.ActionLink("Include", "Create", "PaperQuestions", new { questionid = item.QuestionId, examid = Model.Session, subject = Model.Subject }, new { })
+                        </td>                         
                     </tr>
                 }
 
@@ -47,32 +49,25 @@
 
         <div style="align-self: right; width: 59%; float: right; background: #FFFFDD">
 
-            <h4 style="  background: #EEEEFF ">Paper Questions</h4>
+            <h4 style="  background: #FFFFAA ">Paper Questions</h4>
 
 
             <table class="table">
                 <tr>
-                    <th>
-                        Question
-                    </th>
-                    <th>
-                        # in paper
-                    </th>
-                    <th>
-                        Marks
-                    </th>
+                    <th># in paper</th>
+                    <th>Question</th>
+                    <th>Marks </th>
                     <th>Sort or Remove</th>
                 </tr>
 
                 @foreach (var item in Model.Included)
                 {
                     <tr>
-
                         <td>
-                            @Html.DisplayFor(modelItem => item.RelatedQuestion.QuestionText)
+                        @Html.DisplayFor(modelItem => item.NumberInPaper)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.NumberInPaper)
+                            @Html.DisplayFor(modelItem => item.RelatedQuestion.QuestionText)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.MarksAllocated)   @Html.ActionLink("Edit", "Edit", "PaperQuestions", new { id = item.PaperQuestionId }, new { })
@@ -86,12 +81,14 @@
                         </td>
                     </tr>
                 }
-                <tr><td></td> <td>Total Marks:</td><td>@Model.Mark  </td> <td></td></tr>
+                    <tr><td></td> <td></td> <td>Total Marks: @Model.Mark  </td> <td></td></tr>
 
             </table>
 
         </div>
+
     </div>
+
 }
 else
 {

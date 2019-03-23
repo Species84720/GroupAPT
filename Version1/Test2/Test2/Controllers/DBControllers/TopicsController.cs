@@ -20,8 +20,19 @@ namespace Test2.Controllers.DBControllers
         // GET: Topics
         public async Task<ActionResult> Index()
         {
-            var topics = db.Topics.Include(t => t.RelatedSubject);
-            return View(await topics.ToListAsync());
+
+            // limiting choices of Subject to those of Examiner
+            string TeacherId = User.Identity.GetUserId();
+
+            List<string> specificsubjects = new List<string>(from t in db.Teachings where t.ExaminerId == TeacherId select t.SubjectId);
+            IEnumerable<Subject> subjectlist = new List<Subject>(from s in db.Subjects where specificsubjects.Contains(s.SubjectId) select s);
+
+            // limiting choices of Topics  to those of Examiner's Subjects 
+            List<Topic> topics = new List<Topic>(from t in db.Topics where specificsubjects.Contains(t.SubjectId) select t);
+
+
+            
+            return View(topics);
         }
 
         // GET: Topics/Details/5
@@ -109,7 +120,7 @@ namespace Test2.Controllers.DBControllers
             {
                 db.Entry(topic).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("EditQuestions", "Examiner");
             }
             ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", topic.SubjectId);
             return View(topic);
@@ -138,7 +149,7 @@ namespace Test2.Controllers.DBControllers
             Topic topic = await db.Topics.FindAsync(id);
             db.Topics.Remove(topic);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("EditQuestions", "Examiner");
         }
 
         protected override void Dispose(bool disposing)
