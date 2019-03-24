@@ -37,6 +37,7 @@ namespace Test2.Controllers
         public ActionResult Examiner(ApplicationUser user)
         {
 
+
             return View(user);
         }
 

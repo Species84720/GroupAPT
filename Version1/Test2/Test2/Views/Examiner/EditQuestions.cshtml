@@ -1,0 +1,115 @@
+﻿@using Test2.Models.DBModels
+@model Test2.Models.ViewQuestionsViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2>Edit Exam Questions</h2>
+
+
+@using (Html.BeginForm("EditQuestions", "Examiner", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+
+
+    <div class="form-group">
+        @if (Model.Subject == null)
+        {
+            <div class="col-md-10">
+                @Html.Label("Filter by Subject")
+                @Html.DropDownListFor(model => model.Subject, new SelectList(Model.Subjects, "SubjectId", "subjectName"), "Select Subject") <input type="submit"  value="Apply Subject Filter" />
+             </div>
+
+
+        }
+        else
+        {
+            
+            if (Model.Topic == null)
+            {
+            <div class="col-md-10">
+                Subject Code: @Html.DropDownListFor(model => model.Subject, new SelectList(Model.Subjects, "SubjectId", "subjectName"), "Select Subject")
+
+                @Html.DropDownListFor(model => model.Topic, new SelectList(Model.Topics, "TopicId", "TopicName"), "Select Topic")  <input type="submit"  value="Apply Topic Filter" />
+
+
+            </div>
+
+            }
+            else
+            { <div class="col-md-10">
+
+                   Subject Code: @Model.Subject          Topic Number: @Model.Topic              <input type="submit"  value="Remove Filters" />
+                </div>
+
+            }
+
+        }
+        <Button>@Html.ActionLink("Manage Topics", "Index", "Topics")</Button>
+    </div>
+ }
+
+        @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        }
+
+    <Button>@Html.ActionLink("Create New Question", "Create", "Questions") </Button>  
+
+<table class="table">
+    <tr>
+        <th>
+            Subject
+        </th>
+        <th>
+            Topic
+        </th>
+        <th>
+            Usage
+        </th>
+        <th>
+            Question Text
+        </th>
+        <th>
+            Sample Answer
+        </th>
+        <th>
+            Type
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.QuestionList)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedTopic.TopicName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionUsage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SampleAnswer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionFormat)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Questions", new { id = item.QuestionId }, new{}) 
+                @Html.ActionLink("Details", "Details", "Questions", new { id = item.QuestionId}, new{} ) 
+                @Html.ActionLink("Delete", "Delete", "Questions", new { id = item.QuestionId}, new{} )
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+

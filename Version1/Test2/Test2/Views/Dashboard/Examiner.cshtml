@@ -5,5 +5,69 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Examiner</h2>
+<h2>Examiner's Dashboard</h2>
 
+<div class="row">
+    <div class="col-md-4" style="background-color: #CCDDFF; width: 30%;  height: 200px">
+        <h2>Edit Exam Questions</h2>
+        <p>
+            To create or modify existing questions,
+            so that they can be placed in an Exam later on;
+            click here!
+
+        </p>
+        <p class="btn btn-default">@Html.ActionLink("Questions »", "EditQuestions", "Examiner") </p>
+    </div>
+
+    <div style="background-color: #FFFFFF; width: 5%"> </div>
+
+    <div class="col-md-4" style="background-color: #CCDDFF; width: 30%; margin-left: 2%; margin-right: 2%;  height: 200px">
+        <h2>Edit Exam Papers</h2>
+        <p>
+            You can add or remove 
+            questions to Exam Papers and 
+            organise their order here.
+            
+        </p>
+        <p class="btn btn-default">@Html.ActionLink("Papers »", "EditPapers", "Examiner") </p>
+    </div>
+
+    <div style="background-color: #FFFFFF; width: 5%"> </div>
+
+    <div class="col-md-4" style="background-color: #CCDDFF; width: 30%;  height: 200px">
+        <h2>Correct Exams</h2>
+        <p>
+            Choose what subject to correct. 
+            View the students' individual
+            answers and assign marks.
+
+        </p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Corrections &raquo;</a></p>
+    </div>
+</div>
+
+<div class="row" style="background-color: #FFFFFF; width: 100%; height: 20px; "><p>
+
+    
+</p></div>
+
+    <div class="row" >
+        <div class="col-md-4" style="background-color: #CCDDFF; width: 30%; height: 200px">
+            <h2>Statistics</h2>
+            <p>
+                This is where you can view High Scores, Averages, Success Rates and other statistics about past exams.
+
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Statistics &raquo;</a></p>
+        </div>
+        <div class="col-md-4" style="background-color: #FFFFFF;"><p>
+     
+    
+            </p>
+        </div>
+        <div class="col-md-4" style="background-color: #FFFFFF;"><p>
+     
+    
+            </p>
+        </div>
+    </div>
