@@ -55,8 +55,10 @@ namespace Test2.Controllers.DBControllers
             // limiting choices of Topics  to those of Examiner's Subjects 
             List<Topic> topics = new List<Topic>(from t in db.Topics where specificsubjects.Contains(t.SubjectId) select t);
 
+            ViewBag.SubjectId = subjectlist;
 
-            ViewBag.TopicId = new SelectList(topics, "TopicId", "TopicName");
+
+            ViewBag.TopicId = topics;
             
 
             return View();
