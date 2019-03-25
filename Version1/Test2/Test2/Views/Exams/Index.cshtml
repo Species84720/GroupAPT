@@ -224,10 +224,17 @@
             //showing the question
             show(question, number, paperQuestionId, a);
 
+
             if (a != " ") {
                 showChoices(a, b, c, d);
                 if (document.getElementById('QuestionAnswer').value != "") {
                     document.getElementById('Choice ' + document.getElementById('QuestionAnswer').value).click();
+                } else {
+                    //deselect the radiobuttons
+                    document.getElementById('Choice 1').checked = false;
+                    document.getElementById('Choice 2').checked = false;
+                    document.getElementById('Choice 3').checked = false;
+                    document.getElementById('Choice 4').checked = false;
                 }
             } else {
                 document.getElementById('Choice 1').hidden = true;
