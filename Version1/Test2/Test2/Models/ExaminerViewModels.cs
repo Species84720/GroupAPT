@@ -68,5 +68,38 @@ namespace Test2.Models
 
     }
 
+    public class CorrectingViewModel
+    {
+
+        [Display(Name = "Pick Subject")]
+        public string Subject { get; set; }
+        public List<Subject> Subjects { get; set; }
+
+        public string Exam { get; set; }
+
+        //Session for which paper is being composed
+       // public string Session { get; set; }
+
+         
+
+       // public List<StudentAnswer> Answers { get; set; }
+       
+        public StudentAnswer Answer { get; set; }
+
+        // public List<Question> Questions { get; set; }
+
+
+        // Mark the tutor gives to the Answer
+        //public int? MarkGiven { get; set; }
+
+
+        // if all exams are corrected
+        public bool AllSessionsCorrected { get; set; }
+
+        //if all questions from a subject are corrected
+        public bool AllQsCorrected { get; set; }
+
+    }
+
 
 }

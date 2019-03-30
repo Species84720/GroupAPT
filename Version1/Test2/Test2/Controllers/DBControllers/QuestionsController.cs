@@ -44,22 +44,26 @@ namespace Test2.Controllers.DBControllers
 
         // GET: Questions/Create
         [Authorize(Roles = "Examiner")]
-        public ActionResult Create()
+        public ActionResult Create(string subject)
         {
             // limiting choices of Subject to those of Examiner
             string TeacherId = User.Identity.GetUserId();
 
-            List<string> specificsubjects = new List<string>(from t in db.Teachings where t.ExaminerId == TeacherId select t.SubjectId);
-            IEnumerable<Subject> subjectlist = new List<Subject>(from s in db.Subjects where specificsubjects.Contains(s.SubjectId) select s);
+          //  List<string> specificsubjects = new List<string>(from t in db.Teachings where t.ExaminerId == TeacherId select t.SubjectId);
+            //IEnumerable<Subject> subjectlist = new List<Subject>(from s in db.Subjects where specificsubjects.Contains(s.SubjectId) select s);
 
             // limiting choices of Topics  to those of Examiner's Subjects 
-            List<Topic> topics = new List<Topic>(from t in db.Topics where specificsubjects.Contains(t.SubjectId) select t);
+            List<Topic> topics = new List<Topic>(from t in db.Topics where subject==t.SubjectId select t);
 
-
+            IEnumerable<Subject> subjectchosen = new List<Subject>(from s in db.Subjects where s.SubjectId == subject select s);
+            ViewBag.Subject = subject;
+            ViewBag.SubjectId = new SelectList(subjectchosen, "SubjectId", "SubjectName");
             ViewBag.TopicId = new SelectList(topics, "TopicId", "TopicName");
-            
 
-            return View();
+            Question q = new Question();
+            q.SubjectId = subject;
+            
+            return View(q);
         }
 
         // POST: Questions/Create
@@ -69,6 +73,7 @@ namespace Test2.Controllers.DBControllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "QuestionId,SubjectId,TopicId,QuestionUsage,QuestionText,SampleAnswer,QuestionFormat")] Question question)
         {
+            
             if (ModelState.IsValid)
             {
                 db.Questions.Add(question);
@@ -77,7 +82,7 @@ namespace Test2.Controllers.DBControllers
 
                 if (question.QuestionFormat == Question.QuestionType.MultipleChoice ) { return RedirectToAction("Create", "MultipleChoices", new{ questionid = question.QuestionId}); }
 
-                return RedirectToAction("EditQuestions","Examiner");
+                return RedirectToAction("EditQuestions","Examiner", new { subject = question.SubjectId });
 
 
             }
@@ -85,14 +90,12 @@ namespace Test2.Controllers.DBControllers
 
             // limiting choices of Subject to those of Examiner
             string TeacherId = User.Identity.GetUserId();
+             
 
-            List<string> specificsubjects = new List<string>(from t in db.Teachings where t.ExaminerId == TeacherId select t.SubjectId);
-            IEnumerable<Subject> subjectlist = new List<Subject>(from s in db.Subjects where specificsubjects.Contains(s.SubjectId) select s);
+            List<Topic> topics = new List<Topic>(from t in db.Topics where question.SubjectId==t.SubjectId select t);
 
-            // limiting choices of Topics  to those of Examiner's Subjects 
-            List<Topic> topics = new List<Topic>(from t in db.Topics where specificsubjects.Contains(t.SubjectId) select t);
-
-            ViewBag.SubjectId = new SelectList(subjectlist, "SubjectId", "SubjectName", question.SubjectId);
+            ViewBag.Subject= question.SubjectId;
+            ViewBag.SubjectId = question.SubjectId; // new SelectList(question.SubjectId, "SubjectId", "SubjectName", question.SubjectId);
             ViewBag.TopicId = new SelectList(topics, "TopicId", "TopicName", question.TopicId);
 
             return View(question);
@@ -137,7 +140,7 @@ namespace Test2.Controllers.DBControllers
                     return RedirectToAction("Edit", "MultipleChoices", new { id = multiplechoiceid });
                 }
 
-                return RedirectToAction("EditQuestions", "Examiner");
+                return RedirectToAction("EditQuestions", "Examiner", new { subject = question.SubjectId});
             }
             ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", question.SubjectId);
             ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", question.TopicId);
@@ -167,7 +170,7 @@ namespace Test2.Controllers.DBControllers
             Question question = await db.Questions.FindAsync(id);
             db.Questions.Remove(question);
             await db.SaveChangesAsync();
-            return RedirectToAction("EditQuestions", "Examiner");
+            return RedirectToAction("EditQuestions", "Examiner", new { subject = question.SubjectId });
         }
 
         protected override void Dispose(bool disposing)

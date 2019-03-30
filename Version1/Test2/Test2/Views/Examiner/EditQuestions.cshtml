@@ -9,54 +9,71 @@
 
 <h2>Edit Exam Questions</h2>
 
-
 @using (Html.BeginForm("EditQuestions", "Examiner", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
+    
+
+<div><table class="table"><tr><th> </th></tr></table></div>
+
+<div class="form-group">
+    @if (Model.Subject == null)
+    {
+        <div class="col-md-10">
+            @Html.Label("Filter by Subject")
+            @Html.DropDownListFor(model => model.Subject, new SelectList(Model.Subjects, "SubjectId", "subjectName"), "Select Subject") <input type="submit" value="Apply Subject Filter" />
+        </div>
 
 
-    <div class="form-group">
-        @if (Model.Subject == null)
+    }
+    else
+    {
+
+        if (Model.Topic == null)
         {
-            <div class="col-md-10">
-                @Html.Label("Filter by Subject")
-                @Html.DropDownListFor(model => model.Subject, new SelectList(Model.Subjects, "SubjectId", "subjectName"), "Select Subject") <input type="submit"  value="Apply Subject Filter" />
-             </div>
-
-
-        }
-        else
-        {
-            
-            if (Model.Topic == null)
-            {
             <div class="col-md-10">
                 Subject Code: @Html.DropDownListFor(model => model.Subject, new SelectList(Model.Subjects, "SubjectId", "subjectName"), "Select Subject")
 
-                @Html.DropDownListFor(model => model.Topic, new SelectList(Model.Topics, "TopicId", "TopicName"), "Select Topic")  <input type="submit"  value="Apply Topic Filter" />
+                @Html.DropDownListFor(model => model.Topic, new SelectList(Model.Topics, "TopicId", "TopicName"), "Select Topic")  <input type="submit" value="Apply Topic Filter" />
 
 
             </div>
 
-            }
-            else
-            { <div class="col-md-10">
+        }
+        else
+        { <div class="col-md-10">
 
-                   Subject Code: @Model.Subject          Topic Number: @Model.Topic              <input type="submit"  value="Remove Filters" />
-                </div>
-
-            }
+              Subject Code: @Model.Subject          Topic Number: @Model.Topic              <input type="submit" value="Remove Filters" /> 
+                  ________________________________
+              <Button>@Html.ActionLink("Rename This Topic", "Edit", "Topics", new { id = Model.Topic }, new { subject = Model.Subject })</Button>
+              <Button>@Html.ActionLink("Delete This Topic", "Delete", "Topics", new { id = Model.Topic }, new {})</Button>
+          </div>
 
         }
-        <Button>@Html.ActionLink("Manage Topics", "Index", "Topics")</Button>
-    </div>
+
+    }
+    @if (Model.Subject != null)
+    {
+        <Button>@Html.ActionLink("Create New Topic", "Create", "Topics", new { subject = Model.Subject }, new { })</Button>
+        
+    }
+</div>
  }
 
         @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
         }
+@if (Model.Subject != null) { 
+<Button>@Html.ActionLink("Create New Question", "Create", "Questions", new { subject = Model.Subject }, new { }) </Button>  
+}
+else { <div>
+           <table class="table">
+           <tr>
+               <th> </th>
+           </tr>
+           </table>
+       </div>
 
-    <Button>@Html.ActionLink("Create New Question", "Create", "Questions") </Button>  
-
+}
 <table class="table">
     <tr>
         <th>
@@ -87,7 +104,7 @@
                 @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RelatedTopic.TopicName)
+                @Html.DisplayFor(modelItem => item.RelatedTopic.TopicName) 
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.QuestionUsage)

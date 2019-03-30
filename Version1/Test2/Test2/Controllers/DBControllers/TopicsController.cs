@@ -20,19 +20,8 @@ namespace Test2.Controllers.DBControllers
         // GET: Topics
         public async Task<ActionResult> Index()
         {
-
-            // limiting choices of Subject to those of Examiner
-            string TeacherId = User.Identity.GetUserId();
-
-            List<string> specificsubjects = new List<string>(from t in db.Teachings where t.ExaminerId == TeacherId select t.SubjectId);
-            IEnumerable<Subject> subjectlist = new List<Subject>(from s in db.Subjects where specificsubjects.Contains(s.SubjectId) select s);
-
-            // limiting choices of Topics  to those of Examiner's Subjects 
-            List<Topic> topics = new List<Topic>(from t in db.Topics where specificsubjects.Contains(t.SubjectId) select t);
-
-
-            
-            return View(topics);
+            var topics = db.Topics.Include(t => t.RelatedSubject);
+            return View(await topics.ToListAsync());
         }
 
         // GET: Topics/Details/5
@@ -52,18 +41,23 @@ namespace Test2.Controllers.DBControllers
 
         // GET: Topics/Create
         [Authorize(Roles="Examiner")]
-        public ActionResult Create()
+        public ActionResult Create(string subject)
         {
 
             // limiting choices of Subject to those of Examiner
             string TeacherId = User.Identity.GetUserId();
 
-            List<string> specificsubjects = new List<string>(from t in db.Teachings where t.ExaminerId == TeacherId select t.SubjectId);
-            IEnumerable<Subject> subjectlist = new List<Subject>(from s in db.Subjects where specificsubjects.Contains(s.SubjectId) select s);
+           // List<string> specificsubjects = new List<string>(from t in db.Teachings where t.ExaminerId == TeacherId select t.SubjectId);
+            
 
+            IEnumerable<Subject> subjectchosen = new List<Subject>(from s in db.Subjects where s.SubjectId == subject select s);
+            ViewBag.Subject = subject;
+            ViewBag.SubjectId = new SelectList(subjectchosen, "SubjectId", "SubjectName");
 
-            ViewBag.SubjectId = new SelectList(subjectlist, "SubjectId", "SubjectName");
-            return View();
+            Topic t =new Topic();
+            t.SubjectId = subject;
+
+            return View(t);
         }
 
         // POST: Topics/Create
@@ -73,21 +67,22 @@ namespace Test2.Controllers.DBControllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "TopicId,TopicName,SubjectId")] Topic topic)
         {
+            
             if (ModelState.IsValid)
             {
                 db.Topics.Add(topic);
                 await db.SaveChangesAsync();
-                return RedirectToAction("EditQuestions", "Examiner");
+                return RedirectToAction("EditQuestions", "Examiner", new { subject = topic.SubjectId });
             }
 
 
             // limiting choices of Subject to those of Examiner
             string TeacherId = User.Identity.GetUserId();
 
-            List<string> specificsubjects = new List<string>(from t in db.Teachings where t.ExaminerId == TeacherId select t.SubjectId);
-            IEnumerable<Subject> subjectlist = new List<Subject>(from s in db.Subjects where specificsubjects.Contains(s.SubjectId) select s);
+            //List<string> specificsubjects = new List<string>(from t in db.Teachings where t.ExaminerId == TeacherId select t.SubjectId);
+            IEnumerable<Subject> subjectlist = new List<Subject>(from s in db.Subjects where s.SubjectId==topic.SubjectId select s);
 
-
+            ViewBag.Subject = topic.SubjectId;
             ViewBag.SubjectId = new SelectList(subjectlist,"SubjectId", "SubjectName", topic.SubjectId);
 
             return View(topic);
@@ -120,7 +115,7 @@ namespace Test2.Controllers.DBControllers
             {
                 db.Entry(topic).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("EditQuestions", "Examiner");
+                return RedirectToAction("EditQuestions", "Examiner", new { subject = topic.SubjectId });
             }
             ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", topic.SubjectId);
             return View(topic);
@@ -147,9 +142,10 @@ namespace Test2.Controllers.DBControllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Topic topic = await db.Topics.FindAsync(id);
+            string t_subject = topic.SubjectId;
             db.Topics.Remove(topic);
             await db.SaveChangesAsync();
-            return RedirectToAction("EditQuestions", "Examiner");
+            return RedirectToAction("EditQuestions", "Examiner", new { subject = t_subject });
         }
 
         protected override void Dispose(bool disposing)

@@ -474,6 +474,7 @@
     <Content Include="Views\Exams\Index.cshtml" />
     <Content Include="Views\Examiner\EditQuestions.cshtml" />
     <Content Include="Views\Examiner\EditPapers.cshtml" />
+    <Content Include="Views\Examiner\CorrectExam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

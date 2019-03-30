@@ -31,5 +31,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.TopicId }) |
-    @Html.ActionLink("Back to List", "EditQuestions", "Examiner")
+    @Html.ActionLink( "Back to List", "EditQuestions", "Examiner", new { subject = Model.SubjectId }, new { })
 </p>

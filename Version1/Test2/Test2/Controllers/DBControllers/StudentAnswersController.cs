@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Test2.Models;
 using Test2.Models.DBModels;
 
@@ -16,11 +17,31 @@ namespace Test2.Controllers.DBControllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+        // GET: StudentAnswers
+        public async Task<ActionResult> Correct( StudentAnswer answer , string getsubject )
+        {
+            if (  answer==null  )
+            {
+                return RedirectToAction( "Examiner","Dashboard");
+            }
+
+            StudentAnswer studentAnswer = await db.StudentAnswers.FindAsync(answer.AnswerId);
+
+            studentAnswer = answer;
+            db.Entry(studentAnswer).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("CorrectExam","Examiner", new{ subject=getsubject });
+        }
+
+
         // GET: StudentAnswers
         public async Task<ActionResult> Index()
         {
             var studentAnswers = db.StudentAnswers.Include(s => s.RelatedCorrector).Include(s => s.RelatedEnrollment).Include(s => s.RelatedPaperQuestion);
             return View(await studentAnswers.ToListAsync());
+
         }
 
         // GET: StudentAnswers/Details/5
