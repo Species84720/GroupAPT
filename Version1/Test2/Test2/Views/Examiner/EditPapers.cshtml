@@ -11,9 +11,9 @@
     <h3 style="  background: #FFFFFF "> Subject Code: @Model.Subject</h3>
                                                                     
 
-    <div class="row">
-        <div style="align-self: right; float: left; width: 40%; background: #EFFEFF ">
-            <h4 style="  background: #EEEEFF ">Available Questions</h4>
+    <div class="row"  >
+        <div style="align-self: right; float: left; width: 40%; background: #EFFEFF; border: 1px solid #AAAAAA; padding-left: 1px; padding-top: 1px;  box-shadow: 5px 5px 10px #AAAAAA; ">
+            <h4 style="background: #111111; color: #FFFFFF; align-content: center ">Available Questions</h4>
 
 
             <table class="table">
@@ -33,7 +33,7 @@
                             @Html.DisplayFor(modelItem => item.RelatedTopic.TopicName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.QuestionText)  @Html.ActionLink("Include", "Create", "PaperQuestions", new { questionid = item.QuestionId, examid = Model.Session, subject = Model.Subject }, new { })
+                            @Html.DisplayFor(modelItem => item.QuestionText) <b> @Html.ActionLink("Include", "Create", "PaperQuestions", new { questionid = item.QuestionId, examid = Model.Session, subject = Model.Subject }, new { })</b>
                         </td>
                         
                          
@@ -45,9 +45,9 @@
 
         </div>
 
-        <div style="align-self: right; width: 59%; float: right; background: #FFFFDD">
+        <div style="align-self: right; width: 59%; float: right; background: #FFFFDD;border: 1px solid #AAAAAA; padding-left: 1px; padding-top: 1px;  box-shadow: 5px 5px 10px #AAAAAA;  ">
 
-            <h4 style="  background: #EEEEFF ">Paper Questions</h4>
+            <h4 style="background: #111111; color: #FFFFFF;  align-content: center ">Paper Questions</h4>
 
 
             <table class="table">
@@ -75,13 +75,15 @@
                             @Html.DisplayFor(modelItem => item.NumberInPaper)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.MarksAllocated)   @Html.ActionLink("Edit", "Edit", "PaperQuestions", new { id = item.PaperQuestionId }, new { })
+                            @Html.DisplayFor(modelItem => item.MarksAllocated) <b>@Html.ActionLink("Edit", "Edit", "PaperQuestions", new { id = item.PaperQuestionId }, new { })</b>
                         </td>
                         <td>
 
-                            @Html.ActionLink("Up", "Up", "PaperQuestions", new { id = item.PaperQuestionId }, new { }) |
-                            @Html.ActionLink("Down", "Down", "PaperQuestions", new { id = item.PaperQuestionId }, new { }) |
-                            @Html.ActionLink("Remove", "Delete", "PaperQuestions", new { id = item.PaperQuestionId }, new { })
+                            <b>
+                                @Html.ActionLink("Up", "Up", "PaperQuestions", new { id = item.PaperQuestionId }, new { }) |
+                                @Html.ActionLink("Down", "Down", "PaperQuestions", new { id = item.PaperQuestionId }, new { }) |
+                                @Html.ActionLink("Remove", "Delete", "PaperQuestions", new { id = item.PaperQuestionId }, new { })
+                            </b>
 
                         </td>
                     </tr>

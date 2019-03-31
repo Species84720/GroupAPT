@@ -5,7 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <h2>Index</h2>
+
+<div>
+    @Html.ActionLink("Back to Dashboard", "Dashboard", "Home")
+</div>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -54,53 +59,54 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.RelatedLocation.Campus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExamDateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExamEndTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QuestionAmount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccessCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CodeIssueDateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FullyCorrected)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaxMark)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MinMark)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AvgMark)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumOfParticipants)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumOfFails)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ExamId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ExamId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ExamId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedLocation.Campus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExamDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExamEndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodeIssueDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullyCorrected)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxMark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinMark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvgMark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumOfParticipants)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumOfFails)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ExamId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ExamId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ExamId })
+            </td>
+        </tr>
+    }
 
 </table>

@@ -192,6 +192,7 @@
     <Compile Include="Controllers\DBControllers\TopicsController.cs" />
     <Compile Include="Controllers\ExaminerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvigilationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -475,6 +476,9 @@
     <Content Include="Views\Examiner\EditQuestions.cshtml" />
     <Content Include="Views\Examiner\EditPapers.cshtml" />
     <Content Include="Views\Examiner\CorrectExam.cshtml" />
+    <Content Include="Views\Invigilation\Schedule.cshtml" />
+    <Content Include="Views\Invigilation\MakeCode.cshtml" />
+    <Content Include="Views\ExamSessions\OldIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

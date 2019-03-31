@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Test2.Models;
 using Test2.Models.DBModels;
 
@@ -17,10 +18,29 @@ namespace Test2.Controllers.DBControllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ExamSessions
-        public async Task<ActionResult> Index()
-        {
+        public async Task<ActionResult> OldIndex()
+        {  //if you need to create a bunch of  ExamSessions without logging in as a Clerk 
             var examSessions = db.ExamSessions.Include(e => e.RelatedLocation).Include(e => e.RelatedSubject);
             return View(await examSessions.ToListAsync());
+        }
+
+        // GET: ExamSessions
+        public ActionResult Index()
+        {
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+
+
+            List<string> subjects = new List<string>(from s in db.Subjects where depts.Contains(s.RelatedDepartment.DepartmentId) select s.SubjectId);
+
+            List<ExamSession> sessions = new List<ExamSession>(from e in db.ExamSessions where subjects.Contains(e.SubjectId) select e);
+
+
+
+            var examSessions = db.ExamSessions.Include(e => e.RelatedLocation).Include(e => e.RelatedSubject);
+            return View( sessions);
         }
 
         // GET: ExamSessions/Details/5
@@ -41,8 +61,17 @@ namespace Test2.Controllers.DBControllers
         // GET: ExamSessions/Create
         public ActionResult Create()
         {
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+
+
+            List<Subject> subjects = new List<Subject>(from s in db.Subjects where depts.Contains(s.RelatedDepartment.DepartmentId) select s);
+
+            
+            ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName");
             ViewBag.LocationId = new SelectList(db.Locations, "LocationId", "Campus");
-            ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName");
             return View();
         }
 
@@ -60,8 +89,19 @@ namespace Test2.Controllers.DBControllers
                 return RedirectToAction("Index");
             }
 
+
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+
+
+            List<Subject> subjects = new List<Subject>(from s in db.Subjects where depts.Contains(s.RelatedDepartment.DepartmentId) select s);
+
+
+            ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName");
             ViewBag.LocationId = new SelectList(db.Locations, "LocationId", "Campus", examSession.LocationId);
-            ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", examSession.SubjectId);
+            
             return View(examSession);
         }
 
@@ -75,10 +115,25 @@ namespace Test2.Controllers.DBControllers
             ExamSession examSession = await db.ExamSessions.FindAsync(id);
             if (examSession == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+
+            if (depts.Contains(examSession.RelatedSubject.DepartmentId))
+            {
+                return RedirectToAction("Management", "Dashboard");
+            }
+
+            List<Subject> subjects = new List<Subject>(from s in db.Subjects where depts.Contains(s.RelatedDepartment.DepartmentId) select s);
+
+
+            ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName");
             ViewBag.LocationId = new SelectList(db.Locations, "LocationId", "Campus", examSession.LocationId);
-            ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", examSession.SubjectId);
+
             return View(examSession);
         }
 
@@ -89,14 +144,32 @@ namespace Test2.Controllers.DBControllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "ExamId,SubjectId,LocationId,ExamDateTime,ExamEndTime,QuestionAmount,AccessCode,CodeIssueDateTime,FullyCorrected,MaxMark,MinMark,AvgMark,NumOfParticipants,NumOfFails")] ExamSession examSession)
         {
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+
             if (ModelState.IsValid)
             {
+               
+           
+            if (depts.Contains(examSession.RelatedSubject.DepartmentId))
+            {
+                return RedirectToAction("Management", "Dashboard");
+            }
+
                 db.Entry(examSession).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
+            List<Subject> subjects = new List<Subject>(from s in db.Subjects where depts.Contains(s.RelatedDepartment.DepartmentId) select s);
+
+
+            ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName");
             ViewBag.LocationId = new SelectList(db.Locations, "LocationId", "Campus", examSession.LocationId);
-            ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", examSession.SubjectId);
+
             return View(examSession);
         }
 
@@ -105,13 +178,28 @@ namespace Test2.Controllers.DBControllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             ExamSession examSession = await db.ExamSessions.FindAsync(id);
             if (examSession == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
+
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+
+            
+                if (depts.Contains(examSession.RelatedSubject.DepartmentId))
+                {
+                    return RedirectToAction("Management", "Dashboard");
+                }
+
+           
+
             return View(examSession);
         }
 

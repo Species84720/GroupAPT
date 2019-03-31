@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Test2.Models;
 using Test2.Models.DBModels;
 
@@ -17,31 +18,74 @@ namespace Test2.Controllers.DBControllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Subjects
-        public async Task<ActionResult> Index()
+        public    ActionResult Index()
         {
-            var subjects = db.Subjects.Include(s => s.RelatedDepartment);
-            return View(await subjects.ToListAsync());
+
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+
+            List<Subject> subjectlist = new List<Subject>(from s in db.Subjects
+                join d in db.Departments on s.DepartmentId equals d.DepartmentId
+                where
+                    depts.Contains(s.RelatedDepartment.DepartmentId)
+                select s);
+
+
+            
+            return View(subjectlist);
         }
 
         // GET: Subjects/Details/5
         public async Task<ActionResult> Details(string id)
         {
+
+
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Details", "Subjects");
             }
+
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+
+            Subject testSubject =new Subject();
+
+            testSubject = await db.Subjects.FindAsync(id);
+
+
+            // prevent a clerk from viewing a subject not in his/her department
+            if (testSubject == null || !depts.Contains(testSubject.RelatedDepartment.DepartmentId))
+            {
+                return RedirectToAction("Management", "Dashboard");
+            }
+             
+
             Subject subject = await db.Subjects.FindAsync(id);
             if (subject == null)
             {
                 return HttpNotFound();
             }
             return View(subject);
+
         }
 
         // GET: Subjects/Create
         public ActionResult Create()
         {
-            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentName");
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<Department> departments = new List<Department>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d);
+
+
+            ViewBag.DepartmentId = new SelectList(departments, "DepartmentId", "DepartmentName");
             return View();
         }
 
@@ -60,8 +104,14 @@ namespace Test2.Controllers.DBControllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            string user = User.Identity.GetUserId();
 
-            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentName", subject.DepartmentId);
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<Department> departments = new List<Department>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d);
+
+
+            ViewBag.DepartmentId = new SelectList(departments, "DepartmentId", "DepartmentName", subject.DepartmentId);
             return View(subject);
         }
 
@@ -75,9 +125,32 @@ namespace Test2.Controllers.DBControllers
             Subject subject = await db.Subjects.FindAsync(id);
             if (subject == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Subjects");
             }
-            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentName", subject.DepartmentId);
+
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+
+            Subject testSubject = new Subject();
+
+            testSubject = await db.Subjects.FindAsync(id);
+
+
+            // prevent a clerk from viewing a subject not in his/her department
+            if (testSubject == null || !depts.Contains(testSubject.RelatedDepartment.DepartmentId))
+            {
+                return RedirectToAction("Management", "Dashboard");
+            }
+
+
+
+            List<Department> departments = new List<Department>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d);
+
+
+            ViewBag.DepartmentId = new SelectList(departments, "DepartmentId", "DepartmentName", subject.DepartmentId);
             return View(subject);
         }
 
@@ -94,7 +167,16 @@ namespace Test2.Controllers.DBControllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentName", subject.DepartmentId);
+
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+
+            List<Department> departments = new List<Department>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d);
+
+
+            ViewBag.DepartmentId = new SelectList(departments, "DepartmentId", "DepartmentName", subject.DepartmentId);
             return View(subject);
         }
 
@@ -103,14 +185,29 @@ namespace Test2.Controllers.DBControllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
-            Subject subject = await db.Subjects.FindAsync(id);
-            if (subject == null)
+            
+
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+
+            Subject testSubject = new Subject();
+
+            testSubject = await db.Subjects.FindAsync(id);
+
+
+            // prevent a clerk from viewing a subject not in his/her department
+            if (testSubject == null || !depts.Contains(testSubject.RelatedDepartment.DepartmentId))
             {
-                return HttpNotFound();
+                return RedirectToAction("Management", "Dashboard");
             }
-            return View(subject);
+
+
+            return View(testSubject);
         }
 
         // POST: Subjects/Delete/5

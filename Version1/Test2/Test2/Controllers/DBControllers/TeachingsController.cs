@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Test2.Models;
 using Test2.Models.DBModels;
 
@@ -17,13 +19,25 @@ namespace Test2.Controllers.DBControllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Teachings
-        public async Task<ActionResult> Index()
+        [Authorize(Roles = "Clerk")]
+        public ActionResult Index()
         {
-            var teachings = db.Teachings.Include(t => t.Examinable).Include(t => t.Examiner);
-            return View(await teachings.ToListAsync());
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user  select u.DepartmentId).FirstOrDefault();
+
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId==dept || d.DepartmentParentId==dept select d.DepartmentId );
+
+            List<string> users = new List<string>(from u in db.Users where depts.Contains(u.RelatedDepartment.DepartmentId) select u.Id);
+
+            List<Teaching> teachings =new List<Teaching>(from t in db.Teachings where users.Contains(t.ExaminerId) select t);
+
+             //teachings = db.Teachings.Include(t => t.Examinable).Include(t => t.Examiner);
+            return View(teachings);
         }
 
         // GET: Teachings/Details/5
+        [Authorize(Roles = "Clerk")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -39,11 +53,26 @@ namespace Test2.Controllers.DBControllers
         }
 
         // GET: Teachings/Create
+        [Authorize(Roles = "Clerk")]
         public ActionResult Create()
         {
-            ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName");
-            ViewBag.ExaminerId = new SelectList(db.Users, "Id", "FirstName");
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+            List<Subject> subjects = new List<Subject>(from s in db.Subjects where 
+                depts.Contains( s.RelatedDepartment.DepartmentId) select s);
+
+            List<ApplicationUser> users = 
+                new List<ApplicationUser>
+                    (from u in db.Users where depts.Contains(u.RelatedDepartment.DepartmentId)   select u);
+             
+
+            ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName");
+            ViewBag.ExaminerId = new SelectList(users, "Id", "Firstname"+"SurName");
             return View();
+
         }
 
         // POST: Teachings/Create
@@ -60,8 +89,23 @@ namespace Test2.Controllers.DBControllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", teaching.SubjectId);
-            ViewBag.ExaminerId = new SelectList(db.Users, "Id", "FirstName", teaching.ExaminerId);
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+            List<Subject> subjects = new List<Subject>(from s in db.Subjects
+                where
+                    depts.Contains(s.RelatedDepartment.DepartmentId)
+                select s);
+
+            List<ApplicationUser> users =
+                new List<ApplicationUser>
+                    (from u in db.Users where depts.Contains(u.RelatedDepartment.DepartmentId) select u);
+
+
+            ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName", teaching.SubjectId);
+            ViewBag.ExaminerId = new SelectList(users, "Id", "FirstName", teaching.ExaminerId);
             return View(teaching);
         }
 
@@ -77,8 +121,23 @@ namespace Test2.Controllers.DBControllers
             {
                 return HttpNotFound();
             }
-            ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", teaching.SubjectId);
-            ViewBag.ExaminerId = new SelectList(db.Users, "Id", "FirstName", teaching.ExaminerId);
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+            List<Subject> subjects = new List<Subject>(from s in db.Subjects
+                where
+                    depts.Contains(s.RelatedDepartment.DepartmentId)
+                select s);
+
+            List<ApplicationUser> users =
+                new List<ApplicationUser>
+                    (from u in db.Users where depts.Contains(u.RelatedDepartment.DepartmentId) select u);
+
+
+            ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName", teaching.SubjectId);
+            ViewBag.ExaminerId = new SelectList(users, "Id", "FirstName", teaching.ExaminerId);
             return View(teaching);
         }
 
@@ -95,8 +154,23 @@ namespace Test2.Controllers.DBControllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", teaching.SubjectId);
-            ViewBag.ExaminerId = new SelectList(db.Users, "Id", "FirstName", teaching.ExaminerId);
+            string user = User.Identity.GetUserId();
+
+            int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
+            List<Subject> subjects = new List<Subject>(from s in db.Subjects
+                where
+                    depts.Contains(s.RelatedDepartment.DepartmentId)
+                select s);
+
+            List<ApplicationUser> users =
+                new List<ApplicationUser>
+                    (from u in db.Users where depts.Contains(u.RelatedDepartment.DepartmentId) select u);
+
+
+            ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName", teaching.SubjectId);
+            ViewBag.ExaminerId = new SelectList(users, "Id", "FirstName", teaching.ExaminerId);
             return View(teaching);
         }
 

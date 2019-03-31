@@ -1,0 +1,106 @@
+﻿@model IEnumerable<Test2.Models.DBModels.ExamSession>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedLocation.Campus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedSubject.SubjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExamDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExamEndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccessCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CodeIssueDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullyCorrected)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaxMark)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinMark)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AvgMark)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumOfParticipants)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumOfFails)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RelatedLocation.Campus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExamDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExamEndTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuestionAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccessCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CodeIssueDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullyCorrected)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaxMark)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinMark)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AvgMark)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumOfParticipants)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumOfFails)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ExamId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ExamId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ExamId })
+        </td>
+    </tr>
+}
+
+</table>

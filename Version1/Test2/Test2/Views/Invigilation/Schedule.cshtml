@@ -1,0 +1,50 @@
+﻿@using Test2.Models.DBModels
+@model IEnumerable<Test2.Models.DBModels.Invigilation>
+
+@{
+    ViewBag.Title = "Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Upcoming Duties </h2>
+<p>for: @ViewBag.Name </p>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedExamSession.RelatedSubject.SubjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RelatedExamSession.ExamDateTime)
+        </th>
+         
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedSubject.SubjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamDateTime)
+            </td>
+
+        </tr>
+        <tr> <th> Place:</th> 
+             <td>
+                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Campus) 
+                 <br />
+                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Building) 
+                 <br />
+                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Block) - 
+                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Floor) -
+                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Room)
+             </td>
+        </tr>
+    }
+
+</table>
+

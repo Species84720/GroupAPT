@@ -53,14 +53,12 @@ namespace Test2.Controllers.DBControllers
             //IEnumerable<Subject> subjectlist = new List<Subject>(from s in db.Subjects where specificsubjects.Contains(s.SubjectId) select s);
 
             // limiting choices of Topics  to those of Examiner's Subjects 
-
             List<Topic> topics = new List<Topic>(from t in db.Topics where subject==t.SubjectId select t);
 
             IEnumerable<Subject> subjectchosen = new List<Subject>(from s in db.Subjects where s.SubjectId == subject select s);
             ViewBag.Subject = subject;
             ViewBag.SubjectId = new SelectList(subjectchosen, "SubjectId", "SubjectName");
             ViewBag.TopicId = new SelectList(topics, "TopicId", "TopicName");
-
 
             Question q = new Question();
             q.SubjectId = subject;

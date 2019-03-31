@@ -4,57 +4,75 @@
     ViewBag.Title = "Admin";
 }
 
+<h2>Administrator's Dashboard</h2>
 
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Admin Dashboard</h2>
-        <div>
-            Users:
-            <ul>
-                <li>@Html.ActionLink("Create New User", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-            </ul>
-            <br />
+<div style="background-color: #EEEEEE; border: 1px solid #AAAAAA; padding-left: 15px; padding-top: 15px;  box-shadow: 5px 5px 10px #AAAAAA;">
+
+    <div class="row">
+
+        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; height: 200px">
+            <h2>Create User</h2>
+            <p>
+                Create a new user
+                assign role
+                and Department.
+
+            </p>
+            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Create New User", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</p>
         </div>
 
-        <div>
-            Departments:  @Html.ActionLink("Manage Departments", "Index", "Departments", routeValues: null, htmlAttributes: new { id = "registerLink" })
-            <br />
-        </div>
-        <div>
-            Exam Sessions:
-            <br />
-        </div>
-        <div>
-            Logs:
-            <br />
+        <div style="  width: 5%"> </div>
+
+        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; margin-left: 2%; margin-right: 2%; height: 200px">
+            <h2> Manage Departments</h2>
+            <p>
+                Click here to manage Departments.
+
+            </p>
+            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Manage Departments", "Index", "Departments", routeValues: null, htmlAttributes: new { id = "registerLink" })</p>
         </div>
 
+        <div style="  width: 5%"> </div>
+
+        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; margin-left: 2%; margin-right: 2%; height: 200px">
+            <h2> Logs</h2>
+            <p>
+                Introspect into who has been doing what because you have the power to do so.
+
+            </p>
+            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Manage Exam Sessions »", "Index", "ExamSessions") </p>
+        </div>
     </div>
 
+
+    <div class="row" style=" width: 100%; height: 20px;">
+        <p>
+
+
+        </p>
+    </div>
+
+    <div class="row"> 
+        <div class="col-md-4">
+            <p>
+
+
+            </p>
+        </div>
+        <div class="col-md-4">
+            <p>
+
+
+            </p>
+        </div>
+    </div>
+    <div class="row" style="  width: 100%; height: 20px;">
+        <p>
+
+
+        </p>
+    </div>
 </div>
 
-
-
-@if (Request.IsAuthenticated)
-{
-    <div> User detected to be Authenticated</div>
-    <br />
-   
-
-
-    if (User.IsInRole("Admin"))   //Dislays content including partial View Based on Role
-    {
-      <br />
-        <div> User detected to be an Admin. You should see partial view</div>
-        
-        <br />
-        <div>UserId:   @User.Identity.GetUserId() </div>
-        <br />
-        <div>UserName:   @User.Identity.GetUserName() </div>
-
-
-        @Html.Partial("_MyPartial")
-
-    }
-}
+ 

@@ -5,15 +5,39 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Learner</h2>
-
-
-<br />
-<div>UserId:   @User.Identity.GetUserId() </div>
-<br />
-<div>UserName:   @User.Identity.GetUserName() </div>
+<h2>Student's Dashboard</h2>
 
 
 
-@Html.Partial("_MyPartial")
 
+<div style="background-color: #EEEEEE; border: 1px solid #AAAAAA; padding-left: 15px; padding-top: 15px;  box-shadow: 5px 5px 10px #AAAAAA;">
+
+    <div class="row">
+
+        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; height: 200px">
+            <h2>Exam Time Table</h2>
+            <p>
+                To know when you have examinations
+                and where they will be
+                click here!
+
+            </p>
+            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Time Table »", "Index", "Home") </p>
+        </div>
+
+        <div style="  width: 5%"> </div>
+
+        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; height: 200px">
+            <h2>Results</h2>
+            <p>
+                Any Results that come out
+                will be stored in this section
+                click here to view them!
+
+            </p>
+            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Results »", "Index", "Home") </p>
+        </div>
+
+        <div style="  width: 5%"> </div>
+    </div>
+</div>

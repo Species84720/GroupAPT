@@ -18,8 +18,7 @@ namespace Test2.Controllers
         [Authorize]
         public ActionResult Dashboard()
         {
-            if (Request.IsAuthenticated)
-            {
+           
 
                 if (User.IsInRole("Student"))
                 {
@@ -50,14 +49,14 @@ namespace Test2.Controllers
                 }
 
 
-                return RedirectToAction("Index", "Home");
-            }
+               
+           
+
+            return RedirectToAction("Index", "Home");
 
 
 
-
-
-            return View();
+            
         }
 
        

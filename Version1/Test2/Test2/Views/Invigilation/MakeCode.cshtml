@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "MakeCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Code Is:</h2>
+
+<h1>@ViewBag.Code</h1>
+
+
+@if(@ViewBag.Exam!=null){ <p>For Exam: @ViewBag.Exam</p>}
+
+@Html.ActionLink("Back to Dashboard", "Dashboard","Home") 

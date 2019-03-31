@@ -4,5 +4,85 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Invigilator</h2>
 
+<h2>Invigilator's Dashboard</h2>
+
+<div style="background-color: #EEEEEE; border: 1px solid #AAAAAA; padding-left: 15px; padding-top: 15px;  box-shadow: 5px 5px 10px #AAAAAA;">
+    
+    <div class="row" >
+
+        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; height: 200px">
+            <h2>Invigilation Time Table</h2>
+            <p>
+                To know when you have invigilation duties
+                and where they will be
+                click here!
+
+            </p>
+            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Schedule »", "Schedule", "Invigilation") </p>
+        </div>
+
+        <div style="  width: 5%"> </div>
+
+        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; margin-left: 2%; margin-right: 2%; height: 200px">
+            <h2> Access Code</h2>
+            <p>
+                When an exam is about to start
+                click here to get the Access Code
+                for students to access the exam.
+
+            </p>
+            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Access Code »", "MakeCode", "Invigilation") </p>
+        </div>
+
+        <div style="  width: 5%"> </div>
+
+        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; margin-left: 2%; margin-right: 2%; height: 200px">
+            <h2> Report Misbehaviour</h2>
+            <p>
+                If you notice any student cheating
+                or misbehaving during an exam
+                Report Here.
+
+            </p>
+            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Report »", "Index", "Home") </p>
+        </div>
+    </div>
+
+
+    <div class="row" style=" width: 100%; height: 20px;">
+        <p>
+
+
+        </p>
+    </div>
+
+    <div class="row" >
+        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; height: 200px">
+            <h2>Identity Checking</h2>
+            <p>
+                This is where you can compare the student's photos with their registration photos to make sure they are who they claim to be.
+
+            </p>
+            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;"> @Html.ActionLink("ID Checking »", "Index", "Home") </p>
+        </div>
+        <div class="col-md-4" >
+            <p>
+
+
+            </p>
+        </div>
+        <div class="col-md-4"  >
+            <p>
+
+
+            </p>
+        </div>
+    </div>
+    <div class="row" style="  width: 100%; height: 20px;">
+        <p>
+
+
+        </p>
+    </div>
+</div>

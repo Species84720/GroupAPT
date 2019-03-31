@@ -7,11 +7,14 @@
 
 <h2>Edit</h2>
 
+<div>
+    @Html.ActionLink("Back to Dashboard", "Dashboard", "Home")
+</div>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Enrollment</h4>
         <hr />

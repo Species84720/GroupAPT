@@ -21,7 +21,7 @@ using Database = Test2.Models.Database;
 
 namespace Test2.Controllers
 {
-    [Authorize (Roles="Admin")]
+    
     public class AccountController : Controller
     {
 
@@ -155,7 +155,8 @@ namespace Test2.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        
+        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
             List<string> Roles = new List<string>() { "Student", "Examiner", "Invigilator", "Clerk", "Admin" };
@@ -168,7 +169,7 @@ namespace Test2.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
