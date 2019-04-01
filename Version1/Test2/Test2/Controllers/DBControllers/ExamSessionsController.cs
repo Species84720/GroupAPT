@@ -35,7 +35,7 @@ namespace Test2.Controllers.DBControllers
 
             List<string> subjects = new List<string>(from s in db.Subjects where depts.Contains(s.RelatedDepartment.DepartmentId) select s.SubjectId);
 
-            var sessions = (from e in db.ExamSessions..Include(e => e.RelatedLocation).Include(e => e.RelatedSubject) where subjects.Contains(e.SubjectId) select e);
+            var sessions = (from e in db.ExamSessions.Include(e => e.RelatedLocation).Include(e => e.RelatedSubject) where subjects.Contains(e.SubjectId) select e);
 
 
 
