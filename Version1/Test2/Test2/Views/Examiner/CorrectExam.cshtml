@@ -16,9 +16,13 @@
 
 @if (Model.Subject != null)
 {
-    if (Model.AllQsCorrected) { <div> No more Questions to Correct here.
-                                    @Html.ActionLink("Choose another subject","CorrectExam", "Examiner")
-                                    </div>
+    if (Model.AllQsCorrected) { 
+        
+        <div> No more Questions to Correct here.
+            
+            @Html.ActionLink("Go Back to Dashboard","Dashboard", "Home")
+            
+         </div>
 
     }
     else { 
@@ -103,7 +107,13 @@ else
                 <input type="submit" value="Select"class="btn btn-default"/>
             </div>
         </div>
-
+        
+        if(Model.AllSessionsCorrected){<div>
+            The exam sessions for this subject have been corrected.
+                
+                                        </div>
+        }
+       
     }
 }
 

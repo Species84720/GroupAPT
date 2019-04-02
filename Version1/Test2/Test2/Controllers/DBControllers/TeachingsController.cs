@@ -20,7 +20,7 @@ namespace Test2.Controllers.DBControllers
 
         // GET: Teachings
         [Authorize(Roles = "Clerk")]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             string user = User.Identity.GetUserId();
 
@@ -30,10 +30,11 @@ namespace Test2.Controllers.DBControllers
 
             List<string> users = new List<string>(from u in db.Users where depts.Contains(u.RelatedDepartment.DepartmentId) select u.Id);
 
-            List<Teaching> teachings =new List<Teaching>(from t in db.Teachings where users.Contains(t.ExaminerId) select t);
+            var teachings = (from t in db.Teachings.Include(t=>t.Examinable).Include(t =>t.Examiner )
+                                                         where users.Contains(t.ExaminerId) select t);
 
              //teachings = db.Teachings.Include(t => t.Examinable).Include(t => t.Examiner);
-            return View(teachings);
+            return View(await teachings.ToListAsync() );
         }
 
         // GET: Teachings/Details/5
@@ -70,7 +71,7 @@ namespace Test2.Controllers.DBControllers
              
 
             ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName");
-            ViewBag.ExaminerId = new SelectList(users, "Id", "Firstname"+"SurName");
+            ViewBag.ExaminerId = new SelectList(users, "Id", "FirstName");
             return View();
 
         }

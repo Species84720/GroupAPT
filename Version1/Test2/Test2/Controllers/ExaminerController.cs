@@ -30,14 +30,12 @@ namespace Test2.Controllers.DBControllers
 
             string teacher = User.Identity.GetUserId();
 
-
-
+            
             //We get a list of only subjects for this tutor
             List<string> subjectNames =
                 new List<string>(from t in db.Teachings.Where(x => x.ExaminerId == teacher) select t.SubjectId);
 
-            List<Subject> subjects =
-                new List<Subject>(from s in db.Subjects where subjectNames.Contains(s.SubjectId) select s);
+            List<Subject> subjects = new List<Subject>(from s in db.Subjects where subjectNames.Contains(s.SubjectId) select s);
 
 
             List<Question> questionList;
@@ -117,7 +115,7 @@ namespace Test2.Controllers.DBControllers
 
         // GET: Exam
         // GET: PaperQuestions
-        public ActionResult EditPapers(string subject)
+        public async Task<ActionResult> EditPapers(string subject)
         {
             string teacher = User.Identity.GetUserId();
 
@@ -130,10 +128,35 @@ namespace Test2.Controllers.DBControllers
             List<Subject> subjects =
                 new List<Subject>(from s in db.Subjects where subjectNames.Contains(s.SubjectId) select s);
 
+            SetPaperViewModel viewmodel;
+            if (subject == null)
+            {
+                viewmodel = new SetPaperViewModel(){ Subjects = subjects};
+                
+                 
+
+                return View(viewmodel);
+            }
 
             string session =
                 (from e in db.ExamSessions where (e.SubjectId == subject && !e.FullyCorrected) select e.ExamId)
                 .SingleOrDefault();
+
+            
+            //if there is no session for this subject, a new ExamSession is Created.
+            if (session == null)
+            {
+                ExamSession examSession = new ExamSession();
+
+                session = subject + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year;
+
+                examSession.ExamId = session;
+
+                db.ExamSessions.Add(examSession);
+                await db.SaveChangesAsync();
+
+                
+            }
 
             List<PaperQuestion> paperQuestions = new List<PaperQuestion>(from p in db.PaperQuestions
                 orderby p.NumberInPaper
@@ -155,7 +178,7 @@ namespace Test2.Controllers.DBControllers
                 total = total + (int) p.MarksAllocated;
             }
 
-            SetPaperViewModel viewmodel = new SetPaperViewModel
+             viewmodel = new SetPaperViewModel
             {
 
                 Subject = subject,
@@ -179,17 +202,6 @@ namespace Test2.Controllers.DBControllers
 
         public  ActionResult  CorrectExam (string subject)
         {
-             
-
-            string teacher = User.Identity.GetUserId();
-
-            List<string> subjectNames;
-            List<Subject> subjects;
-            string session;
-            // List<StudentAnswer> answers;
-
-            session = (from e in db.ExamSessions where (e.SubjectId == subject) select e.ExamId).SingleOrDefault();
-
             CorrectingViewModel viewmodel;
 
             viewmodel = new CorrectingViewModel
@@ -201,29 +213,51 @@ namespace Test2.Controllers.DBControllers
             };
 
 
+            string teacher = User.Identity.GetUserId();
+             
+            List<string> subjectNames;
+            List<Subject> subjects;
+
+                 
+
             //We get a list of only subjects for this tutor
             subjectNames =
                 new List<string>(from t in db.Teachings.Where(x => x.ExaminerId == teacher) select t.SubjectId);
+            
+            subjects = new List<Subject>(from s in db.Subjects where subjectNames.Contains(s.SubjectId) select s);
+                
+            //and pass them to the viewmodel
+                viewmodel.Subjects = subjects;
+                
+              if(subject==null)
+              {
+                  return View(viewmodel);
+              }
+            
+            
+            string session  = (from e in db.ExamSessions where (e.SubjectId == subject  && e.FullyCorrected==false) select e.ExamId).SingleOrDefault();
 
-            List<string> uncorrected = new List<string>(from e in db.ExamSessions
-                where subjectNames.Contains(e.SubjectId) && !e.FullyCorrected
-                select e.SubjectId);
-
-            subjects = new List<Subject>(from s in db.Subjects where uncorrected.Contains(s.SubjectId) select s);
-
-
-            //if there are no uncorrected sessions
-            if (uncorrected.Count == 0)
+            if (session == null)
             {
-                viewmodel.AllSessionsCorrected  = true;
 
-               return RedirectToAction("Examiner", "Dashboard");
+                viewmodel.AllQsCorrected = true;
+                viewmodel.AllSessionsCorrected = true;
+
+                return View(viewmodel);
             }
-
 
             List<PaperQuestion> paperquestions = new List<PaperQuestion>(from q in db.PaperQuestions
                 where q.ExamId == session && q.RelatedQuestion.QuestionFormat == Question.QuestionType.WrittenAnswer
                 select q);
+
+
+            //if there are no PaperQuestions go to Dashboard
+
+            if (paperquestions.Count == 0)
+            {
+               return RedirectToAction("Dashboard", "Home");
+
+            }
 
             List<string> paperquestionid = new List<string>(from q in paperquestions select q.PaperQuestionId);
             // List<int> questionid = new List<int>(from q in paperquestions select q.QuestionId);
@@ -251,7 +285,6 @@ namespace Test2.Controllers.DBControllers
             }
 
             viewmodel.Subject = subject;
-            viewmodel.Subjects = subjects;
             viewmodel.Exam = session;
             //  viewmodel.Questions = questions;
             viewmodel.Answer = answer;
@@ -376,14 +409,13 @@ namespace Test2.Controllers.DBControllers
                 if (m < 45) fails++;
             }
 
+            if (count == 0) count = 1; //avoiding DIV by zero case;
             float avg = sum / count;
 
 
             //Now we add the found details and mark the exam as fully corrected
 
-            ExamSession exam = new ExamSession();
-
-            exam =db.ExamSessions.Find(session);
+            ExamSession exam =db.ExamSessions.Find(session);
 
             if(exam==null) { return RedirectToAction("Examiner", "Dashboard"); }
 

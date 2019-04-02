@@ -8,7 +8,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FA6F3701-8F25-4D09-9CC7-F6E7FADD47B4}</ProjectGuid>
+    <ProjectGuid>{66524216-1787-42CB-AFFC-D344D8339BBD}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -334,9 +334,9 @@
     <Compile Include="Models\DBModels\Subject.cs" />
     <Compile Include="Models\DBModels\Teaching.cs" />
     <Compile Include="Models\DBModels\Topic.cs" />
+    <Compile Include="Models\ExaminerViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\ExaminerViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -371,12 +371,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Dashboard.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
@@ -388,101 +382,106 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Dashboard\Admin.cshtml" />
+    <Content Include="Views\Dashboard\Examiner.cshtml" />
+    <Content Include="Views\Dashboard\Invigilator.cshtml" />
+    <Content Include="Views\Dashboard\Learner.cshtml" />
+    <Content Include="Views\Dashboard\Management.cshtml" />
+    <Content Include="Views\Departments\Create.cshtml" />
+    <Content Include="Views\Departments\Delete.cshtml" />
+    <Content Include="Views\Departments\Details.cshtml" />
+    <Content Include="Views\Departments\Edit.cshtml" />
+    <Content Include="Views\Departments\Index.cshtml" />
+    <Content Include="Views\Enrollments\Create.cshtml" />
+    <Content Include="Views\Enrollments\Delete.cshtml" />
+    <Content Include="Views\Enrollments\Details.cshtml" />
+    <Content Include="Views\Enrollments\Edit.cshtml" />
+    <Content Include="Views\Enrollments\Index.cshtml" />
+    <Content Include="Views\Examiner\CorrectExam.cshtml" />
+    <Content Include="Views\Examiner\EditPapers.cshtml" />
+    <Content Include="Views\Examiner\EditQuestions.cshtml" />
+    <Content Include="Views\ExamSessions\Create.cshtml" />
+    <Content Include="Views\ExamSessions\Delete.cshtml" />
+    <Content Include="Views\ExamSessions\Details.cshtml" />
+    <Content Include="Views\ExamSessions\Edit.cshtml" />
+    <Content Include="Views\ExamSessions\Index.cshtml" />
+    <Content Include="Views\ExamSessions\OldIndex.cshtml" />
+    <Content Include="Views\Exams\Index.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Invigilations\Create.cshtml" />
+    <Content Include="Views\Invigilations\Delete.cshtml" />
+    <Content Include="Views\Invigilations\Details.cshtml" />
+    <Content Include="Views\Invigilations\Edit.cshtml" />
+    <Content Include="Views\Invigilations\Index.cshtml" />
+    <Content Include="Views\Invigilation\MakeCode.cshtml" />
+    <Content Include="Views\Invigilation\Schedule.cshtml" />
+    <Content Include="Views\Locations\Create.cshtml" />
+    <Content Include="Views\Locations\Delete.cshtml" />
+    <Content Include="Views\Locations\Details.cshtml" />
+    <Content Include="Views\Locations\Edit.cshtml" />
+    <Content Include="Views\Locations\Index.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_MyPartial.cshtml" />
-    <Content Include="Views\Dashboard\Admin.cshtml" />
-    <Content Include="Views\Departments\Create.cshtml" />
-    <Content Include="Views\Departments\Delete.cshtml" />
-    <Content Include="Views\Departments\Details.cshtml" />
-    <Content Include="Views\Departments\Edit.cshtml" />
-    <Content Include="Views\Departments\Index.cshtml" />
-    <Content Include="Views\Students\Create.cshtml" />
-    <Content Include="Views\Students\Delete.cshtml" />
-    <Content Include="Views\Students\Details.cshtml" />
-    <Content Include="Views\Students\Edit.cshtml" />
-    <Content Include="Views\Students\Index.cshtml" />
-    <Content Include="Views\Enrollments\Create.cshtml" />
-    <Content Include="Views\Enrollments\Delete.cshtml" />
-    <Content Include="Views\Enrollments\Details.cshtml" />
-    <Content Include="Views\Enrollments\Edit.cshtml" />
-    <Content Include="Views\Enrollments\Index.cshtml" />
-    <Content Include="Views\Subjects\Create.cshtml" />
-    <Content Include="Views\Subjects\Delete.cshtml" />
-    <Content Include="Views\Subjects\Details.cshtml" />
-    <Content Include="Views\Subjects\Edit.cshtml" />
-    <Content Include="Views\Subjects\Index.cshtml" />
-    <Content Include="Views\Locations\Create.cshtml" />
-    <Content Include="Views\Locations\Delete.cshtml" />
-    <Content Include="Views\Locations\Details.cshtml" />
-    <Content Include="Views\Locations\Edit.cshtml" />
-    <Content Include="Views\Locations\Index.cshtml" />
-    <Content Include="Views\Dashboard\Learner.cshtml" />
-    <Content Include="Views\Dashboard\Management.cshtml" />
-    <Content Include="Views\Dashboard\Examiner.cshtml" />
-    <Content Include="Views\Dashboard\Invigilator.cshtml" />
-    <Content Include="Views\Topics\Create.cshtml" />
-    <Content Include="Views\Topics\Delete.cshtml" />
-    <Content Include="Views\Topics\Details.cshtml" />
-    <Content Include="Views\Topics\Edit.cshtml" />
-    <Content Include="Views\Topics\Index.cshtml" />
-    <Content Include="Views\Questions\Create.cshtml" />
-    <Content Include="Views\Questions\Delete.cshtml" />
-    <Content Include="Views\Questions\Details.cshtml" />
-    <Content Include="Views\Questions\Edit.cshtml" />
-    <Content Include="Views\Questions\Index.cshtml" />
-    <Content Include="Views\ExamSessions\Create.cshtml" />
-    <Content Include="Views\ExamSessions\Delete.cshtml" />
-    <Content Include="Views\ExamSessions\Details.cshtml" />
-    <Content Include="Views\ExamSessions\Edit.cshtml" />
-    <Content Include="Views\ExamSessions\Index.cshtml" />
-    <Content Include="Views\PaperQuestions\Create.cshtml" />
-    <Content Include="Views\PaperQuestions\Delete.cshtml" />
-    <Content Include="Views\PaperQuestions\Details.cshtml" />
-    <Content Include="Views\PaperQuestions\Edit.cshtml" />
-    <Content Include="Views\PaperQuestions\Index.cshtml" />
-    <Content Include="Views\StudentAnswers\Create.cshtml" />
-    <Content Include="Views\StudentAnswers\Delete.cshtml" />
-    <Content Include="Views\StudentAnswers\Details.cshtml" />
-    <Content Include="Views\StudentAnswers\Edit.cshtml" />
-    <Content Include="Views\StudentAnswers\Index.cshtml" />
-    <Content Include="Views\Teachings\Create.cshtml" />
-    <Content Include="Views\Teachings\Delete.cshtml" />
-    <Content Include="Views\Teachings\Details.cshtml" />
-    <Content Include="Views\Teachings\Edit.cshtml" />
-    <Content Include="Views\Teachings\Index.cshtml" />
     <Content Include="Views\MultipleChoices\Create.cshtml" />
     <Content Include="Views\MultipleChoices\Delete.cshtml" />
     <Content Include="Views\MultipleChoices\Details.cshtml" />
     <Content Include="Views\MultipleChoices\Edit.cshtml" />
     <Content Include="Views\MultipleChoices\Index.cshtml" />
-    <Content Include="Views\Invigilations\Create.cshtml" />
-    <Content Include="Views\Invigilations\Delete.cshtml" />
-    <Content Include="Views\Invigilations\Details.cshtml" />
-    <Content Include="Views\Invigilations\Edit.cshtml" />
-    <Content Include="Views\Invigilations\Index.cshtml" />
+    <Content Include="Views\PaperQuestions\Create.cshtml" />
+    <Content Include="Views\PaperQuestions\Delete.cshtml" />
+    <Content Include="Views\PaperQuestions\Details.cshtml" />
+    <Content Include="Views\PaperQuestions\Edit.cshtml" />
+    <Content Include="Views\PaperQuestions\Index.cshtml" />
+    <Content Include="Views\Questions\Create.cshtml" />
+    <Content Include="Views\Questions\Delete.cshtml" />
+    <Content Include="Views\Questions\Details.cshtml" />
+    <Content Include="Views\Questions\Edit.cshtml" />
+    <Content Include="Views\Questions\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_MyPartial.cshtml" />
     <Content Include="Views\Shots\Create.cshtml" />
     <Content Include="Views\Shots\Delete.cshtml" />
     <Content Include="Views\Shots\Details.cshtml" />
     <Content Include="Views\Shots\Edit.cshtml" />
     <Content Include="Views\Shots\Index.cshtml" />
-    <Content Include="Views\Exams\Index.cshtml" />
-    <Content Include="Views\Examiner\EditQuestions.cshtml" />
-    <Content Include="Views\Examiner\EditPapers.cshtml" />
-    <Content Include="Views\Examiner\CorrectExam.cshtml" />
-    <Content Include="Views\Invigilation\Schedule.cshtml" />
-    <Content Include="Views\Invigilation\MakeCode.cshtml" />
-    <Content Include="Views\ExamSessions\OldIndex.cshtml" />
+    <Content Include="Views\StudentAnswers\Create.cshtml" />
+    <Content Include="Views\StudentAnswers\Delete.cshtml" />
+    <Content Include="Views\StudentAnswers\Details.cshtml" />
+    <Content Include="Views\StudentAnswers\Edit.cshtml" />
+    <Content Include="Views\StudentAnswers\Index.cshtml" />
+    <Content Include="Views\Students\Create.cshtml" />
+    <Content Include="Views\Students\Delete.cshtml" />
+    <Content Include="Views\Students\Details.cshtml" />
+    <Content Include="Views\Students\Edit.cshtml" />
+    <Content Include="Views\Students\Index.cshtml" />
+    <Content Include="Views\Subjects\Create.cshtml" />
+    <Content Include="Views\Subjects\Delete.cshtml" />
+    <Content Include="Views\Subjects\Details.cshtml" />
+    <Content Include="Views\Subjects\Edit.cshtml" />
+    <Content Include="Views\Subjects\Index.cshtml" />
+    <Content Include="Views\Teachings\Create.cshtml" />
+    <Content Include="Views\Teachings\Delete.cshtml" />
+    <Content Include="Views\Teachings\Details.cshtml" />
+    <Content Include="Views\Teachings\Edit.cshtml" />
+    <Content Include="Views\Teachings\Index.cshtml" />
+    <Content Include="Views\Topics\Create.cshtml" />
+    <Content Include="Views\Topics\Delete.cshtml" />
+    <Content Include="Views\Topics\Details.cshtml" />
+    <Content Include="Views\Topics\Edit.cshtml" />
+    <Content Include="Views\Topics\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -605,9 +604,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50752</DevelopmentServerPort>
+          <DevelopmentServerPort>57483</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50752/</IISUrl>
+          <IISUrl>http://localhost:57483/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
