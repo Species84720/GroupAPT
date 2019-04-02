@@ -151,6 +151,7 @@ namespace Test2.Controllers.DBControllers
                 session = subject + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year;
 
                 examSession.ExamId = session;
+                examSession.SubjectId = subject;
 
                 db.ExamSessions.Add(examSession);
                 await db.SaveChangesAsync();

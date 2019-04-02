@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Test2.Models;
@@ -17,6 +18,7 @@ namespace Test2.Controllers.DBControllers
     public class TeachingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+       
 
         // GET: Teachings
         [Authorize(Roles = "Clerk")]
@@ -28,10 +30,13 @@ namespace Test2.Controllers.DBControllers
 
             List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId==dept || d.DepartmentParentId==dept select d.DepartmentId );
 
-            List<string> users = new List<string>(from u in db.Users where depts.Contains(u.RelatedDepartment.DepartmentId) select u.Id);
+           // IEnumerable<string> examiners =  Roles.GetUsersInRole("Examiner");
+
+            List<string> users = new List<string>(from u in db.Users 
+                where depts.Contains(u.RelatedDepartment.DepartmentId) select u.Id);
 
             var teachings = (from t in db.Teachings.Include(t=>t.Examinable).Include(t =>t.Examiner )
-                                                         where users.Contains(t.ExaminerId) select t);
+                                                         where users.Contains(t.ExaminerId)  select t);
 
              //teachings = db.Teachings.Include(t => t.Examinable).Include(t => t.Examiner);
             return View(await teachings.ToListAsync() );
@@ -81,7 +86,7 @@ namespace Test2.Controllers.DBControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "TeachingId,ExaminerId,SubjectId")] Teaching teaching)
+        public async Task<ActionResult> Create([Bind(Include = "TeachingId,ExaminerId,SubjectId")] Test2.Models.DBModels.Teaching teaching)
         {
             if (ModelState.IsValid)
             {

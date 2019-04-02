@@ -150,14 +150,18 @@ namespace Test2.Controllers.DBControllers
 
             List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
 
+
+
+
             if (ModelState.IsValid)
             {
                
-           
+           /*
             if (!depts.Contains(examSession.RelatedSubject.DepartmentId))
             {
                 return RedirectToAction("Management", "Dashboard");
             }
+            */
 
                 db.Entry(examSession).State = EntityState.Modified;
                 await db.SaveChangesAsync();
@@ -186,19 +190,21 @@ namespace Test2.Controllers.DBControllers
                 return RedirectToAction("Index");
             }
 
+            /*
+            
             string user = User.Identity.GetUserId();
 
             int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
 
             List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
 
-            
-                if (depts.Contains(examSession.RelatedSubject.DepartmentId))
+            if (depts.Contains(examSession.RelatedSubject.DepartmentId))
                 {
                     return RedirectToAction("Management", "Dashboard");
                 }
+                */
 
-           
+
 
             return View(examSession);
         }

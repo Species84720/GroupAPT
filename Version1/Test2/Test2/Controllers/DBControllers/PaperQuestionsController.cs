@@ -46,6 +46,8 @@ namespace Test2.Controllers.DBControllers
         // GET: PaperQuestions/Create
         public ActionResult Create(int questionid, string examid, string subject)
         {
+            if (examid == null || subject==null ) { return RedirectToAction("EditPapers", "Examiner", new { subject = subject }); }
+
             PaperQuestion paperQuestion = new PaperQuestion();
 
             paperQuestion.PaperQuestionId = questionid + "-" + examid;
