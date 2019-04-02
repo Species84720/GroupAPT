@@ -28,10 +28,10 @@ namespace Test2.Controllers.DBControllers
             
             List<string> subjects = new List<string >(from s in db.Subjects where depts.Contains(s.RelatedDepartment.DepartmentId) select s.SubjectId);
 
-            var enrollments = (from e in db.Enrollments.Include(s => s.RelatedStudent).Include(s => s.RelatedSubject) where subjects.Contains(e.SubjectId) select e);
+            List<Enrollment> enrollments = new List<Enrollment>(from e in db.Enrollments where subjects.Contains(e.SubjectId) select e);
              
             
-            return View( enrollments.ToList() );
+            return View(enrollments);
         }
 
         // GET: Enrollments/Details/5

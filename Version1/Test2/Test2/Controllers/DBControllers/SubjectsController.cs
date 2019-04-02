@@ -27,16 +27,15 @@ namespace Test2.Controllers.DBControllers
 
             List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
 
-            var subjectlist = (from s in db.Subjects.Include(s=> s.RelatedDepartment)
-                
+            List<Subject> subjectlist = new List<Subject>(from s in db.Subjects
+                join d in db.Departments on s.DepartmentId equals d.DepartmentId
                 where
                     depts.Contains(s.RelatedDepartment.DepartmentId)
-                select s) ;
-            
+                select s);
 
 
             
-            return View(subjectlist.ToList());
+            return View(subjectlist);
         }
 
         // GET: Subjects/Details/5
@@ -124,13 +123,10 @@ namespace Test2.Controllers.DBControllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Subject subject = await db.Subjects.FindAsync(id);
-
             if (subject == null)
             {
                 return RedirectToAction("Index", "Subjects");
             }
-
-            
 
             string user = User.Identity.GetUserId();
 
@@ -138,17 +134,20 @@ namespace Test2.Controllers.DBControllers
 
             List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
 
+            Subject testSubject = new Subject();
 
-            List<Department> departments = new List<Department>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d);
+            testSubject = await db.Subjects.FindAsync(id);
 
 
             // prevent a clerk from viewing a subject not in his/her department
-            if (  !depts.Contains(subject.DepartmentId) )
+            if (testSubject == null || !depts.Contains(testSubject.RelatedDepartment.DepartmentId))
             {
                 return RedirectToAction("Management", "Dashboard");
             }
 
 
+
+            List<Department> departments = new List<Department>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d);
 
 
             ViewBag.DepartmentId = new SelectList(departments, "DepartmentId", "DepartmentName", subject.DepartmentId);
@@ -202,7 +201,7 @@ namespace Test2.Controllers.DBControllers
 
 
             // prevent a clerk from viewing a subject not in his/her department
-            if (testSubject == null || !depts.Contains(testSubject.DepartmentId))
+            if (testSubject == null || !depts.Contains(testSubject.RelatedDepartment.DepartmentId))
             {
                 return RedirectToAction("Management", "Dashboard");
             }

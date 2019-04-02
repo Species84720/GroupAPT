@@ -25,7 +25,7 @@ namespace Test2.Controllers.DBControllers
         }
 
         // GET: ExamSessions
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             string user = User.Identity.GetUserId();
 
@@ -35,12 +35,12 @@ namespace Test2.Controllers.DBControllers
 
             List<string> subjects = new List<string>(from s in db.Subjects where depts.Contains(s.RelatedDepartment.DepartmentId) select s.SubjectId);
 
-            var sessions = (from e in db.ExamSessions..Include(e => e.RelatedLocation).Include(e => e.RelatedSubject) where subjects.Contains(e.SubjectId) select e);
+            List<ExamSession> sessions = new List<ExamSession>(from e in db.ExamSessions where subjects.Contains(e.SubjectId) select e);
 
 
 
-            //var examSessions = db.ExamSessions.Include(e => e.RelatedLocation).Include(e => e.RelatedSubject);
-            return View( await sessions.ToListAsync());
+            var examSessions = db.ExamSessions.Include(e => e.RelatedLocation).Include(e => e.RelatedSubject);
+            return View( sessions);
         }
 
         // GET: ExamSessions/Details/5
@@ -123,7 +123,7 @@ namespace Test2.Controllers.DBControllers
 
             List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
 
-            if (!depts.Contains(examSession.RelatedSubject.DepartmentId))
+            if (depts.Contains(examSession.RelatedSubject.DepartmentId))
             {
                 return RedirectToAction("Management", "Dashboard");
             }
@@ -154,7 +154,7 @@ namespace Test2.Controllers.DBControllers
             {
                
            
-            if (!depts.Contains(examSession.RelatedSubject.DepartmentId))
+            if (depts.Contains(examSession.RelatedSubject.DepartmentId))
             {
                 return RedirectToAction("Management", "Dashboard");
             }
