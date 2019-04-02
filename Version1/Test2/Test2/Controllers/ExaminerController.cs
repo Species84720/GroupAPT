@@ -30,12 +30,14 @@ namespace Test2.Controllers.DBControllers
 
             string teacher = User.Identity.GetUserId();
 
-            
+
+
             //We get a list of only subjects for this tutor
             List<string> subjectNames =
                 new List<string>(from t in db.Teachings.Where(x => x.ExaminerId == teacher) select t.SubjectId);
 
-            List<Subject> subjects = new List<Subject>(from s in db.Subjects where subjectNames.Contains(s.SubjectId) select s);
+            List<Subject> subjects =
+                new List<Subject>(from s in db.Subjects where subjectNames.Contains(s.SubjectId) select s);
 
 
             List<Question> questionList;
@@ -115,7 +117,7 @@ namespace Test2.Controllers.DBControllers
 
         // GET: Exam
         // GET: PaperQuestions
-        public async Task<ActionResult> EditPapers(string subject)
+        public ActionResult EditPapers(string subject)
         {
             string teacher = User.Identity.GetUserId();
 
@@ -132,22 +134,6 @@ namespace Test2.Controllers.DBControllers
             string session =
                 (from e in db.ExamSessions where (e.SubjectId == subject && !e.FullyCorrected) select e.ExamId)
                 .SingleOrDefault();
-
-            
-            //if there is no session for this subject, a new ExamSession is Created.
-            if (session == null)
-            {
-                ExamSession examSession = new ExamSession();
-
-                session = subject + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year;
-
-                examSession.ExamId = session;
-
-                db.ExamSessions.Add(examSession);
-                await db.SaveChangesAsync();
-
-                
-            }
 
             List<PaperQuestion> paperQuestions = new List<PaperQuestion>(from p in db.PaperQuestions
                 orderby p.NumberInPaper
