@@ -278,9 +278,9 @@
     <Compile Include="Migrations\201903100736138_AddTeachingChoices.Designer.cs">
       <DependentUpon>201903100736138_AddTeachingChoices.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201903100744106_Teaching1.cs" />
-    <Compile Include="Migrations\201903100744106_Teaching1.Designer.cs">
-      <DependentUpon>201903100744106_Teaching1.cs</DependentUpon>
+    <Compile Include="Migrations\201903100744106_Teaching.cs" />
+    <Compile Include="Migrations\201903100744106_Teaching.Designer.cs">
+      <DependentUpon>201903100744106_Teaching.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201903100806110_Teaching2.cs" />
     <Compile Include="Migrations\201903100806110_Teaching2.Designer.cs">
@@ -559,8 +559,8 @@
     <EmbeddedResource Include="Migrations\201903100736138_AddTeachingChoices.resx">
       <DependentUpon>201903100736138_AddTeachingChoices.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903100744106_Teaching1.resx">
-      <DependentUpon>201903100744106_Teaching1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201903100744106_Teaching.resx">
+      <DependentUpon>201903100744106_Teaching.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903100806110_Teaching2.resx">
       <DependentUpon>201903100806110_Teaching2.cs</DependentUpon>
