@@ -23,11 +23,12 @@
 <table class="table">
     <tr>
         <th>
-            Location
-        </th>
-        <th>
             Subject
         </th>
+        <th>
+            Location
+        </th>
+
         <th>
             Starts At
         </th>
@@ -42,27 +43,33 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.SubjectId)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Campus)
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Building)
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Block)
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Floor)
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Room)
-                Edit
+                @if (item.RelatedLocation.Room == null)
+                {<i style="color: red"> NO PLACE </i>}
+                 <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubjectId)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.ExamDateTime)
-                Edit
+                @if (item.ExamDateTime == null)
+                {<i style="color: red"> NOT SET </i>}
+                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ExamEndTime)
-                Edit
+                @if (item.ExamEndTime == null)
+                {<i style="color: red"> NOT SET </i>}
+                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
             </td>
             <td>
-                <p style="color:red">NOBODY</p>
-                Change
+                <i style="color: red">NOBODY </i> <b>@Html.ActionLink("Add Invigilator", "Create", "Invigilations", new { id=item.ExamId }, new { })</b>
             </td>
 
         </tr>
@@ -72,28 +79,36 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.SubjectId)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Campus)
                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Building)
                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Block)
                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Floor)
                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Room)
-                Edit
+                @if (item.RelatedExamSession.RelatedLocation == null)
+                {<i style="color: red"> NO PLACE </i>}
+                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.SubjectId)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamDateTime)
-                Edit
+                @if (item.RelatedExamSession.ExamDateTime == null)
+                {<i style="color: red"> NOT SET </i>}
+                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamEndTime)
-                Edit
+                @if (item.RelatedExamSession.ExamDateTime == null)
+                {<i style="color: red"> NOT SET </i>}
+                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RelatedUser.FirstName)
                 @Html.DisplayFor(modelItem => item.RelatedUser.Surname)
-                Edit
+                <b>@Html.ActionLink("Add Another", "Create", "Invigilations", new { id = item.ExamId }, new { })</b> |
+                <b>@Html.ActionLink("Remove", "Delete", "Invigilations", new { id = item.InvigilationId }, new { })</b>
             </td>
 
         </tr>

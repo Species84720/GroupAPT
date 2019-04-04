@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Add an Invigilator</h2>
 
 
 @using (Html.BeginForm()) 
@@ -25,9 +25,13 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ExamId, "ExamId", htmlAttributes: new { @class = "control-label col-md-2" })
+            Exam
             <div class="col-md-10">
+               
+
                 @Html.DropDownList("ExamId", null, htmlAttributes: new { @class = "form-control" })
+
+
                 @Html.ValidationMessageFor(model => model.ExamId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -40,9 +44,10 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @Html.ActionLink("Back to List", "ExamManager", "Clerk")
+         
+    </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

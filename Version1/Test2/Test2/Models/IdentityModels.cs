@@ -19,6 +19,15 @@ namespace Test2.Models
         public int? DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         public virtual Department RelatedDepartment { get; set; }
+        
+        /*
+
+            // in case we add Role in the Users table
+
+        public string Role { get; set; }
+         
+
+        */ 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

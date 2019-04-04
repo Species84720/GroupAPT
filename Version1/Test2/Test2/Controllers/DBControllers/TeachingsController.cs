@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
+using System.Web.DynamicData;
 using System.Web.Mvc;
 using System.Web.Security;
 using Microsoft.AspNet.Identity;
@@ -30,15 +31,17 @@ namespace Test2.Controllers.DBControllers
 
             List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId==dept || d.DepartmentParentId==dept select d.DepartmentId );
 
-           // IEnumerable<string> examiners =  Roles.GetUsersInRole("Examiner");
-
-            List<string> users = new List<string>(from u in db.Users 
+            List<string> usersInSameDept = new List<string>(from u in db.Users 
                 where depts.Contains(u.RelatedDepartment.DepartmentId) select u.Id);
+             
 
-            var teachings = (from t in db.Teachings.Include(t=>t.Examinable).Include(t =>t.Examiner )
-                                                         where users.Contains(t.ExaminerId)  select t);
+            
+var teachings = (from t in db.Teachings.Include(t=>t.Examinable).Include(t =>t.Examiner )
+                                                         where usersInSameDept.Contains(t.ExaminerId)  select t);
+                                                          
+ 
 
-             //teachings = db.Teachings.Include(t => t.Examinable).Include(t => t.Examiner);
+
             return View(await teachings.ToListAsync() );
         }
 

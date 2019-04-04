@@ -69,7 +69,7 @@ namespace Test2.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            if (Request.IsAuthenticated) {return RedirectToAction("Index", "Home"); }  //Avoids logged in users in the login page again
+            if (Request.IsAuthenticated) {return RedirectToAction("Dashboard", "Home"); }  //Avoids logged in users in the login page again
 
             ViewBag.ReturnUrl = returnUrl;
             return View();
@@ -181,6 +181,7 @@ namespace Test2.Controllers
 
             if (ModelState.IsValid)
             {
+               
                 int todate = DateTime.Now.Year;
 
                 string yy = todate.ToString();
@@ -232,7 +233,7 @@ namespace Test2.Controllers
                         db.Students.Add(student);
                         await db.SaveChangesAsync();
 
-                    }
+                    }//end if student
                     return RedirectToAction("Admin", "Dashboard");
                 }
                 AddErrors(result);
@@ -241,6 +242,8 @@ namespace Test2.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+
 
         //
         // GET: /Account/ConfirmEmail

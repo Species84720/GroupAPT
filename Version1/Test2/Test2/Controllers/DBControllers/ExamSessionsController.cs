@@ -115,7 +115,7 @@ namespace Test2.Controllers.DBControllers
             ExamSession examSession = await db.ExamSessions.FindAsync(id);
             if (examSession == null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("ExamManager","Clerk");
             }
             string user = User.Identity.GetUserId();
 

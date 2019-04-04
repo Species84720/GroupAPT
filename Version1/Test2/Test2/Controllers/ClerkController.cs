@@ -30,21 +30,21 @@ namespace Test2.Controllers
 
             List<string> examlist = new List<string>(from e in db.ExamSessions where subjects.Contains(e.SubjectId) select e.ExamId);
 
-            List<Location> locations = new List<Location>(from l in db.Locations select l);
+            
              
-            List<Invigilation> invigilations = new List<Invigilation>(from i in db.Invigilations where examlist.Contains(i.ExamId) select i);
+            //List<Invigilation> invigilations = new List<Invigilation>(from i in db.Invigilations where examlist.Contains(i.ExamId) select i);
 
-            List<string> invigilationList = new List<string>(from i in db.Invigilations where examlist.Contains(i.ExamId) select i.UserId);
+           // List<string> invigilationList = new List<string>(from i in db.Invigilations where examlist.Contains(i.ExamId) select i.UserId);
 
-            List<ApplicationUser> invigilators = new List<ApplicationUser>(from u in db.Users where invigilationList.Contains(u.Id) select u);
+           // List<ApplicationUser> invigilators = new List<ApplicationUser>(from u in db.Users where invigilationList.Contains(u.Id) select u);
 
-            List<Invigilation> wwww = new List<Invigilation>(from i in db.Invigilations.Include(e=>e.RelatedExamSession).Include(l=>l.RelatedUser) where examlist.Contains(i.ExamId)  where examlist.Contains(i.ExamId) select i);
+            List<Invigilation> invigilations = new List<Invigilation>(from i in db.Invigilations.Include(e=>e.RelatedExamSession).Include(l=>l.RelatedUser) where examlist.Contains(i.ExamId)  where examlist.Contains(i.ExamId) select i);
 
             ExamDetailsViewModel examDetails = new ExamDetailsViewModel {
 
                 Sessions=exams,
-                Invigilations=wwww
-
+                Invigilations= invigilations,
+                Department = department
             };
 
 

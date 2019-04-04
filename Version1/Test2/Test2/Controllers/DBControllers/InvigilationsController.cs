@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Owin.Security;
 using Test2.Models;
 using Test2.Models.DBModels;
 
@@ -38,6 +39,7 @@ namespace Test2.Controllers.DBControllers
             return View(invigilation);
         }
 
+        /*
         // GET: Invigilations/Create
         public ActionResult Create()
         {
@@ -45,6 +47,30 @@ namespace Test2.Controllers.DBControllers
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
             return View();
         }
+        */
+
+
+        // GET: Invigilations/Create/5
+        public   ActionResult Create(string id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("ExamManager", "Clerk");
+
+            }
+
+            IEnumerable<ExamSession> exam = new List<ExamSession>(from e in db.ExamSessions where e.ExamId == id select e) ;
+
+            ExamSession specificExam = new ExamSession();
+            specificExam = (from e in db.ExamSessions where e.ExamId == id select e).SingleOrDefault();
+            ViewBag.Subject = specificExam.SubjectId;
+
+
+            ViewBag.ExamId  = new SelectList(exam, "ExamId", "SubjectId");
+            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
+            return View();
+        }
+
 
         // POST: Invigilations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -53,14 +79,18 @@ namespace Test2.Controllers.DBControllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "InvigilationId,UserId,ExamId")] Invigilation invigilation)
         {
+
             if (ModelState.IsValid)
             {
                 db.Invigilations.Add(invigilation);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("ExamManager","Clerk");
             }
 
-            ViewBag.ExamId = new SelectList(db.ExamSessions, "ExamId", "SubjectId", invigilation.ExamId);
+            
+            IEnumerable<ExamSession> exam = new List<ExamSession>(from e in db.ExamSessions where e.ExamId == invigilation.ExamId select e);
+            
+            ViewBag.ExamId = new SelectList(exam, "ExamId", "SubjectId");
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", invigilation.UserId);
             return View(invigilation);
         }
@@ -123,7 +153,7 @@ namespace Test2.Controllers.DBControllers
             Invigilation invigilation = await db.Invigilations.FindAsync(id);
             db.Invigilations.Remove(invigilation);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("ExamManager", "Clerk");
         }
 
         protected override void Dispose(bool disposing)
