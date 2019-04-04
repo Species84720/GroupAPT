@@ -29,43 +29,75 @@
             Subject
         </th>
         <th>
-          Starts At
+            Starts At
         </th>
         <th>
             Ends At
         </th>
 
-        <th></th>
+        <th>inv</th>
     </tr>
 
     @foreach (var item in Model.Sessions)
     {
         <tr>
             <td>
-              
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Campus)
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Building)
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Block)
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Floor)
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Room)
+                Edit
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
+                @Html.DisplayFor(modelItem => item.SubjectId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ExamDateTime)
+                Edit
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ExamEndTime)
+                Edit
             </td>
-            
-          
             <td>
-                @Html.ActionLink("Edit", "Edit", "ExamSessions", new { id = item.ExamId }, new{}) |
-                @Html.ActionLink("Details", "Details", "ExamSessions", new { id = item.ExamId }, new { }) |
-
+                <p style="color:red">NOBODY</p>
+                Change
             </td>
+
         </tr>
     }
+
+    @foreach (var item in Model.Invigilations)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Campus)
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Building)
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Block)
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Floor)
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Room)
+                Edit
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.SubjectId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamDateTime)
+                Edit
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamEndTime)
+                Edit
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedUser.FirstName)
+                @Html.DisplayFor(modelItem => item.RelatedUser.Surname)
+                Edit
+            </td>
+
+        </tr>
+    }
+
 
 </table>

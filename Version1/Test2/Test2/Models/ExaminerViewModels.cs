@@ -102,6 +102,29 @@ namespace Test2.Models
     }
 
 
+    public class ExamInvigilUser
+    {
+        public string examId { get; set; }
+
+        public string examLocation { get; set; }
+
+        public string LocationId { get; set; }
+
+        public string examSubject { get; set; }
+
+        public System.DateTime examStart { get; set; }
+
+        public System.DateTime examEnd { get; set; }
+
+        public string invigilId  { get; set; }
+
+        public string invigilName { get; set; }
+
+        
+    }
+
+
+
     public class ExamDetailsViewModel
     {
         //public ExamSession Session {get;set;}
@@ -116,6 +139,9 @@ namespace Test2.Models
 
         public List<ApplicationUser> Invigilators { get; set; }
 
+        public List<Invigilation> Invigilations { get; set; }
+
+        public List<ExamInvigilUser> Mylist { get; set; }
 
 
     }
