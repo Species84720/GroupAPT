@@ -15,20 +15,15 @@ namespace Test2.Models
     {
         public string FirstName { get; set; }
         public string Surname { get; set; }
-        public string NickName { get; set; }
+        //public string NickName { get; set; }
         public int? DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         public virtual Department RelatedDepartment { get; set; }
         
-        /*
-
-            // in case we add Role in the Users table
-
         public string Role { get; set; }
          
 
-        */ 
-
+         
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

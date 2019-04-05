@@ -194,6 +194,7 @@
     <Compile Include="Controllers\ExaminerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvigilationController.cs" />
+    <Compile Include="Controllers\LearnerController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -317,6 +318,10 @@
     <Compile Include="Migrations\201903221058244_seedMoreTestData.cs" />
     <Compile Include="Migrations\201903221058244_seedMoreTestData.Designer.cs">
       <DependentUpon>201903221058244_seedMoreTestData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904050930385_RolesInAllUsers.cs" />
+    <Compile Include="Migrations\201904050930385_RolesInAllUsers.Designer.cs">
+      <DependentUpon>201904050930385_RolesInAllUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -481,6 +486,8 @@
     <Content Include="Views\Topics\Edit.cshtml" />
     <Content Include="Views\Topics\Index.cshtml" />
     <Content Include="Views\Clerk\ExamManager.cshtml" />
+    <Content Include="Views\Learner\Schedule.cshtml" />
+    <Content Include="Views\Learner\Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -588,6 +595,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903221058244_seedMoreTestData.resx">
       <DependentUpon>201903221058244_seedMoreTestData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904050930385_RolesInAllUsers.resx">
+      <DependentUpon>201904050930385_RolesInAllUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -18,6 +18,7 @@ namespace Test2.Controllers.DBControllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Invigilations
+        [Authorize(Roles = "Clerk")]
         public async Task<ActionResult> Index()
         {
             var invigilations = db.Invigilations.Include(i => i.RelatedExamSession).Include(i => i.RelatedUser);
@@ -25,6 +26,7 @@ namespace Test2.Controllers.DBControllers
         }
 
         // GET: Invigilations/Details/5
+        [Authorize(Roles = "Clerk")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,6 +53,7 @@ namespace Test2.Controllers.DBControllers
 
 
         // GET: Invigilations/Create/5
+        [Authorize(Roles = "Clerk")]
         public   ActionResult Create(string id)
         {
             if (id == null)
@@ -66,8 +69,20 @@ namespace Test2.Controllers.DBControllers
             ViewBag.Subject = specificExam.SubjectId;
 
 
+            List<ApplicationUser> invigilators = new List<ApplicationUser>(from u in db.Users
+                where u.Role == "Invigilator"
+                select u );
+
+            if (invigilators.Count==0)
+            {
+                return RedirectToAction("ExamManager", "Clerk");
+
+            }
+
+
+            ViewBag.UserId = new SelectList(invigilators, "Id", "FirstName");
             ViewBag.ExamId  = new SelectList(exam, "ExamId", "SubjectId");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
+            
             return View();
         }
 
@@ -82,6 +97,11 @@ namespace Test2.Controllers.DBControllers
 
             if (ModelState.IsValid)
             {
+                //we do a check to avoid duplicates
+                Invigilation compare = (from i in db.Invigilations where invigilation.ExamId == i.ExamId && invigilation.UserId == i.UserId select i).SingleOrDefault();
+                if (compare != null) { return RedirectToAction("ExamManager", "Clerk"); }
+
+
                 db.Invigilations.Add(invigilation);
                 await db.SaveChangesAsync();
                 return RedirectToAction("ExamManager","Clerk");
@@ -89,13 +109,21 @@ namespace Test2.Controllers.DBControllers
 
             
             IEnumerable<ExamSession> exam = new List<ExamSession>(from e in db.ExamSessions where e.ExamId == invigilation.ExamId select e);
-            
+
+
+            List<ApplicationUser> invigilators = new List<ApplicationUser>(from u in db.Users
+                where u.Role == "Invigilator"
+                select u);
+
+
+            ViewBag.UserId = new SelectList(invigilators, "Id", "FirstName", invigilation.UserId);
             ViewBag.ExamId = new SelectList(exam, "ExamId", "SubjectId");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", invigilation.UserId);
+            
             return View(invigilation);
         }
 
         // GET: Invigilations/Edit/5
+        [Authorize(Roles = "Clerk")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)

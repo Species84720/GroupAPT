@@ -15,6 +15,7 @@ namespace Test2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Clerk
+        [Authorize(Roles = "Clerk")]
         public ActionResult ExamManager()
         {
              
@@ -32,11 +33,7 @@ namespace Test2.Controllers
 
             
              
-            //List<Invigilation> invigilations = new List<Invigilation>(from i in db.Invigilations where examlist.Contains(i.ExamId) select i);
-
-           // List<string> invigilationList = new List<string>(from i in db.Invigilations where examlist.Contains(i.ExamId) select i.UserId);
-
-           // List<ApplicationUser> invigilators = new List<ApplicationUser>(from u in db.Users where invigilationList.Contains(u.Id) select u);
+            
 
             List<Invigilation> invigilations = new List<Invigilation>(from i in db.Invigilations.Include(e=>e.RelatedExamSession).Include(l=>l.RelatedUser) where examlist.Contains(i.ExamId)  where examlist.Contains(i.ExamId) select i);
 
