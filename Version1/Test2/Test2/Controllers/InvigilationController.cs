@@ -16,6 +16,7 @@ namespace Test2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Invigilation
+        [Authorize(Roles = "Invigilator")]
         public ActionResult Schedule()
         {
             string ingivilator = User.Identity.GetUserId();
@@ -32,7 +33,7 @@ namespace Test2.Controllers
             return View(invigilations);
         }
 
-
+        [Authorize(Roles = "Invigilator")]
         public ActionResult MakeCode()
         {
             string ingivilator = User.Identity.GetUserId();

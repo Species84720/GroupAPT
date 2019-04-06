@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
+using System.Web.DynamicData;
 using System.Web.Mvc;
 using System.Web.Security;
 using Microsoft.AspNet.Identity;
@@ -30,15 +31,17 @@ namespace Test2.Controllers.DBControllers
 
             List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId==dept || d.DepartmentParentId==dept select d.DepartmentId );
 
-           // IEnumerable<string> examiners =  Roles.GetUsersInRole("Examiner");
+            List<string> examinersInSameDept = new List<string>(from u in db.Users 
+                where depts.Contains(u.RelatedDepartment.DepartmentId) && u.Role=="Examiner" select u.Id);
+             
 
-            List<string> users = new List<string>(from u in db.Users 
-                where depts.Contains(u.RelatedDepartment.DepartmentId) select u.Id);
+            
+var teachings = (from t in db.Teachings.Include(t=>t.Examinable).Include(t =>t.Examiner )
+                                                         where examinersInSameDept.Contains(t.ExaminerId)  select t);
+                                                          
+ 
 
-            var teachings = (from t in db.Teachings.Include(t=>t.Examinable).Include(t =>t.Examiner )
-                                                         where users.Contains(t.ExaminerId)  select t);
 
-             //teachings = db.Teachings.Include(t => t.Examinable).Include(t => t.Examiner);
             return View(await teachings.ToListAsync() );
         }
 
@@ -71,9 +74,9 @@ namespace Test2.Controllers.DBControllers
                 depts.Contains( s.RelatedDepartment.DepartmentId) select s);
 
             List<ApplicationUser> users = 
-                new List<ApplicationUser>
-                    (from u in db.Users where depts.Contains(u.RelatedDepartment.DepartmentId)   select u);
-             
+                new List<ApplicationUser>(from u in db.Users where depts.Contains(u.RelatedDepartment.DepartmentId) && u.Role == "Examiner"
+                select u );
+
 
             ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName");
             ViewBag.ExaminerId = new SelectList(users, "Id", "FirstName");
@@ -90,6 +93,12 @@ namespace Test2.Controllers.DBControllers
         {
             if (ModelState.IsValid)
             {
+
+                //we do a check to avoid duplicates
+                Teaching compare = (from t in db.Teachings where teaching.ExaminerId ==t.ExaminerId && teaching.SubjectId==t.SubjectId  select t).SingleOrDefault();
+                if (compare != null) { return RedirectToAction("Index"); }
+
+
                 db.Teachings.Add(teaching);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -107,7 +116,9 @@ namespace Test2.Controllers.DBControllers
 
             List<ApplicationUser> users =
                 new List<ApplicationUser>
-                    (from u in db.Users where depts.Contains(u.RelatedDepartment.DepartmentId) select u);
+                (from u in db.Users
+                    where depts.Contains(u.RelatedDepartment.DepartmentId) && u.Role == "Examiner"
+                    select u);
 
 
             ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName", teaching.SubjectId);
@@ -116,6 +127,7 @@ namespace Test2.Controllers.DBControllers
         }
 
         // GET: Teachings/Edit/5
+        [Authorize(Roles = "Clerk")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -139,7 +151,9 @@ namespace Test2.Controllers.DBControllers
 
             List<ApplicationUser> users =
                 new List<ApplicationUser>
-                    (from u in db.Users where depts.Contains(u.RelatedDepartment.DepartmentId) select u);
+                (from u in db.Users
+                    where depts.Contains(u.RelatedDepartment.DepartmentId) && u.Role == "Examiner"
+                    select u);
 
 
             ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName", teaching.SubjectId);
@@ -172,7 +186,9 @@ namespace Test2.Controllers.DBControllers
 
             List<ApplicationUser> users =
                 new List<ApplicationUser>
-                    (from u in db.Users where depts.Contains(u.RelatedDepartment.DepartmentId) select u);
+                (from u in db.Users
+                    where depts.Contains(u.RelatedDepartment.DepartmentId) && u.Role == "Examiner"
+                    select u);
 
 
             ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName", teaching.SubjectId);
@@ -181,6 +197,7 @@ namespace Test2.Controllers.DBControllers
         }
 
         // GET: Teachings/Delete/5
+        [Authorize(Roles = "Clerk")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
