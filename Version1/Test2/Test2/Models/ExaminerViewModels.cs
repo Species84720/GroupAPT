@@ -102,17 +102,13 @@ namespace Test2.Models
     }
 
 
-   
-
-
-
     public class ExamDetailsViewModel
     {
         //public ExamSession Session {get;set;}
         
         
 
-        public int? Department { get; set; }
+        public int Department { get; set; }
 
         public List<ExamSession> Sessions { get; set; }
 
@@ -120,9 +116,6 @@ namespace Test2.Models
 
         public List<ApplicationUser> Invigilators { get; set; }
 
-        public List<Invigilation> Invigilations { get; set; }
-
-      
 
 
     }

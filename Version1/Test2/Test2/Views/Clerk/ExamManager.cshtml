@@ -23,96 +23,49 @@
 <table class="table">
     <tr>
         <th>
+            Location
+        </th>
+        <th>
             Subject
         </th>
         <th>
-            Location
-        </th>
-
-        <th>
-            Starts At
+          Starts At
         </th>
         <th>
             Ends At
         </th>
 
-        <th>inv</th>
+        <th></th>
     </tr>
 
     @foreach (var item in Model.Sessions)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.SubjectId)
-            </td>
-            <td>
+              
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Campus)
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Building)
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Block)
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Floor)
                 @Html.DisplayFor(modelItem => item.RelatedLocation.Room)
-                @if (item.RelatedLocation.Room == null)
-                {<i style="color: red"> NO PLACE </i>}
-                 <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
             </td>
-
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ExamDateTime)
-                @if (item.ExamDateTime == null)
-                {<i style="color: red"> NOT SET </i>}
-                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ExamEndTime)
-                @if (item.ExamEndTime == null)
-                {<i style="color: red"> NOT SET </i>}
-                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
             </td>
+            
+          
             <td>
-                <i style="color: red">NOBODY </i> <b>@Html.ActionLink("Add Invigilator", "Create", "Invigilations", new { id=item.ExamId }, new { })</b>
-            </td>
+                @Html.ActionLink("Edit", "Edit", "ExamSessions", new { id = item.ExamId }, new{}) |
+                @Html.ActionLink("Details", "Details", "ExamSessions", new { id = item.ExamId }, new { }) |
 
+            </td>
         </tr>
     }
-
-    @foreach (var item in Model.Invigilations)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.SubjectId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Campus)
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Building)
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Block)
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Floor)
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Room)
-                @if (item.RelatedExamSession.RelatedLocation == null)
-                {<i style="color: red"> NO PLACE </i>}
-                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamDateTime)
-                @if (item.RelatedExamSession.ExamDateTime == null)
-                {<i style="color: red"> NOT SET </i>}
-                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamEndTime)
-                @if (item.RelatedExamSession.ExamDateTime == null)
-                {<i style="color: red"> NOT SET </i>}
-                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedUser.FirstName)
-                @Html.DisplayFor(modelItem => item.RelatedUser.Surname)
-                <b>@Html.ActionLink("Add Another", "Create", "Invigilations", new { id = item.ExamId }, new { })</b> |
-                <b>@Html.ActionLink("Remove", "Delete", "Invigilations", new { id = item.InvigilationId }, new { })</b>
-            </td>
-
-        </tr>
-    }
-
 
 </table>

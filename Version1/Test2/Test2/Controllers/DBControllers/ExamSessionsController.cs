@@ -25,7 +25,6 @@ namespace Test2.Controllers.DBControllers
         }
 
         // GET: ExamSessions
-        [Authorize(Roles = "Clerk")]
         public async Task<ActionResult> Index()
         {
             string user = User.Identity.GetUserId();
@@ -60,7 +59,6 @@ namespace Test2.Controllers.DBControllers
         }
 
         // GET: ExamSessions/Create
-        [Authorize(Roles = "Admin, Clerk")]
         public ActionResult Create()
         {
             string user = User.Identity.GetUserId();
@@ -108,7 +106,6 @@ namespace Test2.Controllers.DBControllers
         }
 
         // GET: ExamSessions/Edit/5
-        [Authorize(Roles = "Clerk")]
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
@@ -118,7 +115,7 @@ namespace Test2.Controllers.DBControllers
             ExamSession examSession = await db.ExamSessions.FindAsync(id);
             if (examSession == null)
             {
-                return RedirectToAction("ExamManager","Clerk");
+                return RedirectToAction("Index");
             }
             string user = User.Identity.GetUserId();
 
@@ -181,7 +178,6 @@ namespace Test2.Controllers.DBControllers
         }
 
         // GET: ExamSessions/Delete/5
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)

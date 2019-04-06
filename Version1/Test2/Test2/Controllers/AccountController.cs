@@ -69,7 +69,7 @@ namespace Test2.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            if (Request.IsAuthenticated) {return RedirectToAction("Dashboard", "Home"); }  //Avoids logged in users in the login page again
+            if (Request.IsAuthenticated) {return RedirectToAction("Index", "Home"); }  //Avoids logged in users in the login page again
 
             ViewBag.ReturnUrl = returnUrl;
             return View();
@@ -181,13 +181,12 @@ namespace Test2.Controllers
 
             if (ModelState.IsValid)
             {
-               
                 int todate = DateTime.Now.Year;
 
                 string yy = todate.ToString();
 
                 string IssuedNickName1 = model.FirstName[0].ToString();
-                string IssuedNickName = IssuedNickName1 + model.FirstName[1] + model.FirstName[2] + model.FirstName[3] + model.Surname[0] + model.Surname[1] + model.Surname[2] + model.Surname[3] + "";
+                string IssuedNickName = IssuedNickName1 + model.FirstName[1] + model.FirstName[2] + model.Surname[0] + model.Surname[1] + model.Surname[2] + "";
                 
                 IssuedNickName = IssuedNickName + yy[2] + yy[3]; //adds the 2 numbers of the year I hope
 
@@ -196,7 +195,7 @@ namespace Test2.Controllers
                 someusers = db.Users.ToList();  // gets a list of all users
 
                 IEnumerable<ApplicationUser> similarName = from s in someusers
-                                                           where s.UserName == IssuedNickName
+                                                           where s.NickName == IssuedNickName
                                                            select s;
                 int anumber = similarName.Count();  //counts how many have a similar nick name
 
@@ -204,7 +203,7 @@ namespace Test2.Controllers
 
                 if (anumber>0) IssuedUserName=IssuedUserName+ "." +anumber.ToString(); //contignecy to avoid UserName being similar
 
-                var user = new ApplicationUser { UserName =IssuedUserName, Role = model.Role, DepartmentId=model.DepartmentId, FirstName = model.FirstName, Surname = model.Surname, Email = model.Email };
+                var user = new ApplicationUser { UserName =IssuedUserName, NickName = IssuedNickName, DepartmentId=model.DepartmentId, FirstName = model.FirstName, Surname = model.Surname, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -233,7 +232,7 @@ namespace Test2.Controllers
                         db.Students.Add(student);
                         await db.SaveChangesAsync();
 
-                    }//end if student
+                    }
                     return RedirectToAction("Admin", "Dashboard");
                 }
                 AddErrors(result);
@@ -242,8 +241,6 @@ namespace Test2.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-
 
         //
         // GET: /Account/ConfirmEmail

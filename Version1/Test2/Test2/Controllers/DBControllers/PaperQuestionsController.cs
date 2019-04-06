@@ -13,7 +13,6 @@ using Test2.Models.DBModels;
 
 namespace Test2.Controllers.DBControllers
 {
-    [Authorize(Roles = "Examiner")]
     public class PaperQuestionsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

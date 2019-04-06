@@ -15,35 +15,33 @@ namespace Test2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Clerk
-        [Authorize(Roles = "Clerk")]
         public ActionResult ExamManager()
         {
-             
             string user = User.Identity.GetUserId();
 
             int? department = (from u in db.Users where u.Id ==user select u.DepartmentId).FirstOrDefault();
-             
+
             List<int> departments =new List<int>(from d in db.Departments where (d.DepartmentId ==department || d.DepartmentParentId==department) select d.DepartmentId );
 
             List<string> subjects = new List<string> (from s in db.Subjects where departments.Contains(s.DepartmentId) select s.SubjectId);
-             
-            List<ExamSession> exams = new List<ExamSession> (from e in db.ExamSessions where subjects.Contains(e.SubjectId) && e.Invigilations.Count==0 select e );
-
-            List<string> examlist = new List<string>(from e in db.ExamSessions where subjects.Contains(e.SubjectId) select e.ExamId);
 
             
+            List<ExamSession> exams = new List<ExamSession> (from e in db.ExamSessions where subjects.Contains(e.SubjectId) select e );
+
+            List<Location> locations = new List<Location>(from l in db.Locations select l);
+
+
+            List<ApplicationUser> invigilators =new List<ApplicationUser>(from u in db.Users select u );//I found no way of filtering by Role :((
+
              
-            
 
-            List<Invigilation> invigilations = new List<Invigilation>(from i in db.Invigilations.Include(e=>e.RelatedExamSession).Include(l=>l.RelatedUser) where examlist.Contains(i.ExamId)  where examlist.Contains(i.ExamId) select i);
 
-            ExamDetailsViewModel examDetails = new ExamDetailsViewModel {
-
+            ExamDetailsViewModel examDetails = new ExamDetailsViewModel
+            {
                 Sessions=exams,
-                Invigilations= invigilations,
-                Department = department
+                Invigilators = invigilators,
+                Locations = locations
             };
-
 
 
             return View(examDetails);
