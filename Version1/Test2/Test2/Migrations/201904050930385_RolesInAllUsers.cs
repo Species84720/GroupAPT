@@ -11,9 +11,7 @@ namespace Test2.Migrations
             DropColumn("dbo.AllUsers", "NickName");
 
 
-            Sql(@"
-
-");
+            
         }
         
         public override void Down()
