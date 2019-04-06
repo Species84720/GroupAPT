@@ -9,41 +9,40 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("OEMS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
+    <nav id="navbar-homepage" class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand font-weight-bolder h1" href="@Url.Action("Index", "Home", new { area = "" })">ZPoems</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                @if (Request.IsAuthenticated)
-                {
-
-                    <ul class="nav navbar-nav">
-
-                        <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
-
-                    </ul>
-                }
-                    @Html.Partial("_LoginPartial")
-                </div>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        @if (Request.IsAuthenticated)
+                        {
+                            <a class="nav-link" href="@Url.Action("Dashboard", "Home")">Dashboard</a>
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @Html.Partial("_LoginPartial")
+                </li>
+            </ul>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - GAPT Application</p>
-        </footer>
-    </div>
+</nav>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+<div class="container body-content" style="padding-top:80px">
+    @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - GAPT Application</p>
+    </footer>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
 </body>
 </html>
