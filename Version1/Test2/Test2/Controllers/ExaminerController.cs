@@ -383,6 +383,9 @@ namespace Test2.Controllers.DBControllers
                 int c = a + b;
                 enrollment.ExamMark = (byte) c;
 
+                if (c >= 45) enrollment.FinalAssessment = Enrollment.Assessment.Passed;
+                else enrollment.FinalAssessment = Enrollment.Assessment.Failed;
+
                 db.Entry(enrollment).State = EntityState.Modified;
                 db.SaveChanges();
 

@@ -12,6 +12,7 @@ using Test2.Models.DBModels;
 
 namespace Test2.Controllers.DBControllers
 {
+    
     public class StudentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
