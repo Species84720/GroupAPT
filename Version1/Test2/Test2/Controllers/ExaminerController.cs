@@ -440,12 +440,29 @@ namespace Test2.Controllers.DBControllers
             db.Entry(exam).State = EntityState.Modified;
             db.SaveChanges();
              
-
-
-
+            
             return RedirectToAction("Examiner", "Dashboard");
 
 
+        }
+
+
+        [Authorize(Roles = "Examiner")]
+        public ActionResult Statistics()
+        {
+
+            string teacher = User.Identity.GetUserId();
+
+            List<string> subjectNames =new List<string>(from t in db.Teachings.Where(x => x.ExaminerId == teacher) select t.SubjectId);
+
+            IEnumerable<ExamSession> exams = new List<ExamSession>(from e in db.ExamSessions.Include(s => s.RelatedSubject)
+                where subjectNames.Contains(e.SubjectId) && e.FullyCorrected && e.ExamEndTime != null && e.ExamEndTime < DateTime.Now
+                select e).OrderByDescending(e => e.ExamDateTime.Value.Year);
+
+
+
+
+            return View(exams);
         }
 
 

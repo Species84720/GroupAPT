@@ -48,5 +48,29 @@ namespace Test2.Controllers
 
             return View(examDetails);
         }
+
+
+        [Authorize(Roles = "Clerk")]
+        public ActionResult Statistics()
+        {
+
+            string user = User.Identity.GetUserId();
+
+            int? department = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
+
+            List<int> departments = new List<int>(from d in db.Departments where (d.DepartmentId == department || d.DepartmentParentId == department) select d.DepartmentId);
+
+            List<string> subjects = new List<string>(from s in db.Subjects where departments.Contains(s.DepartmentId) select s.SubjectId);
+
+            IEnumerable<ExamSession> exams = new List<ExamSession>(from e in db.ExamSessions.Include(s =>s.RelatedSubject)
+                where subjects.Contains(e.SubjectId) && e.FullyCorrected && e.ExamEndTime!=null && e.ExamEndTime<DateTime.Now 
+                select e).OrderByDescending(e=>e.ExamDateTime.Value.Year);
+
+
+
+
+            return View(exams);
+        }
+
     }
 }

@@ -12,7 +12,8 @@ using Test2.Models.DBModels;
 
 namespace Test2.Controllers.DBControllers
 {
-    public class LocationsController : Controller
+    [Authorize(Roles="Admin,Clerk")]
+       public class LocationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
