@@ -3,15 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-    <nav id="navbar-homepage" class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+    <nav id="navbar-homepage" class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm" style="background-color:#e3e3e3">
         <div class="container-fluid">
-            <a class="navbar-brand font-weight-bolder h1" href="@Url.Action("Index", "Home", new { area = "" })">ZPoems</a>
+            <a class="navbar-brand font-weight-bolder h1" href="@Url.Action("Index", "Home", new { area = "" })">
+                <img src="@Url.Content("~/favicon.ico")" wdith="30" height="30" class="d-inline-block align-top" />
+                ZPoems
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
                     aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -27,10 +30,10 @@
                     </li>
                     <li class="nav-item">
                         @Html.Partial("_LoginPartial")
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
 </nav>
 
 <div class="container body-content" style="padding-top:80px">
