@@ -6,11 +6,12 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/bootstrap.min.js"></script>
 
 </head>
 <body>
     <nav id="navbar-homepage" class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm" style="background-color:#e3e3e3">
-        <div class="container-fluid">
+        <div class="container">
             <a class="navbar-brand font-weight-bolder h1" href="@Url.Action("Index", "Home", new { area = "" })">
                 <img src="@Url.Content("~/favicon.ico")" wdith="30" height="30" class="d-inline-block align-top" />
                 ZPoems
@@ -28,6 +29,8 @@
                             <a class="nav-link" href="@Url.Action("Dashboard", "Home")">Dashboard</a>
                         }
                     </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         @Html.Partial("_LoginPartial")
                     </li>
