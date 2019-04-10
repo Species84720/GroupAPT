@@ -352,6 +352,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\favicon1.png" />
     <Content Include="Content\Images\pic1.jpg" />
     <Content Include="Content\Images\pic2.jpg" />
     <Content Include="Content\Images\pic3.jpg" />
