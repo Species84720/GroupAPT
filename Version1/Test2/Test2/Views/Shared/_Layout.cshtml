@@ -3,18 +3,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/Custom.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/fontawesome-all.css" type="text/css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
-    <nav id="navbar-homepage" class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm rounded-bottom" style="background-color:#99c9e5">
-        <div class="container">
+    <nav id="navbar-homepage" class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm rounded-bottom">
+        <div class="container-fluid">
             <a class="navbar-brand h1" href="@Url.Action("Index", "Home", new { area = "" })">
                 <img src=@Url.Content("~/Content/Images/favicon1.png") width="30" height="30" class="d-inline-block align-top" />
                 ZPoems
             </a>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
                     aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -28,6 +30,9 @@
                             <a class="nav-link" href="@Url.Action("Dashboard", "Home")">Dashboard</a>
                         }
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Contact", "Home", new { area = "" })">Contact Us</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
@@ -36,18 +41,15 @@
                 </ul>
             </div>
         </div>
-</nav>
+    </nav>
 
-<div class="container body-content" style="padding-top:50px">
-    @RenderBody()
-    <hr />
-    <footer>
-        <p>&copy; @DateTime.Now.Year - GAPT Application</p>
-    </footer>
-</div>
+    <div id="bodycontainer" class="container">
+        @RenderBody()
+        @Html.Partial("_MyPartial")
+    </div>
 
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-@RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
