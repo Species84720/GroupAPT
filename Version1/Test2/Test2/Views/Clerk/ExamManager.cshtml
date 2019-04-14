@@ -36,7 +36,7 @@
             Ends At
         </th>
 
-        <th>inv</th>
+        <th>Invigilator(s)</th>
     </tr>
 
     @foreach (var item in Model.Sessions)
@@ -64,9 +64,11 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ExamEndTime)
+                
                 @if (item.ExamEndTime == null)
                 {<i style="color: red"> NOT SET </i>}
-                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
+                
+                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new { id=item.ExamId}, new {})</b>
             </td>
             <td>
                 <i style="color: red">NOBODY </i> <b>@Html.ActionLink("Add Invigilator", "Create", "Invigilations", new { id=item.ExamId }, new { })</b>

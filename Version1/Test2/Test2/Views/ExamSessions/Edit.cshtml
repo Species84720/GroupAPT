@@ -41,15 +41,30 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ExamDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ExamDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                @if (Model.ExamDateTime != null)
+                {
+                    @Html.HiddenFor(model => model.ExamDateTime)
+                    @Model.ExamDateTime
+                    @Html.ActionLink("Change" ,"ExamDateChange" , new { idd = Model.ExamId }, new { })
+                }
+                else
+                {@Html.Editor("ExamDateTime", new { htmlAttributes = new { @class = "form-control", type = "datetime-local", value = @Model.ExamDateTime } })}
+
                 @Html.ValidationMessageFor(model => model.ExamDateTime, "", new { @class = "text-danger" })
+
+
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.ExamEndTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ExamEndTime, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-10"> @if (Model.ExamEndTime != null)
+                                    {
+                                        @Html.HiddenFor(model => model.ExamEndTime)
+                                        @Model.ExamEndTime
+                                        @Html.ActionLink("Change" ,"ExamEndChange" , new { idd = Model.ExamId }, new { })
+            }
+            else { @Html.EditorFor(model => model.ExamEndTime,  new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })}
                 @Html.ValidationMessageFor(model => model.ExamEndTime, "", new { @class = "text-danger" })
             </div>
         </div>

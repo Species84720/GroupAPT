@@ -94,6 +94,8 @@ namespace Test2.Models
 
         public System.Data.Entity.DbSet<Test2.Models.DBModels.Shot> Shots { get; set; }
 
+        public System.Data.Entity.DbSet<Test2.Models.DBModels.Log> Logs { get; set; }
+
         // if any scaffold adds an ApplicationUser DbSet here remove it.
         // in the new Controller change all references for ApplicationUsers to just Users
         // public System.Data.Entity.DbSet<Test2.Models.ApplicationUser> ApplicationUsers { get; set; }

@@ -25,7 +25,7 @@
             <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Time Table »", "Schedule", "Learner") </p>
         </div>
 
-        <div style="  width: 5%">   </div>
+
         <div style="  width: 5%">
 
         </div>
@@ -40,7 +40,17 @@
             </p>
             <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Results »", "Results", "Learner") </p>
         </div>
+        <div style="  width: 5%">   </div>
+      @if(ViewBag.Exam!=null){  <div class="col-md-4" style="background-color: #FFFFAA; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; height: 200px">
+            <h2>Exam</h2>
+            <p>
+                Start Exam for Subject: @ViewBag.Subject
 
+
+            </p>
+            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Exam »", "Index", "Exams", new {examid=ViewBag.Exam}, new{}) </p>
+        </div>
+      }
 
     </div>
 </div>

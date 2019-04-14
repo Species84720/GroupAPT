@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Test2.Models;
 using Test2.Models.DBModels;
 
@@ -16,24 +17,43 @@ namespace Test2.Controllers.DBControllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+         
+
+
         // GET: Exam
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string examid)
         {
+            // checking that the request was posted on time.
+
+
+            ViewData["ExamId"] = examid;
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index(string AccessCode)
+        public async Task<ActionResult> Index(string AccessCode, string examid)
         {
-            string username = (string)Session["Username"];
-            if (db.ExamSessions.Where(x => x.AccessCode == AccessCode).FirstOrDefault() != null)
-            {
-                string id = db.ExamSessions.Where(x => x.AccessCode == AccessCode).FirstOrDefault().ExamId;
+            string username = User.Identity.GetUserName();
 
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+
+            ExamSession exam = new ExamSession();
+            exam=(from e in db.ExamSessions where e.AccessCode==AccessCode && e.ExamId==examid select e ).FirstOrDefault();
+
+            if (exam != null)
+            {
+
+                if(DateTime.Now.Minute>exam.CodeIssueDateTime.Value.Minute+6 || (DateTime.Now.Hour > exam.CodeIssueDateTime.Value.Hour) ) {
+                    ViewData["ExamId"] = examid;
+                        ViewData["Error"] = "This code has expired. " +
+                                            "Ask the Invigilator for a new one";
+                        return View();
+                    
                 }
+
+
+                string id = examid;
 
                 ExamSession examSession = await db.ExamSessions.FindAsync(id);
                 if (examSession == null)
@@ -72,6 +92,7 @@ namespace Test2.Controllers.DBControllers
                 ViewBag.Answers = specificAnswerList;
                 ViewData["ExamId"] = id;
 
+                ViewData["AccessCode"] = AccessCode;
 
                 //now we get the subject
                 string subjectid = (from q in questionList select q.SubjectId).FirstOrDefault();
@@ -81,7 +102,17 @@ namespace Test2.Controllers.DBControllers
             }
             else
             {
-                ViewData["Error"] = "This code is not available";
+                Log log = new Log();
+                log.Activity = "Attempted Exam Access Code for ExamSession" + examid;
+                log.WhoId = User.Identity.GetUserId();
+                log.When = DateTime.Now;
+
+                db.Logs.AddOrUpdate(log);
+
+                await db.SaveChangesAsync();
+
+                ViewData["ExamId"] = examid;
+                ViewData["Error"] = "This code is not correct";
                 return View();
             }
         }

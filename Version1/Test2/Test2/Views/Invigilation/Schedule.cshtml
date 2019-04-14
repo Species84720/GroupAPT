@@ -18,33 +18,41 @@
         <th>
             @Html.DisplayNameFor(model => model.RelatedExamSession.ExamDateTime)
         </th>
-         
-
+        <th> Place:</th>
     </tr>
 
     @foreach (var item in Model)
-    {
-        <tr>
+    { 
+   
+        
+            
             <td>
                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedSubject.SubjectName)
             </td>
+        
+         
+           
             <td>
                 @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamDateTime)
             </td>
 
-        </tr>
-        <tr> <th> Place:</th> 
-             <td>
-                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Campus) 
-                 <br />
-                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Building) 
-                 <br />
-                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Block) - 
-                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Floor) -
-                 @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Room)
-             </td>
-        </tr>
-    }
+        
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Campus)
+                <br />
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Building)
+                <br />
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Block) -
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Floor) -
+                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Room)
+            </td>
+        
+   
 
+         
+    }
+     
 </table>
+
 

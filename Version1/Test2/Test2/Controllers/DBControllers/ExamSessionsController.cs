@@ -107,6 +107,41 @@ namespace Test2.Controllers.DBControllers
             return View(examSession);
         }
 
+
+
+        
+        public ActionResult ExamDateChange(string idd)
+        {
+            ExamSession examSession =new ExamSession();
+            examSession = db.ExamSessions.Find(idd);
+
+            examSession.ExamDateTime = null;
+
+            db.Entry(examSession).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Edit", "ExamSessions", new{ id=idd});
+        }
+
+
+
+        public ActionResult ExamEndChange(string idd)
+        {
+            ExamSession examSession = new ExamSession();
+            examSession = db.ExamSessions.Find(idd);
+
+            examSession.ExamEndTime = null;
+
+            db.Entry(examSession).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Edit", "ExamSessions", new { id = idd });
+        }
+
+
+
+
+
         // GET: ExamSessions/Edit/5
         [Authorize(Roles = "Clerk")]
         public async Task<ActionResult> Edit(string id)
@@ -133,6 +168,7 @@ namespace Test2.Controllers.DBControllers
 
             List<Subject> subjects = new List<Subject>(from s in db.Subjects where depts.Contains(s.RelatedDepartment.DepartmentId) select s);
 
+            ViewBag.Start = examSession.ExamDateTime;
 
             ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName");
             ViewBag.LocationId = new SelectList(db.Locations, "LocationId", "Campus", examSession.LocationId);
@@ -168,7 +204,7 @@ namespace Test2.Controllers.DBControllers
 
                 db.Entry(examSession).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("ExamManager", "Clerk");
             }
 
             List<Subject> subjects = new List<Subject>(from s in db.Subjects where depts.Contains(s.RelatedDepartment.DepartmentId) select s);
@@ -179,6 +215,10 @@ namespace Test2.Controllers.DBControllers
 
             return View(examSession);
         }
+
+
+        
+
 
         // GET: ExamSessions/Delete/5
         [Authorize(Roles = "Admin")]

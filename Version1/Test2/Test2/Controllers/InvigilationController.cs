@@ -40,41 +40,25 @@ namespace Test2.Controllers
 
             string code="" ;
 
-            ExamSession session = (from i in db.Invigilations where i.UserId == ingivilator && i.RelatedExamSession.ExamDateTime.Value.Day == DateTime.Now.Day && i.RelatedExamSession.ExamDateTime.Value.Minute <= DateTime.Now.Minute + 30 && i.RelatedExamSession.ExamDateTime.Value.Hour == DateTime.Now.Hour && i.RelatedExamSession.ExamDateTime.Value.Minute <= DateTime.Now.Minute + 30 select i.RelatedExamSession ).FirstOrDefault();
+            ExamSession session = (from i in db.Invigilations where i.UserId == ingivilator && i.RelatedExamSession.ExamDateTime<= DateTime.Now && i.RelatedExamSession.ExamEndTime >= DateTime.Now select i.RelatedExamSession ).FirstOrDefault();
 
             //we get the list of invigilations that have not yet happened, related to this invigilation
-            List<Invigilation> invigilations = new List<Invigilation>(from i in db.Invigilations where i.UserId == ingivilator && i.RelatedExamSession.ExamDateTime >= DateTime.Now select i);
+            //List<Invigilation> invigilations = new List<Invigilation>(from i in db.Invigilations where i.UserId == ingivilator && i.RelatedExamSession.ExamDateTime >= DateTime.Now select i);
 
             int num;
 
             if (session==null )
             {
-                code = "There are no Active Exams: ";
+                code = "you are not suppose to be at any Active Exam  ";
+                 
 
-                Random rand = new Random();
-
-                for (int i = 0; i <= 5; i++)
-                {
-                    num = rand.Next(0, 35);
-                    if (num < 10)
-                    {
-                        code = code + num;
-                    }
-                    else
-                    {
-                        code = code + (char)('A' + num - 9);
-                    }
-
-                }//end for
-
-                ViewBag.Exam = "";
+                ViewBag.Exam = "You are not during any exam right now";
 
                 ViewBag.Code = code;
                 return View();
             }
 
-            if (session.CodeIssueDateTime == null || session.CodeIssueDateTime.Value.Minute > DateTime.Now.Minute + 6)
-            {
+             
                 Random rand = new Random();
 
                 for (int i = 0; i <= 5; i++)
@@ -101,7 +85,7 @@ namespace Test2.Controllers
                 db.SaveChanges();
                 }
 
-            }
+            
 
             ViewBag.Exam = session.RelatedSubject.SubjectName;
             ViewBag.Code = code;

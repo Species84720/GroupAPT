@@ -8,7 +8,7 @@
 }
 @{ HttpContext.Current.Session["Username"] = User.Identity.GetUserName(); }
 
-@if (ViewData["ExamId"] != null)
+@if (ViewData["AccessCode"] != null)
 {
     List<PaperQuestion> paperQuestions = ViewBag.PaperQuestions;
 
@@ -328,8 +328,13 @@
 else
 {
     <form method="POST" class="form-horizontal">
+        
         <div class="form-group">
-            <input type="text" id="AccessCode" name="AccessCode" />
+            @Html.Hidden("ExamId")
+        </div>
+        
+        <div class="form-group">
+            <input type="text" id="AccessCode" name="AccessCode"/>
         </div>
 
         @if (ViewData["Error"] != null)
@@ -341,7 +346,7 @@ else
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Next" class="btn btn-default" />
+                <input type="submit" value="Next" class="btn btn-default"/>
             </div>
         </div>
     </form>

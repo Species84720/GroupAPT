@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -46,7 +47,7 @@ namespace Test2.Controllers
 
             List<Enrollment> studentResults = new List<Enrollment>(from e in db.Enrollments where e.StudentId == student && e.FinalAssessment > Enrollment.Assessment.Present && e.SessionStatus > Enrollment.Status.Dubious select e );
 
-            
+             
 
             ViewBag.Name = name;
 

@@ -322,6 +322,10 @@
     <Compile Include="Migrations\201904050930385_RolesInAllUsers.Designer.cs">
       <DependentUpon>201904050930385_RolesInAllUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904131742510_AddingLogs1.cs" />
+    <Compile Include="Migrations\201904131742510_AddingLogs1.Designer.cs">
+      <DependentUpon>201904131742510_AddingLogs1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Database.cs" />
@@ -330,6 +334,7 @@
     <Compile Include="Models\DBModels\ExamSession.cs" />
     <Compile Include="Models\DBModels\Invigilation.cs" />
     <Compile Include="Models\DBModels\Location.cs" />
+    <Compile Include="Models\DBModels\Log.cs" />
     <Compile Include="Models\DBModels\MultipleChoice.cs" />
     <Compile Include="Models\DBModels\PaperQuestion.cs" />
     <Compile Include="Models\DBModels\Question.cs" />
@@ -633,6 +638,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904050930385_RolesInAllUsers.resx">
       <DependentUpon>201904050930385_RolesInAllUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904131742510_AddingLogs1.resx">
+      <DependentUpon>201904131742510_AddingLogs1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

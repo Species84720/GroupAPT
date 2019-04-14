@@ -23,9 +23,13 @@ namespace Test2.Models.DBModels
         public virtual Location RelatedLocation { get; set; }
 
         [DisplayName("Exam Start Date-Time")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat( DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime? ExamDateTime { get; set; }
 
         [DisplayName("Exam End Date-Time")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime? ExamEndTime { get; set; }
 
         [DisplayName("Number of Questions")]
