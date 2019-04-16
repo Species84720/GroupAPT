@@ -4,50 +4,55 @@
     ViewBag.Title = "Log in";
 }
 <div id="loginRow" class="row">
-    <div class="col-8">
+    <div class="col-sm-4">
         <div id="loginCard" class="card">
             <div class="card-header">
-                Login
+                <h4 class="font-weight-bold">Login</h4>
             </div>
             <div class="card-body">
-                <section>
+                <section id="formSection">
                     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group">
-                            @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-10">
+                            @Html.LabelFor(m => m.UserName, new { @class = "row-md-2 control-label" })
+                            <div class="row-md-10">
                                 @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-10">
+                            @Html.LabelFor(m => m.Password, new { @class = "row-md-2 control-label" })
+                            <div class="row-md-10">
                                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <div class="checkbox">
-                                    @Html.CheckBoxFor(m => m.RememberMe)
-                                    @Html.LabelFor(m => m.RememberMe)
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="checkbox">
+                                        @Html.CheckBoxFor(m => m.RememberMe)
+                                        @Html.LabelFor(m => m.RememberMe)
+                                    </div>
+                                </div>
+                                <div id="forgotPwd" class="col-sm-5">
+                                    <p>
+                                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Log in" class="btn btn-primary" />
+                            <div class="row-md-10">
+                                <input type="submit" value="Log in" class="btn btn-primary btn-block" />
                             </div>
                         </div>
 
                         @*Html.ActionLink("Register as a new user", "Register")
                         Enable this once you have account confirmation enabled for password reset functionality*@
-                        <p>
-                            @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                        </p>
+                        
                     }
                 </section>
             </div>

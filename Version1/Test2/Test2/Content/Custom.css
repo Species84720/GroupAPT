@@ -36,3 +36,12 @@
 #footerText {
     font-size: 12px;
 }
+
+#forgotPwd {
+    text-align: end;
+}
+
+#formSection {
+    display:flex; 
+    justify-content:center;
+}
