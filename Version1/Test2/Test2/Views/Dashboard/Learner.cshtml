@@ -6,51 +6,29 @@
 }
 
 <h2>Student's Dashboard</h2>
-
-
-
-
-<div style="background-color: #EEEEEE; border: 1px solid #AAAAAA; padding-left: 15px; padding-top: 15px;  box-shadow: 5px 5px 10px #AAAAAA;">
-
-    <div class="row">
-
-        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; height: 200px">
-            <h2>Exam Time Table</h2>
-            <p>
-                To know when you have examinations
-                and where they will be
-                click here!
-
-            </p>
-            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Time Table »", "Schedule", "Learner") </p>
+<hr />
+<div id="managementFooter" class="card-deck">
+    <div id="loginCard" class="card">
+        <div class="card-body">
+            <h5 class="card-title">Exam Time Table</h5>
+            <p class="card-text">To know when you have examinations and where they will be click here!</p>
+            <a class="btn btn-primary" href="@Url.Action("Schedule", "Learner")">TimeTable</a>
         </div>
-
-
-        <div style="  width: 5%">
-
-        </div>
-
-        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; height: 200px">
-            <h2>Results</h2>
-            <p>
-                Any Results that come out
-                will be stored in this section
-                click here to view them!
-
-            </p>
-            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Results »", "Results", "Learner") </p>
-        </div>
-        <div style="  width: 5%">   </div>
-      @if(ViewBag.Exam!=null){  <div class="col-md-4" style="background-color: #FFFFAA; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; height: 200px">
-            <h2>Exam</h2>
-            <p>
-                Start Exam for Subject: @ViewBag.Subject
-
-
-            </p>
-            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Exam »", "Index", "Exams", new {examid=ViewBag.Exam}, new{}) </p>
-        </div>
-      }
-
     </div>
+    <div id="loginCard" class="card">
+        <div class="card-body">
+            <h5 class="card-title">Results</h5>
+            <p class="card-text">Any Results that come out will be stored in this section click here to view them!</p>
+            <a class="btn btn-primary" href="@Url.Action("Results", "Learner")">Results</a>
+        </div>
+    </div>
+    @if (ViewBag.Exam != null) {
+        <div id="loginCard" class="card text-white bg-danger">
+            <div class="card-body">
+                <h5 class="card-title">Next Exam</h5>
+                <p class="card-text">Start Exam for Subject: @ViewBag.Subject</p>
+                <p class="btn btn-primary">@Html.ActionLink("Exam »", "Index", "Exams", new { examid = ViewBag.Exam }, new { }) </p>
+            </div>
+        </div>
+    }
 </div>
