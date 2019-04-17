@@ -4,9 +4,11 @@
 }
 
 <h2>Account Management</h2>
-<div class="alert alert-success" role="alert">
-    @ViewBag.StatusMessage
-</div>
+@if(ViewBag.StatusMessage != ""){
+    <div class="alert alert-success" role="alert">
+        @ViewBag.StatusMessage
+    </div>
+}
 <div id="managementFooter">
     <hr />
     <div class="col-md-3">
