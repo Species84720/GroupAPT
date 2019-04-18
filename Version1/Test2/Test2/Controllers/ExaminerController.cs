@@ -40,7 +40,7 @@ namespace Test2.Controllers.DBControllers
 
             List<Question> questionList;
             List<Topic> topics;
-
+            string topicname="";
 
             if (String.IsNullOrEmpty(subject))
             {
@@ -82,6 +82,10 @@ namespace Test2.Controllers.DBControllers
                 where SpecificQuestions.Contains(m.QuestionId)
                 select m);
 
+            if (topic != null)
+            {
+              topicname = (from t in db.Topics where t.TopicId == topic select t.TopicName).FirstOrDefault(); }
+
             ViewQuestionsViewModel viewmodel = new ViewQuestionsViewModel
             {
 
@@ -90,7 +94,8 @@ namespace Test2.Controllers.DBControllers
                 MultichoiceList = multichoiceList,
                 Subject = subject,
                 Topic = topic,
-                Topics = topics
+                Topics = topics,
+                TopicName =topicname
             };
 
 

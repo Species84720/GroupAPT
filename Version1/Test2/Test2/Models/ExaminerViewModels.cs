@@ -21,6 +21,7 @@ namespace Test2.Models
 
 
         public int? Topic { get; set; }
+        public string TopicName { get; set; }
 
         public List<Topic> Topics { get; set; }
 

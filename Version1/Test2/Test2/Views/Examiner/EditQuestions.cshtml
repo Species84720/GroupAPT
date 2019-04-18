@@ -31,19 +31,20 @@
         if (Model.Topic == null)
         {
             <div class="col-md-10">
-                Subject Code: @Html.DropDownListFor(model => model.Subject, new SelectList(Model.Subjects, "SubjectId", "subjectName"), "Select Subject")
-
+               @Html.Label("Subject Code:")  @Html.DisplayFor(model => model.Subject)
+              
+                @Html.Label(" ")
                 @Html.DropDownListFor(model => model.Topic, new SelectList(Model.Topics, "TopicId", "TopicName"), "Select Topic")  <input type="submit" value="Apply Topic Filter" />
 
-
+                @Html.HiddenFor(model => model.Subject) 
             </div>
 
         }
         else
         { <div class="col-md-10">
 
-              Subject Code: @Model.Subject          Topic Number: @Model.Topic              <input type="submit" value="Remove Filters" /> 
-                  ________________________________
+              Subject Code: @Model.Subject          Topic: @Model.TopicName              <input type="submit" value="Remove Filters" /> 
+                  _______________
               <Button>@Html.ActionLink("Rename This Topic", "Edit", "Topics", new { id = Model.Topic }, new { subject = Model.Subject })</Button>
               <Button>@Html.ActionLink("Delete This Topic", "Delete", "Topics", new { id = Model.Topic }, new {})</Button>
           </div>
