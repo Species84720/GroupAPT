@@ -82,7 +82,7 @@
                             <b>
                                 @Html.ActionLink("Up", "Up", "PaperQuestions", new { id = item.PaperQuestionId }, new { }) |
                                 @Html.ActionLink("Down", "Down", "PaperQuestions", new { id = item.PaperQuestionId }, new { }) |
-                                @Html.ActionLink("Remove", "Delete", "PaperQuestions", new { id = item.PaperQuestionId }, new { })
+                                @Html.ActionLink("Remove", "Delete", "PaperQuestions", new { id = item.PaperQuestionId , session= Model.Session }, new { })
                             </b>
 
                         </td>

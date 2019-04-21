@@ -107,21 +107,22 @@ namespace Test2.Controllers.DBControllers
             PaperQuestion paperQuestionToUp = db.PaperQuestions.Find(id);
             if (paperQuestionToUp == null)
             {
-                  return RedirectToAction("EditPapers", "Examiner", new { subject = paperQuestionToUp.RelatedQuestion.SubjectId });
+                  return RedirectToAction("EditPapers", "Examiner");
             }
 
 
-            PaperQuestion paperQuestionToDown = (from p in db.PaperQuestions where p.NumberInPaper== paperQuestionToUp.NumberInPaper-1 select p).FirstOrDefault() ;
+            PaperQuestion paperQuestionToDown = (from p in db.PaperQuestions
+                where p.NumberInPaper== paperQuestionToUp.NumberInPaper-1 && p.ExamId == paperQuestionToUp.ExamId
+                select p).FirstOrDefault() ;
 
-            if (paperQuestionToDown == null)
+            if (paperQuestionToDown != null)
             {
-                return RedirectToAction("EditPapers", "Examiner", new { subject = paperQuestionToUp.RelatedQuestion.SubjectId });
+                paperQuestionToDown.NumberInPaper++;
+                paperQuestionToUp.NumberInPaper--;
+                //return RedirectToAction("EditPapers", "Examiner", new { subject = paperQuestionToUp.RelatedQuestion.SubjectId });
             }
 
             
-            paperQuestionToUp.NumberInPaper--;
-            paperQuestionToDown.NumberInPaper++;
-
             db.SaveChanges();
 
 
@@ -140,21 +141,22 @@ namespace Test2.Controllers.DBControllers
 
             if (paperQuestionToDown == null)
             {
-                return RedirectToAction("EditPapers", "Examiner", new { subject = paperQuestionToDown.RelatedQuestion.SubjectId });
+                return RedirectToAction("EditPapers", "Examiner" );
             }
 
 
-            PaperQuestion paperQuestionToUp = (from p in db.PaperQuestions where p.NumberInPaper == paperQuestionToDown.NumberInPaper + 1 select p).FirstOrDefault();
+            PaperQuestion paperQuestionToUp = (from p in db.PaperQuestions
+                where p.NumberInPaper == paperQuestionToDown.NumberInPaper+1 && p.ExamId == paperQuestionToDown.ExamId
+                select p).FirstOrDefault();
 
-            if (paperQuestionToUp == null)
+            if (paperQuestionToUp != null)
             {
-                return RedirectToAction("EditPapers", "Examiner", new { subject = paperQuestionToDown.RelatedQuestion.SubjectId });
+                paperQuestionToUp.NumberInPaper--;
+                paperQuestionToDown.NumberInPaper++;
+                // return RedirectToAction("EditPapers", "Examiner", new { subject = paperQuestionToDown.RelatedQuestion.SubjectId });
             }
 
-
-            paperQuestionToUp.NumberInPaper--;
-            paperQuestionToDown.NumberInPaper++;
-
+            
             db.SaveChanges();
 
 
@@ -207,22 +209,26 @@ namespace Test2.Controllers.DBControllers
 
 
         // GET: PaperQuestions/Delete/5
-        public async Task<ActionResult> Delete(string id, string subject)
+        public async Task<ActionResult> Delete(string id, string session)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            // we find the question to be deleted
             PaperQuestion paperQuestion = await db.PaperQuestions.FindAsync(id);
             if (paperQuestion == null)
             {
                 return HttpNotFound();
             }
 
-            byte lastQNumber = (from p in db.PaperQuestions select p.NumberInPaper).Max();
+            // we find the last question
+            byte lastQNumber = (from p in db.PaperQuestions where p.ExamId==session select p.NumberInPaper).Max();
+            PaperQuestion lastQuestion = (from p in db.PaperQuestions where p.NumberInPaper==lastQNumber && p.ExamId==session select p).SingleOrDefault();
 
-            PaperQuestion lastQuestion = (from p in db.PaperQuestions where p.NumberInPaper==lastQNumber select p).SingleOrDefault();
-
+            // we give the last question the same number as the one to be deleted.
+            // this way the last question will jump to its position
             lastQuestion.NumberInPaper = paperQuestion.NumberInPaper;
             db.SaveChanges();
 
