@@ -1,6 +1,8 @@
 ﻿@model Test2.Models.SetPaperViewModel
 
 @{
+    /**/
+
     ViewBag.Title = "EditPapers";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -8,105 +10,108 @@
 @if (Model.Subject != null)
 {
 
-    <h3 style="  background: #FFFFFF "> Subject Code: @Model.Subject</h3>
-                                                                    
-
-    <div class="row"  >
-        <div style="align-self: right; float: left; width: 40%; background: #EFFEFF; border: 1px solid #AAAAAA; padding-left: 1px; padding-top: 1px;  box-shadow: 5px 5px 10px #AAAAAA; ">
-            <h4 style="background: #111111; color: #FFFFFF; align-content: center ">Available Questions</h4>
-
-
-            <table class="table">
-                <tr>
-                    <th>
-                        Topic
-                    </th>
-                    <th>
-                        Question
-                    </th>
-                </tr>
-
-                @foreach (var item in Model.AvailableQuestions)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RelatedTopic.TopicName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.QuestionText) <b> @Html.ActionLink("Include", "Create", "PaperQuestions", new { questionid = item.QuestionId, examid = Model.Session, subject = Model.Subject }, new { })</b>
-                        </td>
-                        
-                         
-                    </tr>
-                }
-
-            </table>
-
-
+    <div id="loginCard" class="card">
+        <div class="card-header">
+            <h2 class="card-title">Subject Code: @Model.Subject</h2>
         </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm">
+                    <h5 style="text-align:center">Available Questions</h5>
 
-        <div style="align-self: right; width: 59%; float: right; background: #FFFFDD;border: 1px solid #AAAAAA; padding-left: 1px; padding-top: 1px;  box-shadow: 5px 5px 10px #AAAAAA;  ">
+                    <table class="table table-hover table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Topic</th>
+                                <th scope="col">Question</th>
+                            </tr>
+                        </thead>
 
-            <h4 style="background: #111111; color: #FFFFFF;  align-content: center ">Paper Questions</h4>
+                        @foreach (var item in Model.AvailableQuestions)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RelatedTopic.TopicName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.QuestionText)
+                                    @Html.ActionLink("Include", "Create", "PaperQuestions", new { questionid = item.QuestionId, examid = Model.Session, subject = Model.Subject }, new { @class = "btn btn-primary btn-sm" })
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <div  class="col-sm">
+                    <h5 style="text-align:center">Paper Questions</h5>
+                    <table class="table table-hover table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Question</th>
+                                <th scope="col"># in paper</th>
+                                <th scope="col">Marks</th>
+                                <th scope="col">Sort or Remove</th>
+                            </tr>
+                        </thead>
 
+                        @foreach (var item in Model.Included)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RelatedQuestion.QuestionText)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NumberInPaper)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MarksAllocated)
+                                    @Html.ActionLink("Edit", "Edit", "PaperQuestions", new { id = item.PaperQuestionId }, new { @class = "btn btn-primary btn-sm" })
+                                </td>
+                                <td>
+                                    <div class="col">
+                                        @Html.ActionLink("Up", "Up", "PaperQuestions", new { id = item.PaperQuestionId }, new { @class = "btn btn-primary btn-sm" })
+                                    </div>
+                                    <div id="coltop2px" class="col">
+                                        @Html.ActionLink("Down", "Down", "PaperQuestions", new { id = item.PaperQuestionId }, new { @class = "btn btn-primary btn-sm" })
+                                    </div>
+                                    <div id="coltop2px" class="col">
+                                        @Html.ActionLink("Remove", "Delete", "PaperQuestions", new { id = item.PaperQuestionId, session = Model.Session }, new { @class = "btn btn-primary btn-sm" })
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td></td> 
+                            <td>Total Marks:</td>
+                            <td>@Model.Mark</td>
+                            <td></td>
+                        </tr>
 
-            <table class="table">
-                <tr>
-                    <th>
-                        Question
-                    </th>
-                    <th>
-                        # in paper
-                    </th>
-                    <th>
-                        Marks
-                    </th>
-                    <th>Sort or Remove</th>
-                </tr>
-
-                @foreach (var item in Model.Included)
-                {
-                    <tr>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RelatedQuestion.QuestionText)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NumberInPaper)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MarksAllocated) <b>@Html.ActionLink("Edit", "Edit", "PaperQuestions", new { id = item.PaperQuestionId }, new { })</b>
-                        </td>
-                        <td>
-
-                            <b>
-                                @Html.ActionLink("Up", "Up", "PaperQuestions", new { id = item.PaperQuestionId }, new { }) |
-                                @Html.ActionLink("Down", "Down", "PaperQuestions", new { id = item.PaperQuestionId }, new { }) |
-                                @Html.ActionLink("Remove", "Delete", "PaperQuestions", new { id = item.PaperQuestionId , session= Model.Session }, new { })
-                            </b>
-
-                        </td>
-                    </tr>
-                }
-                <tr><td></td> <td>Total Marks:</td><td>@Model.Mark  </td> <td></td></tr>
-
-            </table>
-
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
+
 }
 else
 {
-    using (Html.BeginForm("EditPapers", "Examiner", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    using (Html.BeginForm("EditPapers", "Examiner", FormMethod.Post, new { @class = "form", role = "form" }))
     {
-
-        <div class="form-group">
-
-            <div class="col-md-10">
-                @Html.Label("Choose Subject")
-                @Html.DropDownListFor(model => model.Subject, new SelectList(Model.Subjects, "SubjectId", "subjectName"), "Select Subject") <input type="submit" value="Select" />
+        <div id="loginCard" class="card">
+            <div class="card-header">
+                <h2 class="card-title">Edit Exam Questions</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    @Html.Label("Choose Subject", htmlAttributes: new { @class = "col-sm-2 col-control-label" })
+                    <div class="col-sm">
+                        @Html.DropDownListFor(model => model.Subject, new SelectList(Model.Subjects, "SubjectId", "subjectName"), "Select Subject", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm">
+                        <input class="btn btn-outline-primary" type="submit" value="Select" />
+                    </div>
+                </div>
             </div>
         </div>
-
     }
 }

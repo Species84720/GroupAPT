@@ -6,128 +6,140 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
-<h2>Edit Exam Questions</h2>
-
-@using (Html.BeginForm("EditQuestions", "Examiner", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("EditQuestions", "Examiner", FormMethod.Post, new { @class = "form", role = "form" }))
 {
-    
-
-<div><table class="table"><tr><th> </th></tr></table></div>
-
-<div class="form-group">
-    @if (Model.Subject == null)
-    {
-        <div class="col-md-10">
-            @Html.Label("Filter by Subject")
-            @Html.DropDownListFor(model => model.Subject, new SelectList(Model.Subjects, "SubjectId", "subjectName"), "Select Subject") <input type="submit" value="Apply Subject Filter" />
+    <div id="loginCard" class="card">
+        <div class="card-header">
+            <h2 class="card-title">Edit Exam Questions</h2>
         </div>
-
-
-    }
-    else
-    {
-
-        if (Model.Topic == null)
-        {
-            <div class="col-md-10">
-               @Html.Label("Subject Code:")  @Html.DisplayFor(model => model.Subject)
-              
-                @Html.Label(" ")
-                @Html.DropDownListFor(model => model.Topic, new SelectList(Model.Topics, "TopicId", "TopicName"), "Select Topic")  <input type="submit" value="Apply Topic Filter" />
-
-                @Html.HiddenFor(model => model.Subject) 
+        <div class="card-body">
+            @if (Model.Subject == null)
+            {
+            <div class="form-group row">
+                @Html.Label("Filter by Subject:", htmlAttributes: new { @class = "col-sm-2 col-control-label" })
+                <div class="col-sm">
+                    @Html.DropDownListFor(model => model.Subject, new SelectList(Model.Subjects, "SubjectId", "subjectName"), "Select Subject", htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm">
+                    <input class="btn btn-outline-primary" type="submit" value="Apply Subject Filter" />
+                </div>
             </div>
-
-        }
-        else
-        { <div class="col-md-10">
-
-              Subject Code: @Model.Subject          Topic: @Model.TopicName              <input type="submit" value="Remove Filters" /> 
-                  _______________
-              <Button>@Html.ActionLink("Rename This Topic", "Edit", "Topics", new { id = Model.Topic }, new { subject = Model.Subject })</Button>
-              <Button>@Html.ActionLink("Delete This Topic", "Delete", "Topics", new { id = Model.Topic }, new {})</Button>
-          </div>
-
-        }
-
-    }
-    @if (Model.Subject != null)
-    {
-        <Button>@Html.ActionLink("Create New Topic", "Create", "Topics", new { subject = Model.Subject }, new { })</Button>
-        
-    }
+            }
+            else
+            {
+                if (Model.Topic == null)
+                {
+            <div class="form-group row">
+                <div class="col-sm-auto col-control-label">
+                    @Html.Label("Subject Code:")
+                    @Html.DisplayFor(model => model.Subject)
+                </div>
+                <div class="col-sm">
+                    @Html.DropDownListFor(model => model.Topic, new SelectList(Model.Topics, "TopicId", "TopicName"), "Select Topic", htmlAttributes: new { @class = "form-control", @style="max-width:100%;" })
+                </div>
+                <div class="col-sm">
+                    <input class="btn btn-outline-primary" type="submit" value="Apply Topic Filter" />
+                </div>
+                @Html.HiddenFor(model => model.Subject)
+            </div>
+                }
+                else
+                { 
+            <div class="form-group row">
+                <div class="col-sm-auto col-control-label">
+                    Subject Code: @Model.Subject<br />Topic: @Model.TopicName
+                </div>
+                <div id="coltop10px" class="col-sm">
+                    <input class="btn btn-outline-primary" type="submit" value="Remove Filters" />
+                </div>
+            </div>
+                <div id="coltop10px" class="col-sm">
+                    @Html.ActionLink("Rename This Topic", "Edit", "Topics", new { id = Model.Topic }, new { subject = Model.Subject, @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Delete This Topic", "Delete", "Topics", new { id = Model.Topic }, new { @class = "btn btn-primary btn-sm" })
+                </div>
+                }
+            }
+            @if (Model.Subject != null)
+            {
+                  <div id="coltop10px" class="col-md-10">
+                        @Html.ActionLink("Create New Topic", "Create", "Topics", new { subject = Model.Subject }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("Create New Question", "Create", "Questions", new { subject = Model.Subject }, new { @class = "btn btn-primary btn-sm" })   
+                  </div>
+            }
+        </div>
+    </div>
+}
+<div id="tableCard" class="card">
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        Subject
+                    </th>
+                    <th scope="col">
+                        Topic
+                    </th>
+                    <th scope="col">
+                        Usage
+                    </th>
+                    <th scope="col">
+                        Question Text
+                    </th>
+                    <th scope="col">
+                        Sample Answer
+                    </th>
+                    <th scope="col">
+                        Type
+                    </th>
+                    <th scope="col">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.QuestionList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RelatedTopic.TopicName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QuestionUsage)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QuestionText)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SampleAnswer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QuestionFormat)
+                        </td>
+                        <td>
+                            <div class="col">
+                                @Html.ActionLink("Edit", "Edit", "Questions", new { id = item.QuestionId }, new { @class = "btn btn-primary btn-sm" })
+                            </div>
+                            <div id="coltop10px" class="col">
+                                @Html.ActionLink("Details", "Details", "Questions", new { id = item.QuestionId }, new { @class = "btn btn-primary btn-sm" })
+                            </div>
+                            <div id="coltop10px" class="col">
+                                @Html.ActionLink("Delete", "Delete", "Questions", new { id = item.QuestionId }, new { @class = "btn btn-primary btn-sm" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
- }
 
-        @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        }
-@if (Model.Subject != null) { 
-<Button>@Html.ActionLink("Create New Question", "Create", "Questions", new { subject = Model.Subject }, new { }) </Button>  
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
-else { <div>
-           <table class="table">
-           <tr>
-               <th> </th>
-           </tr>
-           </table>
-       </div>
-
-}
-<table class="table">
-    <tr>
-        <th>
-            Subject
-        </th>
-        <th>
-            Topic
-        </th>
-        <th>
-            Usage
-        </th>
-        <th>
-            Question Text
-        </th>
-        <th>
-            Sample Answer
-        </th>
-        <th>
-            Type
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model.QuestionList)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedTopic.TopicName) 
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuestionUsage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuestionText)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SampleAnswer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuestionFormat)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", "Questions", new { id = item.QuestionId }, new{}) 
-                @Html.ActionLink("Details", "Details", "Questions", new { id = item.QuestionId}, new{} ) 
-                @Html.ActionLink("Delete", "Delete", "Questions", new { id = item.QuestionId}, new{} )
-            </td>
-        </tr>
-    }
-
-</table>
-
-
-
