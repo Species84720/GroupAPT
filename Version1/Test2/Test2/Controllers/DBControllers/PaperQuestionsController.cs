@@ -230,9 +230,18 @@ namespace Test2.Controllers.DBControllers
             // we give the last question the same number as the one to be deleted.
             // this way the last question will jump to its position
             lastQuestion.NumberInPaper = paperQuestion.NumberInPaper;
-            db.SaveChanges();
+            //  db.SaveChanges();
 
-            return View(paperQuestion);
+            string Subject = (from q in db.Questions where q.QuestionId == paperQuestion.QuestionId select q.SubjectId).SingleOrDefault();
+
+            db.PaperQuestions.Remove(paperQuestion);
+             
+
+            await db.SaveChangesAsync();
+
+
+            return RedirectToAction("EditPapers", "Examiner", new { subject = Subject });
+            
         }
 
         // POST: PaperQuestions/Delete/5
@@ -240,13 +249,15 @@ namespace Test2.Controllers.DBControllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id )
         {
+            // REDUNDANT AS  FU*** Method
+
             PaperQuestion paperQuestion = await db.PaperQuestions.FindAsync(id);
 
             string Subject = (from q in db.Questions where q.QuestionId == paperQuestion.QuestionId select q.SubjectId).SingleOrDefault();
 
             db.PaperQuestions.Remove(paperQuestion);
 
-            
+
 
             await db.SaveChangesAsync();
 
