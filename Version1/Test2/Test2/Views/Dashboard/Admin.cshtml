@@ -5,76 +5,38 @@
 }
 
 <h2>Administrator's Dashboard</h2>
-
-
-<div style="background-color: #EEEEEE; border: 1px solid #AAAAAA; padding-left: 15px; padding-top: 15px;  box-shadow: 5px 5px 10px #AAAAAA;">
-
-    <div class="row">
-
-        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; height: 200px">
-            <h2>Create User</h2>
-            <p>
-                Create a new user
-                assign role
-                and Department.
-
-            </p>
-            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Create New User", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</p>
-        </div>
-
-        <div style="  width: 5%"> </div>
-
-        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; margin-left: 2%; margin-right: 2%; height: 200px">
-            <h2> Manage Departments</h2>
-            <p>
-                Click here to manage Departments.
-
-            </p>
-            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Manage Departments", "Index", "Departments", routeValues: null, htmlAttributes: new { id = "registerLink" })</p>
-        </div>
-
-        <div style="  width: 5%"> </div>
-
-        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; margin-left: 2%; margin-right: 2%; height: 200px">
-            <h2> Logs</h2>
-            <p>
-                Introspect into who has been doing what because you have the power to do so.
-
-            </p>
-            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Manage Exam Sessions »", "Index", "ExamSessions") </p>
+<hr />
+<div id="managementFooter" class="card-deck" style="flex-wrap:wrap">
+    <div id="loginCard" class="card">
+        <div class="card-body">
+            <h5 class="card-title">Create User</h5>
+            <p class="card-text">Create a new User, assign their Role and their respective Department!</p>
+            @* <a class="btn btn-primary" href="@Url.Action("Register", "Examiner")">Questions</a> *@
+            @Html.ActionLink("Create New User", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class= "btn btn-primary" })
         </div>
     </div>
-
-
-    <div class="row" style=" width: 100%; height: 20px;">
-        <p>
-
-
-        </p>
-    </div>
-
-    <div class="row"> 
-        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; margin-left: 2%; margin-right: 2%; height: 200px">
-            <h2> Locations</h2>
-            <p>
-                Add Exam Locations to the Database
-
-            </p>
-            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Manage Exam Sessions »", "Index", "Locations") </p>
-        </div>
-        <div class="col-md-4">
-            <p>
-
-
-            </p>
+    <div id="loginCard" class="card">
+        <div class="card-body">
+            <h5 class="card-title">Manage Departments</h5>
+            <p class="card-text">Manage a Department!</p>
+            @*<a class="btn btn-primary" href="@Url.Action("EditPapers", "Examiner")">Papers</a>*@
+            @Html.ActionLink("Manage Departments", "Index", "Departments", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
         </div>
     </div>
-    <div class="row" style="  width: 100%; height: 20px;">
-        <p>
-
-
-        </p>
+    <div id="loginCard" class="card">
+        <div class="card-body">
+            <h5 class="card-title">Access Logs</h5>
+            <p class="card-text">Check all of the actions of the users from here!</p>
+            @*<a class="btn btn-primary" href="@Url.Action("CorrectExam", "Examiner")">Corrections</a>*@
+            @Html.ActionLink("Access Logs", "Index", "ExamSessions", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
+        </div>
+    </div>
+    <div id="loginCard" class="card">
+        <div class="card-body">
+            <h5 class="card-title">Locations</h5>
+            <p class="card-text">Add exam locations into the database!</p>
+            @*<a class="btn btn-primary" href="@Url.Action("Statistics", "Examiner")">Statistics</a>*@
+            @Html.ActionLink("Manage Locations", "Index", "Locations", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
+        </div>
     </div>
 </div>
-
- 

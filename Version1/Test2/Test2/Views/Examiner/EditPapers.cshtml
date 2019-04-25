@@ -10,7 +10,7 @@
 @if (Model.Subject != null)
 {
 
-    <div id="loginCard" class="card">
+    <div id="managementFooter" class="card">
         <div class="card-header">
             <h2 class="card-title">Subject Code: @Model.Subject</h2>
         </div>
@@ -35,7 +35,7 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.QuestionText)
-                                    @Html.ActionLink("Include", "Create", "PaperQuestions", new { questionid = item.QuestionId, examid = Model.Session, subject = Model.Subject }, new { @class = "btn btn-primary btn-sm" })
+                                    @Html.ActionLink("Add", "Create", "PaperQuestions", new { questionid = item.QuestionId, examid = Model.Session, subject = Model.Subject }, new { @class = "btn btn-primary btn-sm" })
                                 </td>
                             </tr>
                         }
@@ -49,7 +49,7 @@
                                 <th scope="col">Question</th>
                                 <th scope="col"># in paper</th>
                                 <th scope="col">Marks</th>
-                                <th scope="col">Sort or Remove</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
 
@@ -97,7 +97,7 @@ else
 {
     using (Html.BeginForm("EditPapers", "Examiner", FormMethod.Post, new { @class = "form", role = "form" }))
     {
-        <div id="loginCard" class="card">
+        <div id="managementFooter" class="card">
             <div class="card-header">
                 <h2 class="card-title">Edit Exam Questions</h2>
             </div>

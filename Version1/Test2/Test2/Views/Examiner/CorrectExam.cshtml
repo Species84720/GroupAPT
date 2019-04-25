@@ -18,76 +18,67 @@
         <div>
             No more Questions to Correct here.
 
-            @Html.ActionLink("Go Back to Dashboard", "Dashboard", "Home")
+            @Html.ActionLink("Go Back to Dashboard", "Dashboard", "Home", new { @class = "btn btn-primary" })
 
         </div>
 
     }
     else
     {
-
         using (Html.BeginForm("Correct", "Examiner", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
-            <div class="form-group">
+        <div class="form-group">
+            <div id="tableCard" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Answer Correction</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th> Question</th>
+                            <td>@Html.DisplayFor(model => model.Answer.RelatedPaperQuestion.RelatedQuestion.QuestionText)</td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <th>Sample Answer</th>
+                            <td>@Html.DisplayFor(model => model.Answer.RelatedPaperQuestion.RelatedQuestion.SampleAnswer)</td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <th>Student's Answer</th>
+                            <td>@Html.DisplayFor(model => model.Answer.Answer)</td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td> <b> Assign Mark  Out Of: @Html.DisplayFor(model => model.Answer.RelatedPaperQuestion.MarksAllocated) </b></td>
+                            <td>
+                                @Html.EditorFor(model => model.Answer.MarksGained, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Answer.MarksGained, "", new { @class = "text-danger" })
 
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <th>Add Comment</th>
+                            <td>
+                                @Html.TextAreaFor(model => model.Answer.ExaminerComments)
+                                @Html.ValidationMessageFor(model => model.Answer.ExaminerComments, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <th>
+                                @Html.HiddenFor(model => model.Answer.AnswerId)
+                                @Html.HiddenFor(model => model.Answer.CorrectedDateTime)
+                                @Html.HiddenFor(model => model.Answer.CorrectorId)
 
-
-
-                <h2>Answer Correction</h2>
-
-                <table class="table">
-
-                    <tr>
-                        <th> Question</th>
-                        <td>@Html.DisplayFor(model => model.Answer.RelatedPaperQuestion.RelatedQuestion.QuestionText)</td>
-                    </tr>
-                    <tr></tr>
-                    <tr>
-                        <th>Sample Answer</th>
-                        <td>@Html.DisplayFor(model => model.Answer.RelatedPaperQuestion.RelatedQuestion.SampleAnswer)</td>
-                    </tr>
-                    <tr></tr>
-                    <tr>
-                        <th>Student's Answer</th>
-                        <td>@Html.DisplayFor(model => model.Answer.Answer)</td>
-                    </tr>
-                    <tr></tr>
-                    <tr>
-                        <td> <b> Assign Mark  Out Of: @Html.DisplayFor(model => model.Answer.RelatedPaperQuestion.MarksAllocated) </b></td>
-                        <td>
-                            @Html.EditorFor(model => model.Answer.MarksGained, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Answer.MarksGained, "", new { @class = "text-danger" })
-
-                        </td>
-                    </tr>
-                    <tr></tr>
-                    <tr>
-                        <th>Add Comment</th>
-                        <td>
-                            @Html.TextAreaFor(model => model.Answer.ExaminerComments)
-                            @Html.ValidationMessageFor(model => model.Answer.ExaminerComments, "", new { @class = "text-danger" })
-                        </td>
-                    </tr>
-                    <tr></tr>
-                    <tr>
-                        <th>
-                            @Html.HiddenFor(model => model.Answer.AnswerId)
-                            @Html.HiddenFor(model => model.Answer.CorrectedDateTime)
-                            @Html.HiddenFor(model => model.Answer.CorrectorId)
-
-                        </th>
-                        <td>
-                            <input type="submit" value="Save" class="btn btn-default" />
-
-
-                        </td>
-
-                    </tr>
-
-
-                </table>
-
+                            </th>
+                            <td><input type="submit" value="Save" class="btn btn-default" /></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
+        </div>
 
         } //ends using
     } //end else
@@ -96,8 +87,7 @@ else
 {  //if subject not null
     using (Html.BeginForm("CorrectExam", "Examiner", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
-
-        <div id="loginCard" class="card">
+        <div id="managementFooter" class="card">
             <div class="card-header">
                 <h2 class="card-title">Correct Exams</h2>
             </div>
@@ -111,19 +101,13 @@ else
                         <input class="btn btn-outline-primary" type="submit" value="Apply Subject Filter" />
                     </div>
                 </div>
+                @if (Model.AllSessionsCorrected)
+                {
+                    <div class="alert alert-success" role="alert">
+                        The exam sessions for this subject have been corrected.
+                    </div>
+                }
             </div>
         </div>
-
-        if (Model.AllSessionsCorrected)
-        {
-            <div>
-                The exam sessions for this subject have been corrected.
-            </div>
-        }
     }
 }
-
-
-
-
-
