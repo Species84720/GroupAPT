@@ -4,55 +4,68 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Campus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Building)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Floor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Block)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Room)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Campus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Building)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Floor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Block)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Room)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LocationId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LocationId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LocationId })
-        </td>
-    </tr>
-}
-
-</table>
+<div id="tableCard" class="card">
+    <div class="card-header">
+        <h2 class="card-title">Location Index</h2>
+    </div>
+    <div class="card-body">
+        @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-primary", @style = "margin-bottom:10px;" })
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.Campus)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.Building)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.Floor)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.Block)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.Room)
+                    </th>
+                    <th scope="col">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Campus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Building)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Floor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Block)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Room)
+                    </td>
+                    <td>
+                        <div class="col">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.LocationId }, new { @class = "btn btn-primary btn-sm" })
+                        </div>
+                        <div id="coltop10px" class="col">
+                            @Html.ActionLink("Details", "Details", new { id = item.LocationId }, new { @class = "btn btn-primary btn-sm" })
+                        </div>
+                        <div id="coltop10px" class="col">
+                            @Html.ActionLink("Delete", "Delete", new { id = item.LocationId }, new { @class = "btn btn-primary btn-sm" })
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
