@@ -35,7 +35,7 @@
                     @Html.DisplayFor(model => model.Subject)
                 </div>
                 <div class="col-sm">
-                    @Html.DropDownListFor(model => model.Topic, new SelectList(Model.Topics, "TopicId", "TopicName"), "Select Topic", htmlAttributes: new { @class = "form-control", @style="max-width:100%;" })
+                    @Html.DropDownListFor(model => model.Topic, new SelectList(Model.Topics, "TopicId", "TopicName"), "Select Topic", htmlAttributes: new { @class = "form-control form-style" })
                 </div>
                 <div class="col-sm">
                     <input class="btn btn-outline-primary" type="submit" value="Apply Topic Filter" />

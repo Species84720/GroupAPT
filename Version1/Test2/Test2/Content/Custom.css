@@ -71,3 +71,11 @@
 #coltop2px {
     padding-top:2px;
 }
+
+.form-style {
+    max-width: 100%;
+}
+
+.style-margin-bottom {
+    margin-bottom: 10px;
+}
