@@ -5,54 +5,59 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Results for @ViewBag.Name</h2>
-
-<table class="table">
-    <tr>
-        
-        <th>
-            @Html.DisplayNameFor(model => model.RelatedSubject.SubjectName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExamMark)
-        </th>
-         
-        <th>
-            @Html.DisplayNameFor(model => model.SessionStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FinalAssessment)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedStudent.StudentId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExamMark)
-            </td>
+<div id="tableCard" class="card">
+    <div class="card-header">
+        <h2 class="card-title">Results for @ViewBag.Name</h2>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.RelatedSubject.SubjectName)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.ExamMark)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SessionStatus)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.FinalAssessment)
+                    </th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RelatedStudent.StudentId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExamMark)
+                        </td>
              
-            <td>
-                @Html.DisplayFor(modelItem => item.SessionStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FinalAssessment)
-            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SessionStatus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FinalAssessment)
+                        </td>
             
-            @if(item.FinalAssessment==Enrollment.Assessment.Failed) { 
-                <td>
-                    @Html.ActionLink("Re-Apply for Resit", "Resit", "Learner", new { id = item.EnrollmentId })
-                </td>
-            }
-            else { <td></td>}
-        </tr>
-    }
-
-</table>
+                        @if(item.FinalAssessment==Enrollment.Assessment.Failed) { 
+                            <td>
+                                @Html.ActionLink("Re-Apply for Resit", "Resit", "Learner", new { id = item.EnrollmentId }, new { @class="btn btn-primary" })
+                            </td>
+                        }
+                        else { <td></td> }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

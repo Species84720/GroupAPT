@@ -4,51 +4,44 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Upcoming Exams for @ViewBag.Name</h2>
+<div id="tableCard" class="card">
+    <div class="card-header">
+        <h2 class="card-title">Upcoming Exams for @ViewBag.Name</h2>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Starts At</th>
+                    <th scope="col">Ends At</th>
+                    <th scope="col">Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExamDateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExamEndTime)
+                    </td>
+                    <td>
 
-<table class="table">
-    <tr>
-
-        <th>
-            Subject
-        </th>
-        <th>
-            Starts At
-        </th>
-        <th>
-            Ends At
-        </th>
-        <th>
-            Location
-        </th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExamDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExamEndTime)
-            </td>
-            <td>
-
-                @Html.DisplayFor(modelItem => item.RelatedLocation.Campus)
-                @Html.DisplayFor(modelItem => item.RelatedLocation.Building)
-                @Html.DisplayFor(modelItem => item.RelatedLocation.Block)
-                @Html.DisplayFor(modelItem => item.RelatedLocation.Floor)
-                @Html.DisplayFor(modelItem => item.RelatedLocation.Room)
-            </td>
-
-
-        </tr>
-    }
-</table>
-<p>
-    End of List
-
-</p>
+                        @Html.DisplayFor(modelItem => item.RelatedLocation.Campus)
+                        @Html.DisplayFor(modelItem => item.RelatedLocation.Building)
+                        @Html.DisplayFor(modelItem => item.RelatedLocation.Block)
+                        @Html.DisplayFor(modelItem => item.RelatedLocation.Floor)
+                        @Html.DisplayFor(modelItem => item.RelatedLocation.Room)
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
