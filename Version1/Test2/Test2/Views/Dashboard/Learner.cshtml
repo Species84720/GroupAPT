@@ -7,15 +7,15 @@
 
 <h2>Student's Dashboard</h2>
 <hr />
-<div id="managementFooter" class="card-deck">
-    <div id="loginCard" class="card">
+<div class="card-deck managementFooter">
+    <div class="card managementFooter">
         <div class="card-body">
             <h5 class="card-title">Exam Time Table</h5>
             <p class="card-text">To know when you have examinations and where they will be click here!</p>
             <a class="btn btn-primary" href="@Url.Action("Schedule", "Learner")">TimeTable</a>
         </div>
     </div>
-    <div id="managementFooter" class="card">
+    <div class="card managementFooter">
         <div class="card-body">
             <h5 class="card-title">Results</h5>
             <p class="card-text">Any Results that come out will be stored in this section click here to view them!</p>
@@ -23,7 +23,7 @@
         </div>
     </div>
     @if (ViewBag.Exam != null) {
-        <div id="loginCard" class="card text-white bg-danger">
+        <div class="card text-white bg-danger managementFooter">
             <div class="card-body">
                 <h5 class="card-title">Next Exam</h5>
                 <p class="card-text">Start Exam for Subject: @ViewBag.Subject</p>

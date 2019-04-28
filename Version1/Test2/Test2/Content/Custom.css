@@ -16,10 +16,6 @@
     justify-content:center;
 }
 
-#loginCard {
-    margin-top: 0px;
-}
-
 .card {
     margin-top: 100px;
 }
@@ -49,6 +45,11 @@
 #managementFooter {
     margin-top:0px;
     margin-bottom:-40px;
+}
+
+.managementFooter {
+    margin-top: 0px;
+    margin-bottom: -40px;
 }
 
 #buttonPadding {

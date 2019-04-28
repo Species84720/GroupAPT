@@ -7,7 +7,7 @@
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <div id="loginCard" class="card">
+    <div class="card managementFooter">
         <div class="card-header">
             <h5 class="card-title">Register a new Account</h5>
         </div>
@@ -60,7 +60,7 @@
                 <div class="form-group row">
                     @Html.LabelFor(m => m.DepartmentId, new { @class = "col-sm-2 col-control-label" })
                     <div class="col-sm-10">
-                        @*Html.TextBoxFor(m => m.DepartmentId, new { @class = "form-control", @style = "max-width:100%" })*@
+                        @*Html.TextBoxFor(m => m.DepartmentId, new { @class = "form-control form-style" })*@
                         @Html.DropDownListFor(m => m.DepartmentId, ViewBag.DepartmentList as SelectList, "No Department", new { @class = "form-control form-style" })
                     </div>
                 </div>

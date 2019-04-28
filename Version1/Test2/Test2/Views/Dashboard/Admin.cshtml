@@ -6,8 +6,8 @@
 
 <h2>Administrator's Dashboard</h2>
 <hr />
-<div id="managementFooter" class="card-deck" style="flex-wrap:wrap">
-    <div id="loginCard" class="card">
+<div class="card-deck managementFooter" style="flex-wrap:wrap">
+    <div class="card managementFooter">
         <div class="card-body">
             <h5 class="card-title">Create User</h5>
             <p class="card-text">Create a new User, assign their Role and their respective Department!</p>
@@ -15,7 +15,7 @@
             @Html.ActionLink("Create New User", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class= "btn btn-primary" })
         </div>
     </div>
-    <div id="loginCard" class="card">
+    <div class="card managementFooter">
         <div class="card-body">
             <h5 class="card-title">Manage Departments</h5>
             <p class="card-text">Manage a Department!</p>
@@ -23,7 +23,7 @@
             @Html.ActionLink("Manage Departments", "Index", "Departments", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
         </div>
     </div>
-    <div id="loginCard" class="card">
+    <div class="card managementFooter">
         <div class="card-body">
             <h5 class="card-title">Access Logs</h5>
             <p class="card-text">Check all of the actions of the users from here!</p>
@@ -31,7 +31,7 @@
             @Html.ActionLink("Access Logs", "Index", "ExamSessions", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
         </div>
     </div>
-    <div id="loginCard" class="card">
+    <div class="card managementFooter">
         <div class="card-body">
             <h5 class="card-title">Locations</h5>
             <p class="card-text">Add exam locations into the database!</p>
