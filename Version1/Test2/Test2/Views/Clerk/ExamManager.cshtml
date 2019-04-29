@@ -3,118 +3,109 @@
     ViewBag.Title = "ExamManager";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>ExamManager</h2>
-
-
-
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div id="tableCard" class="card">
+    <div class="card-header">
+        <h2 class="card-title">Exam Manager</h2>
+    </div>
+    <div class="card-body">
+        @Html.ActionLink("Return", "Dashboard", "Home", new { }, new { @class = "btn btn-primary style-margin-bottom" })
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Starts At</th>
+                    <th scope="col">Ends At</th>
+                    <th scope="col">Invigilator(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Sessions)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SubjectId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RelatedLocation.Campus)
+                            @Html.DisplayFor(modelItem => item.RelatedLocation.Building)
+                            @Html.DisplayFor(modelItem => item.RelatedLocation.Block)
+                            @Html.DisplayFor(modelItem => item.RelatedLocation.Floor)
+                            @Html.DisplayFor(modelItem => item.RelatedLocation.Room)
+                            @if (item.RelatedLocation.Room == null)
+                            {<i style="color: red"> NO PLACE </i>}
+                            @Html.ActionLink("Change", "Edit", "ExamSessions", new { id = item.ExamId }, new { @class = "btn btn-primary btn-sm" })
+                        </td>
 
-<h2>Index</h2>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExamDateTime)
+                            @if (item.ExamDateTime == null)
+                            {<i style="color: red"> NOT SET </i>}
+                            @Html.ActionLink("Change", "Edit", "ExamSessions", new { id = item.ExamId }, new { @class = "btn btn-primary btn-sm" })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExamEndTime)
 
-<div>
-    @Html.ActionLink("Back to Dashboard", "Dashboard", "Home")
+                            @if (item.ExamEndTime == null)
+                            {<i style="color: red"> NOT SET </i>}
+
+                            @Html.ActionLink("Change", "Edit", "ExamSessions", new { id = item.ExamId }, new { @class = "btn btn-primary btn-sm" })
+                        </td>
+                        <td>
+                            <i style="color: red">NOBODY </i>
+                            @Html.ActionLink("Add Invigilator", "Create", "Invigilations", new { id = item.ExamId }, new { @class = "btn btn-primary btn-sm" })
+                        </td>
+
+                    </tr>
+                }
+
+                @foreach (var item in Model.Invigilations)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.SubjectId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Campus)
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Building)
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Block)
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Floor)
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Room)
+                            @if (item.RelatedExamSession.RelatedLocation == null)
+                            {<i style="color: red"> NO PLACE </i>}
+                            @Html.ActionLink("Change", "Edit", "ExamSessions", new { id = item.ExamId }, new { @class = "btn btn-primary btn-sm" })
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamDateTime)
+                            @if (item.RelatedExamSession.ExamDateTime == null)
+                            {<i style="color: red"> NOT SET </i>}
+                            @Html.ActionLink("Change", "Edit", "ExamSessions", new { id = item.ExamId }, new { @class = "btn btn-primary btn-sm" })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamEndTime)
+                            @if (item.RelatedExamSession.ExamDateTime == null)
+                            {<i style="color: red"> NOT SET </i>}
+                            @Html.ActionLink("Change", "Edit", "ExamSessions", new { id = item.ExamId }, new { @class = "btn btn-primary btn-sm" })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RelatedUser.FirstName)
+                            @Html.DisplayFor(modelItem => item.RelatedUser.Surname)
+                            <div class="col coltop10px">
+                                @Html.ActionLink("Add Another", "Create", "Invigilations", new { id = item.ExamId }, new { @class = "btn btn-primary btn-sm" })
+                            </div>
+                            <div class="col coltop10px">
+                                @Html.ActionLink("Remove", "Delete", "Invigilations", new { id = item.InvigilationId }, new { @class = "btn btn-primary btn-sm" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
-
-<table class="table">
-    <tr>
-        <th>
-            Subject
-        </th>
-        <th>
-            Location
-        </th>
-
-        <th>
-            Starts At
-        </th>
-        <th>
-            Ends At
-        </th>
-
-        <th>Invigilator(s)</th>
-    </tr>
-
-    @foreach (var item in Model.Sessions)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubjectId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedLocation.Campus)
-                @Html.DisplayFor(modelItem => item.RelatedLocation.Building)
-                @Html.DisplayFor(modelItem => item.RelatedLocation.Block)
-                @Html.DisplayFor(modelItem => item.RelatedLocation.Floor)
-                @Html.DisplayFor(modelItem => item.RelatedLocation.Room)
-                @if (item.RelatedLocation.Room == null)
-                {<i style="color: red"> NO PLACE </i>}
-                 <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.ExamDateTime)
-                @if (item.ExamDateTime == null)
-                {<i style="color: red"> NOT SET </i>}
-                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExamEndTime)
-                
-                @if (item.ExamEndTime == null)
-                {<i style="color: red"> NOT SET </i>}
-                
-                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new { id=item.ExamId}, new {})</b>
-            </td>
-            <td>
-                <i style="color: red">NOBODY </i> <b>@Html.ActionLink("Add Invigilator", "Create", "Invigilations", new { id=item.ExamId }, new { })</b>
-            </td>
-
-        </tr>
-    }
-
-    @foreach (var item in Model.Invigilations)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.SubjectId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Campus)
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Building)
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Block)
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Floor)
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Room)
-                @if (item.RelatedExamSession.RelatedLocation == null)
-                {<i style="color: red"> NO PLACE </i>}
-                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamDateTime)
-                @if (item.RelatedExamSession.ExamDateTime == null)
-                {<i style="color: red"> NOT SET </i>}
-                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamEndTime)
-                @if (item.RelatedExamSession.ExamDateTime == null)
-                {<i style="color: red"> NOT SET </i>}
-                <b>@Html.ActionLink("Change", "Edit", "ExamSessions", new{id=item.ExamId}, new{})</b>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedUser.FirstName)
-                @Html.DisplayFor(modelItem => item.RelatedUser.Surname)
-                <b>@Html.ActionLink("Add Another", "Create", "Invigilations", new { id = item.ExamId }, new { })</b> |
-                <b>@Html.ActionLink("Remove", "Delete", "Invigilations", new { id = item.InvigilationId }, new { })</b>
-            </td>
-
-        </tr>
-    }
-
-
-</table>
