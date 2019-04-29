@@ -4,37 +4,48 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Examinable.SubjectName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Examiner.FirstName)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Examinable.SubjectName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Examiner.FirstName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TeachingId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TeachingId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TeachingId })
-        </td>
-    </tr>
-}
-
-</table>
+<div id="tableCard" class="card">
+    <div class="card-header">
+        <h2 class="card-title">Teaching Index</h2>
+    </div>
+    <div class="card-body">
+        @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-primary style-margin-bottom" })
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.Examinable.SubjectName)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.Examiner.FirstName)
+                    </th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Examinable.SubjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Examiner.FirstName)
+                    </td>
+                    <td>
+                        <div class="col">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.TeachingId })
+                        </div>
+                        <div class="col coltop10px">
+                            @Html.ActionLink("Details", "Details", new { id = item.TeachingId })
+                        </div>
+                        <div class="col coltop10px">
+                            @Html.ActionLink("Delete", "Delete", new { id = item.TeachingId })
+                        </div>
+                     </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

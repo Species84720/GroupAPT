@@ -70,10 +70,10 @@
                                     <div class="col">
                                         @Html.ActionLink("Up", "Up", "PaperQuestions", new { id = item.PaperQuestionId }, new { @class = "btn btn-primary btn-sm" })
                                     </div>
-                                    <div id="coltop2px" class="col">
+                                    <div class="col coltop2px">
                                         @Html.ActionLink("Down", "Down", "PaperQuestions", new { id = item.PaperQuestionId }, new { @class = "btn btn-primary btn-sm" })
                                     </div>
-                                    <div id="coltop2px" class="col">
+                                    <div class="col coltop2px">
                                         @Html.ActionLink("Remove", "Delete", "PaperQuestions", new { id = item.PaperQuestionId, session = Model.Session }, new { @class = "btn btn-primary btn-sm" })
                                     </div>
                                 </td>

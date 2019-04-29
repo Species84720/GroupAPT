@@ -4,40 +4,55 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Index</h2>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.RelatedDepartment.DepartmentName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SubjectName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Credits)
-        </th>
-        <th></th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedDepartment.DepartmentName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubjectName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Credits)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.SubjectId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.SubjectId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.SubjectId })
-            </td>
-        </tr>
-    }
-</table>
+<div id="tableCard" class="card">
+    <div class="card-header">
+        <h2 class="card-title">Subject Index</h2>
+    </div>
+    <div class="card-body">
+        @Html.ActionLink("Cancel", "Dashboard", "Home", new { }, new { @class = "btn btn-primary style-margin-bottom" })
+        @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-primary style-margin-bottom" })
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.RelatedDepartment.DepartmentName)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SubjectName)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.Credits)
+                    </th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RelatedDepartment.DepartmentName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SubjectName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Credits)
+                        </td>
+                        <td>
+                            <div class="col">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.SubjectId }, new { @class = "btn btn-primary btn-sm" })
+                            </div>
+                            <div class="col coltop10px">
+                                @Html.ActionLink("Details", "Details", new { id = item.SubjectId }, new { @class = "btn btn-primary btn-sm" })
+                            </div>
+                            <div class="col coltop10px">
+                                @Html.ActionLink("Delete", "Delete", new { id = item.SubjectId }, new { @class = "btn btn-primary btn-sm" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

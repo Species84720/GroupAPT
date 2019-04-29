@@ -1,93 +1,54 @@
 ﻿@using Microsoft.AspNet.Identity
 @{
-    ViewBag.Title = "Departent Management Dashboard";
+    ViewBag.Title = "Management Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Management Dashboard</h2>
-
-
-<div style="background-color: #EEEEEE; border: 1px solid #AAAAAA; padding-left: 15px; padding-top: 15px;  box-shadow: 5px 5px 10px #AAAAAA;">
-
-    <div class="row">
-
-        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; height: 200px">
-            <h2>Students' Enrollments</h2>
-            <p>
-                To enroll a student into a subject's Exam
-                or to view and edit enrollments; 
-
-                click here!
-
-            </p>
-            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Enrollments »", "Index", "Enrollments") </p>
-        </div>
-
-        <div style="  width: 5%"> </div>
-
-        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; margin-left: 2%; margin-right: 2%; height: 200px">
-            <h2> Examiner to Subject</h2>
-            <p>
-                Click here to manage which persons are associated to a
-                subject, giving them rights to edit and
-                correct the exam paper for that subject.
-
-            </p>
-            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Subject Examiners »", "Index", "Teachings") </p>
-        </div>
-
-        <div style="  width: 5%"> </div>
-
-        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; margin-left: 2%; margin-right: 2%; height: 200px">
-            <h2> Manage Exams</h2>
-            <p>
-                Edit each subject's Exam Session. 
-                Assign Place, Date, Time and 
-                Invigilators to each Exam here.
-
-            </p>
-            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Manage Exam Sessions »", "ExamManager", "Clerk") </p>
+<hr />
+<div class="card-deck managementFooter">
+    <div class="card managementFooter">
+        <div class="card-body">
+            <h5 class="card-title">Students Enrollments</h5>
+            <p class="card-text">To enroll a student into a subject's exam or to view and edit enrollments!</p>
+            @Html.ActionLink("Enrollments", "Index", "Enrollments", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
         </div>
     </div>
-
-
-    <div class="row" style=" width: 100%; height: 20px;">
-        <p>
-
-
-        </p>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; height: 200px">
-            <h2>Manage Subjects</h2>
-            <p>
-                Click here to create or edit Subjects for your department
-
-            </p>
-            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;"> @Html.ActionLink("Manage Subjects »", "Index", "Subjects") </p>
-        </div>
-        <div class="col-md-4" style="background-color: #EDFFDC; box-shadow: 5px 5px 5px #BBBBBB; width: 30%; margin-left: 2%; margin-right: 2%; height: 200px">
-            <h2> Locations</h2>
-            <p>
-                Add Exam Locations to the Database
-
-            </p>
-            <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Locations »", "Index", "Locations") </p>
-        </div>
-        <div class="col-md-4">
-            <p>
-
-
-            </p>
+    <div class="card managementFooter">
+        <div class="card-body">
+            <h5 class="card-title">Examiner to Subject</h5>
+            <p class="card-text">Manage which persons are associated to which subject. Assigning them rights to edit and correct the exams for said subject.</p>
+            @Html.ActionLink("Subject Examiners", "Index", "Teachings", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
         </div>
     </div>
-    <div class="col-md-4" style="background-color: #CCDDFF; width: 30%; height: 200px">
-        <h2>Statistics</h2>
-        <p>
-            This is where you can view High Scores, Averages, Success Rates and other statistics about past exams.
-
-        </p>
-        <p class="btn btn-default" style="box-shadow: 5px 5px 3px #99CCA9;">@Html.ActionLink("Statistics »", "Statistics", "Clerk") </p>
+    <div class="card managementFooter">
+        <div class="card-body">
+            <h5 class="card-title">Manage Exams</h5>
+            <p class="card-text">Edit each subject's exam session. Assign the location, date, time and proctors to each exam!</p>
+            @Html.ActionLink("Manage Exams", "ExamManager", "Clerk", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
+        </div>
+    </div>
+</div>
+<div class="card-deck managementFooter bottom-card-deck">
+    <div class="card managementFooter">
+        <div class="card-body">
+            <h5 class="card-title">Manage Subjects</h5>
+            <p class="card-text">Create or editing subjects for your department!</p>
+            @Html.ActionLink("Manage Subjects", "Index", "Subjects", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
+        </div>
+    </div>
+    <div class="card managementFooter">
+        <div class="card-body">
+            <h5 class="card-title">Manage Locations</h5>
+            <p class="card-text">Add exam locations to the database!</p>
+            @Html.ActionLink("Manage Locations", "Index", "Locations", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
+        </div>
+    </div>
+    <div class="card managementFooter">
+        <div class="card-body">
+            <h5 class="card-title">Manage Statistics</h5>
+            <p class="card-text">View high scores, averages, success rates and other statistics about past exams!</p>
+            @Html.ActionLink("Manage Statistics", "Statistics", "Clerk", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
+        </div>
     </div>
 </div>

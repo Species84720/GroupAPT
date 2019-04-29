@@ -49,11 +49,11 @@
                 <div class="col-sm-auto col-control-label">
                     Subject Code: @Model.Subject<br />Topic: @Model.TopicName
                 </div>
-                <div id="coltop10px" class="col-sm">
+                <div class="col-sm coltop10px">
                     <input class="btn btn-outline-primary" type="submit" value="Remove Filters" />
                 </div>
             </div>
-                <div id="coltop10px" class="col-sm">
+                <div class="col-sm coltop10px">
                     @Html.ActionLink("Rename This Topic", "Edit", "Topics", new { id = Model.Topic }, new { subject = Model.Subject, @class = "btn btn-primary btn-sm" })
                     @Html.ActionLink("Delete This Topic", "Delete", "Topics", new { id = Model.Topic }, new { @class = "btn btn-primary btn-sm" })
                 </div>
@@ -61,7 +61,7 @@
             }
             @if (Model.Subject != null)
             {
-                  <div id="coltop10px" class="col-md-10">
+                  <div class="col-md-10 coltop10px">
                         @Html.ActionLink("Create New Topic", "Create", "Topics", new { subject = Model.Subject }, new { @class = "btn btn-primary btn-sm" })
                         @Html.ActionLink("Create New Question", "Create", "Questions", new { subject = Model.Subject }, new { @class = "btn btn-primary btn-sm" })   
                   </div>
@@ -123,10 +123,10 @@
                             <div class="col">
                                 @Html.ActionLink("Edit", "Edit", "Questions", new { id = item.QuestionId }, new { @class = "btn btn-primary btn-sm" })
                             </div>
-                            <div id="coltop10px" class="col">
+                            <div class="col coltop10px">
                                 @Html.ActionLink("Details", "Details", "Questions", new { id = item.QuestionId }, new { @class = "btn btn-primary btn-sm" })
                             </div>
-                            <div id="coltop10px" class="col">
+                            <div class="col coltop10px">
                                 @Html.ActionLink("Delete", "Delete", "Questions", new { id = item.QuestionId }, new { @class = "btn btn-primary btn-sm" })
                             </div>
                         </td>

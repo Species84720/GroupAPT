@@ -3,79 +3,69 @@
     ViewBag.Title = "Statistics";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div id="tableCard" class="card">
+    <div class="card-header">
+        <h2 class="card-title">Statistics</h2>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        Subject
+                    </th>
+                    <th scope="col">
+                        Session
+                    </th>
+                    <th scope="col">
+                        Lowest Mark
+                    </th>
+                    <th scope="col">
+                        Average
+                    </th>
+                    <th scope="col">
+                        Highest Mark
+                    </th>
+                    <th scope="col">Sucesses #</th>
+                    <th scope="col">Out of</th>
+                    <th scope="col">Failures % </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExamDateTime.Value.Month)
+                            @Html.DisplayFor(modelItem => item.ExamDateTime.Value.Year)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MinMark)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AvgMark)
+                        </td>
 
-<h2>Statistics</h2>
-
-
-<div>
-    @Html.ActionLink("Back to Dashboard", "Dashboard", "Home")
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaxMark)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumOfParticipants - item.NumOfFails)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumOfParticipants)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumOfFails / item.NumOfParticipants * 100)%
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
-
-<table class="table">
-    <tr>
-        <th>
-            Subject
-        </th>
-        <th>
-            Session
-        </th>
-        <th>
-            Lowest Mark
-        </th>
-        <th>
-            Average
-        </th>
-        <th>
-            Highest Mark
-        </th>
-        <th>Sucesses #</th>
-        <th>Out of</th>
-        <th>Failures % </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.RelatedSubject.SubjectName)
-        </td>
-
-
-        <td>
-            @Html.DisplayFor(modelItem => item.ExamDateTime.Value.Month)
-            @Html.DisplayFor(modelItem => item.ExamDateTime.Value.Year)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MinMark)
-
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AvgMark)
-
-        </td>
-
-        <td>
-            @Html.DisplayFor(modelItem => item.MaxMark)
-
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumOfParticipants - item.NumOfFails)
-
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumOfParticipants)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumOfFails/item.NumOfParticipants *100)%
-        </td>
-
-         
-
-    </tr>
-    }
-     
-
-
-</table>
 
 

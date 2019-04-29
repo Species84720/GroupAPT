@@ -5,66 +5,72 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="card managementFooter">
+    <div class="card-header">
+        <h5 class="card-title">Enrollment Details</h5>
+    </div>
+    <div class="card-body">
 
-<div>
-    @Html.ActionLink("Back to Dashboard", "Dashboard", "Home")
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <dt>
+                    @Html.DisplayNameFor(model => model.RelatedStudent.UserId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.RelatedStudent.UserId)
+                </dd>
+            </li>
+            <li class="list-group-item">
+                <dt>
+                    @Html.DisplayNameFor(model => model.RelatedSubject.SubjectName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.RelatedSubject.SubjectName)
+                </dd>
+            </li>
+            <li class="list-group-item">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ExamMark)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ExamMark)
+                </dd>
+            </li>
+            <li class="list-group-item">
+                <dt>
+                    @Html.DisplayNameFor(model => model.SeatNumber)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SeatNumber)
+                </dd>
+            </li>
+            <li class="list-group-item">
+                <dt>
+                    @Html.DisplayNameFor(model => model.SessionStatus)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SessionStatus)
+                </dd>
+            </li>
+            <li class="list-group-item">
+                <dt>
+                    @Html.DisplayNameFor(model => model.FinalAssessment)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FinalAssessment)
+                </dd>
+            </li>
+        </ul>
+
+        <div id="buttonPadding" class="col-sm-10">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.EnrollmentId }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Cancel", "Index", new { area = "" }, new { @class = "btn btn-primary" })
+        </div>
+    </div>
 </div>
-<div>
-    <h4>Enrollment</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.RelatedStudent.UserId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RelatedStudent.UserId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RelatedSubject.SubjectName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RelatedSubject.SubjectName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ExamMark)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ExamMark)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SeatNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SeatNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SessionStatus)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SessionStatus)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FinalAssessment)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FinalAssessment)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EnrollmentId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

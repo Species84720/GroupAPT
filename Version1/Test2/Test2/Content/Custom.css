@@ -47,6 +47,10 @@
     margin-bottom: -40px;
 }
 
+.bottom-card-deck {
+    margin-top: 60px;
+}
+
 #buttonPadding {
     padding-top:20px;
 }
@@ -55,7 +59,7 @@
     padding-top:14px;
 }
 
-#coltop10px {
+.coltop10px {
     padding-top:10px;
 }
 
@@ -64,7 +68,7 @@
     margin-bottom:-40px;
 }
 
-#coltop2px {
+.coltop2px {
     padding-top:2px;
 }
 
