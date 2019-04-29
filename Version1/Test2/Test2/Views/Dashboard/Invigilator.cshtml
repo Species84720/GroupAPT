@@ -3,7 +3,7 @@
     ViewBag.Title = "Invigilator";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Proctor Dashboard</h2>
+<h2>Invigilator Dashboard</h2>
 <hr />
 <div class="card-deck managementFooter">
     <div class="card managementFooter">
@@ -22,6 +22,13 @@
     </div>
 </div>
 <div class="card-deck managementFooter bottom-card-deck">
+    <!---<div class="card managementFooter">
+        <div class="card-body">
+            <h5 class="card-title">Identity Checking</h5>
+            <p class="card-text">This is where you can compare the student's photos with their registration photos to make sure they are who they claim to be.</p>
+            @*Html.ActionLink("ID Checking", "Index", "Home", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })*@
+        </div>
+    </div>-->
     <div class="card managementFooter">
         <div class="card-body">
             <h5 class="card-title">Report Misbehaviour</h5>
@@ -29,12 +36,4 @@
             @Html.ActionLink("Report Here", "Index", "Home", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
         </div>
     </div>
-    <div class="card managementFooter">
-        <div class="card-body">
-            <h5 class="card-title">Identity Checking</h5>
-            <p class="card-text">This is where you can compare the student's photos with their registration photos to make sure they are who they claim to be.</p>
-            @Html.ActionLink("Manage Subjects", "Index", "Subjects", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
-        </div>
-    </div>
 </div>
-

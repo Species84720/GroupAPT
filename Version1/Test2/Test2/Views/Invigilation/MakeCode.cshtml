@@ -1,14 +1,13 @@
-﻿
-@{
-    ViewBag.Title = "MakeCode";
+﻿@{
+    ViewBag.Title = "Generate Code";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Code Is:</h2>
-
-<h1>@ViewBag.Code</h1>
-
-
-@if(@ViewBag.Exam!=null){ <p>For Exam: @ViewBag.Exam</p>}
-
-@Html.ActionLink("Back to Dashboard", "Dashboard","Home") 
+<div class="card  managementFooter">
+    <div class="card-header">
+        <h2 class="card-title">Generate Code For Exam: <em>@ViewBag.Exam</em></h2>
+    </div>
+    <div class="card-body">
+        @if (@ViewBag.Exam != null)
+        {<p>For Exam: @ViewBag.Exam</p>}
+    </div>
+</div>

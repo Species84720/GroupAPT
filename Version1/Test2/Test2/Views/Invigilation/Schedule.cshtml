@@ -6,53 +6,46 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Upcoming Duties </h2>
-<p>for: @ViewBag.Name </p>
-
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.RelatedExamSession.RelatedSubject.SubjectName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RelatedExamSession.ExamDateTime)
-        </th>
-        <th> Place:</th>
-    </tr>
-
-    @foreach (var item in Model)
-    { 
-   
-        
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedSubject.SubjectName)
-            </td>
-        
-         
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamDateTime)
-            </td>
-
-        
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Campus)
-                <br />
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Building)
-                <br />
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Block) -
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Floor) -
-                @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Room)
-            </td>
-        
-   
-
-         
-    }
-     
-</table>
-
-
+<div id="tableCard" class="card">
+    <div class="card-header">
+        <h2 class="card-title">Upcoming Duties for: @ViewBag.Name</h2>
+    </div>
+    <div class="card-body">
+        @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-primary style-margin-bottom" })
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.RelatedExamSession.RelatedSubject.SubjectName)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.RelatedExamSession.ExamDateTime)
+                    </th>
+                    <th scope="col">Place:</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td class="col">
+                        @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedSubject.SubjectName)
+                    </td>
+                    <td class="col">
+                        @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamDateTime)
+                    </td>
+                    <td class="col coltop10px">
+                        @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Campus)
+                        <br />
+                        @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Building)
+                        <br />
+                        @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Block) -
+                        @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Floor) -
+                        @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Room)
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
