@@ -41,7 +41,7 @@ namespace Test2.Controllers
                 ViewBag.Exam = currentexam.ExamId;
                 ViewBag.Subject = studentSubjects[0];
 
-                RedirectToAction("Index", "Exams", new { examid = ViewBag.Exam }  );  //
+                RedirectToAction("ValidateStudent", "Exams", new { examid = ViewBag.Exam }  );  //
             }
 
             

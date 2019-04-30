@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "ValidateStudent";    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewData["ExamId"] == null) { <b>There is no exam at this time</b>}
+
+<form method="POST" class="form-horizontal">
+
+    <div class="form-group">
+        @Html.Hidden("ExamId")
+
+    </div>
+
+    <div class="form-group">
+        <input type="text" id="AccessCode" name="AccessCode" />
+    </div>
+
+    @if (ViewData["Error"] != null)
+    {
+        <p style="color: red">
+            @ViewData["Error"]
+        </p>
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Submit Code" class="btn btn-default" />
+        </div>
+    </div>
+</form>

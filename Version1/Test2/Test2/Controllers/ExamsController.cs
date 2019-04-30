@@ -16,13 +16,10 @@ namespace Test2.Controllers.DBControllers
     public class ExamsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+ 
 
 
-         
-
-
-        // GET: Exam
-        public async Task<ActionResult> Index(string examid)
+        public ActionResult ValidateStudent(string examid)
         {
             // checking that the request was posted on time.
 
@@ -32,40 +29,108 @@ namespace Test2.Controllers.DBControllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index(string AccessCode, string examid)
+        public async Task<ActionResult> ValidateStudent(string AccessCode, string examid)
         {
-            string username = User.Identity.GetUserName();
+            string username = User.Identity.GetUserId();
 
+            if (examid == null) { RedirectToAction("Index", "Home"); }
 
+            if (AccessCode != null)
+            {
+                Log log = new Log();
+                log.Activity = "Attempted Exam Access Code for ExamSession: " + examid;
+                log.WhoId = username;
+                log.When = DateTime.Now;
+
+                db.Logs.AddOrUpdate(log);
+
+                await db.SaveChangesAsync();
+            }
 
             ExamSession exam = new ExamSession();
-            exam=(from e in db.ExamSessions where e.AccessCode==AccessCode && e.ExamId==examid select e ).FirstOrDefault();
+            exam = (from e in db.ExamSessions where e.AccessCode == AccessCode && e.ExamId == examid select e).FirstOrDefault();
 
-            if (exam != null)
+
+            if (exam == null)
+            { RedirectToAction("Index", "Home"); }
+
+           
+
+            if (DateTime.Now.Minute > exam.CodeIssueDateTime.Value.Minute + 6 || (DateTime.Now.Hour > exam.CodeIssueDateTime.Value.Hour))
+            {
+                    ViewData["ExamId"] = examid;
+                    ViewData["Error"] = "The last Access Code has expired. " +
+                                        "Ask the Invigilator for a new one";
+                    return View();
+            }
+            else
+            {
+                if (AccessCode != exam.AccessCode)
+                {
+
+                    ViewData["ExamId"] = examid;
+                    ViewData["Error"] = "This code is not correct";
+                    return View();
+                }
+            }
+
+
+            ViewData["ExamId"] = examid;
+
+                ViewData["AccessCode"] = AccessCode;
+
+                //now we get the subject
+                
+                ViewBag.Subject = exam.SubjectId;
+
+            if (AccessCode == exam.AccessCode)
             {
 
-                if(DateTime.Now.Minute>exam.CodeIssueDateTime.Value.Minute+6 || (DateTime.Now.Hour > exam.CodeIssueDateTime.Value.Hour) ) {
-                    ViewData["ExamId"] = examid;
-                        ViewData["Error"] = "This code has expired. " +
-                                            "Ask the Invigilator for a new one";
-                        return View();
-                    
-                }
+                ViewData["ExamId"] = examid;
+                ViewData["Error"] = "";
+                return RedirectToAction("Index","Snap",new { examid=exam.ExamId} );
+            }
+
+            return View();
+            
+            
+        }
 
 
-                string id = examid;
+        public ActionResult ExamPage(string examid)
+        {        
 
-                ExamSession examSession = await db.ExamSessions.FindAsync(id);
-                if (examSession == null)
-                {
-                    return HttpNotFound();
-                }
+            ExamSession exam = new ExamSession();
+            exam = (from e in db.ExamSessions where e.ExamId == examid && e.FullyCorrected==false select e).FirstOrDefault();
+
+            ViewData["ExamId"] = examid;
+            ViewBag.Subject = exam.SubjectId;
+            List<PaperQuestion> paper = new List<PaperQuestion>();
+
+            paper =db.PaperQuestions.Where(x => x.ExamId == examid).ToList();
+
+            return View(paper);
+        }
+
+        [HttpPost]
+        public ActionResult ExamPage(List<PaperQuestion> paper)
+        {
+            ViewBag.PaperQuestions = paper;
+
+
+            string username = User.Identity.GetUserName();
+
+            
+
+                string id = paper.First().ExamId;
+
+
 
                 // we get the paperquestions for this exam in a list
-                List<PaperQuestion> paper = db.PaperQuestions.Where(x => x.ExamId == id).ToList();
+               // List<PaperQuestion> paper = db.PaperQuestions.Where(x => x.ExamId == id).ToList();
 
                 //now we generate a list of QuestionId found in the list above
-                IEnumerable<int> SpecificQuestions = from p in paper select p.QuestionId;
+                IEnumerable<int> SpecificQuestions = new List<int>(from p in paper select p.QuestionId);
 
                 //and we select those Questions that match the QuestionIds
                 List<Question> questionList =
@@ -78,7 +143,7 @@ namespace Test2.Controllers.DBControllers
 
                 ViewBag.MultiChoices = multichoiceList;
                 ViewBag.Questions = questionList;
-                ViewBag.PaperQuestions = paper;
+              
 
                 //ViewBag.PaperQuestions = db.PaperQuestions.Where(x => x.ExamId == id).ToList();
                 //ViewBag.Questions = db.Questions.ToList();
@@ -92,30 +157,18 @@ namespace Test2.Controllers.DBControllers
                 ViewBag.Answers = specificAnswerList;
                 ViewData["ExamId"] = id;
 
-                ViewData["AccessCode"] = AccessCode;
 
                 //now we get the subject
                 string subjectid = (from q in questionList select q.SubjectId).FirstOrDefault();
                 ViewBag.Subject = subjectid;
 
-                return View();
-            }
-            else
-            {
-                Log log = new Log();
-                log.Activity = "Attempted Exam Access Code for ExamSession" + examid;
-                log.WhoId = User.Identity.GetUserId();
-                log.When = DateTime.Now;
+               
 
-                db.Logs.AddOrUpdate(log);
-
-                await db.SaveChangesAsync();
-
-                ViewData["ExamId"] = examid;
-                ViewData["Error"] = "This code is not correct";
-                return View();
-            }
+            
+            return View();
         }
+
+
 
         [HttpPost]
         //[ValidateAntiForgeryToken]

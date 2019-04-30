@@ -177,7 +177,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DBControllers\DepartmentsController.cs" />
     <Compile Include="Controllers\DBControllers\EnrollmentsController.cs" />
-    <Compile Include="Controllers\DBControllers\ExamsController.cs" />
+    <Compile Include="Controllers\ExamsController.cs" />
     <Compile Include="Controllers\DBControllers\ExamSessionsController.cs" />
     <Compile Include="Controllers\DBControllers\InvigilationsController.cs" />
     <Compile Include="Controllers\DBControllers\LocationsController.cs" />
@@ -195,6 +195,7 @@
     <Compile Include="Controllers\InvigilationController.cs" />
     <Compile Include="Controllers\LearnerController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SnapController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -432,6 +433,10 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\WebCam-Scripts\jquery.webcam.js" />
+    <Content Include="Scripts\WebCam-Scripts\jquery.webcam.min.js" />
+    <Content Include="Scripts\WebCam-Scripts\jscam.swf" />
+    <Content Include="Scripts\WebCam-Scripts\jscam_canvas_only.swf" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -477,7 +482,7 @@
     <Content Include="Views\ExamSessions\Edit.cshtml" />
     <Content Include="Views\ExamSessions\Index.cshtml" />
     <Content Include="Views\ExamSessions\OldIndex.cshtml" />
-    <Content Include="Views\Exams\Index.cshtml" />
+    <Content Include="Views\Exams\ExamPage.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -578,9 +583,16 @@
     <Content Include="webfonts\fa-brands-400.woff" />
     <Content Include="webfonts\fa-brands-400.ttf" />
     <Content Include="webfonts\fa-brands-400.eot" />
+    <Content Include="Views\Snap\Index.cshtml" />
+    <Content Include="Views\Snap\LaunchSnap.cshtml" />
+    <Content Include="Scripts\WebCam-Scripts\bower.json" />
+    <Content Include="Scripts\WebCam-Scripts\webcam.jquery.json" />
+    <Content Include="Views\Exams\ValidateStudent.cshtml" />
+    <Content Include="Views\Exams\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Captures\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
