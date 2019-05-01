@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebSockets;
 using Microsoft.AspNet.Identity;
 using Test2.Models;
 using Test2.Models.DBModels;
@@ -16,9 +17,14 @@ namespace Test2.Controllers.DBControllers
     public class ExamsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
- 
 
+        public ActionResult Index(string examid)
+        {
+            ViewData["ExamId"] = examid;
+            return View();
+        }
 
+        /*
         public ActionResult ValidateStudent(string examid)
         {
             // checking that the request was posted on time.
@@ -27,9 +33,10 @@ namespace Test2.Controllers.DBControllers
             ViewData["ExamId"] = examid;
             return View();
         }
+        */
 
         [HttpPost]
-        public async Task<ActionResult> ValidateStudent(string AccessCode, string examid)
+        public async Task<ActionResult> Index(string AccessCode, string examid, string imagename)
         {
             string username = User.Identity.GetUserId();
 
@@ -88,7 +95,13 @@ namespace Test2.Controllers.DBControllers
 
                 ViewData["ExamId"] = examid;
                 ViewData["Error"] = "";
-                return RedirectToAction("Index","Snap",new { examid=exam.ExamId} );
+                //return RedirectToAction("Index","Snap",new { examid=exam.ExamId} );
+
+                //redirects to a get
+                //return RedirectToAction("ExamPage", new { examid=exam.ExamId } );
+
+                List<PaperQuestion> paper = ExamPage(examid);
+                return View(paper);
             }
 
             return View();
@@ -96,7 +109,7 @@ namespace Test2.Controllers.DBControllers
             
         }
 
-
+        /*
         public ActionResult ExamPage(string examid)
         {        
 
@@ -111,61 +124,65 @@ namespace Test2.Controllers.DBControllers
 
             return View(paper);
         }
+        */
 
-        [HttpPost]
-        public ActionResult ExamPage(List<PaperQuestion> paper)
+        //[HttpPost]
+        //public ActionResult ExamPage(List<PaperQuestion> paper)
+        //public ActionResult ExamPage(string examid)
+        public List<PaperQuestion> ExamPage(string examid)
         {
-            ViewBag.PaperQuestions = paper;
+            ExamSession exam = new ExamSession();
+            exam = (from e in db.ExamSessions where e.ExamId == examid && e.FullyCorrected == false select e).FirstOrDefault();
 
+            ViewData["ExamId"] = examid;
+            ViewBag.Subject = exam.SubjectId;
+            List<PaperQuestion> paper = new List<PaperQuestion>();
+
+            paper = db.PaperQuestions.Where(x => x.ExamId == examid).ToList();
+
+            //ViewBag.PaperQuestions = paper;
 
             string username = User.Identity.GetUserName();
+            //string id = paper.First().ExamId;
 
-            
+            // we get the paperquestions for this exam in a list
+            // List<PaperQuestion> paper = db.PaperQuestions.Where(x => x.ExamId == id).ToList();
 
-                string id = paper.First().ExamId;
+            //now we generate a list of QuestionId found in the list above
+            IEnumerable<int> SpecificQuestions = new List<int>(from p in paper select p.QuestionId);
 
+            //and we select those Questions that match the QuestionIds
+            List<Question> questionList = new List<Question>(from q in db.Questions where SpecificQuestions.Contains(q.QuestionId) select q);
 
+            //now we get the multiple choices we need for this exam
+            List<MultipleChoice> multichoiceList = new List<MultipleChoice>(from m in db.MultipleChoices
+                where SpecificQuestions.Contains(m.QuestionId)
+                select m);
 
-                // we get the paperquestions for this exam in a list
-               // List<PaperQuestion> paper = db.PaperQuestions.Where(x => x.ExamId == id).ToList();
-
-                //now we generate a list of QuestionId found in the list above
-                IEnumerable<int> SpecificQuestions = new List<int>(from p in paper select p.QuestionId);
-
-                //and we select those Questions that match the QuestionIds
-                List<Question> questionList =
-                    new List<Question>(from q in db.Questions where SpecificQuestions.Contains(q.QuestionId) select q);
-
-                //now we get the multiple choices we need for this exam
-                List<MultipleChoice> multichoiceList = new List<MultipleChoice>(from m in db.MultipleChoices
-                                                                                where SpecificQuestions.Contains(m.QuestionId)
-                                                                                select m);
-
-                ViewBag.MultiChoices = multichoiceList;
-                ViewBag.Questions = questionList;
-              
-
-                //ViewBag.PaperQuestions = db.PaperQuestions.Where(x => x.ExamId == id).ToList();
-                //ViewBag.Questions = db.Questions.ToList();
-
-                //we get the StudentAnswers that concern us only
-                string[] idSplit = id.Split('-');
-                username = username + "-" + idSplit[0];
-                IEnumerable<string> specificPaperQuestions = from p in paper select p.PaperQuestionId;
-                List<StudentAnswer> answerList = new List<StudentAnswer>(from q in db.StudentAnswers where specificPaperQuestions.Contains(q.PaperQuestionId) select q);
-                List<StudentAnswer> specificAnswerList = answerList.Where(x => x.EnrollmentId == username).ToList();
-                ViewBag.Answers = specificAnswerList;
-                ViewData["ExamId"] = id;
+            ViewBag.MultiChoices = multichoiceList;
+            ViewBag.Questions = questionList;
 
 
-                //now we get the subject
-                string subjectid = (from q in questionList select q.SubjectId).FirstOrDefault();
-                ViewBag.Subject = subjectid;
+            //ViewBag.PaperQuestions = db.PaperQuestions.Where(x => x.ExamId == id).ToList();
+            //ViewBag.Questions = db.Questions.ToList();
 
-               
+            //we get the StudentAnswers that concern us only
+            string[] idSplit = examid.Split('-');
+            username = username + "-" + idSplit[0];
+            IEnumerable<string> specificPaperQuestions = from p in paper select p.PaperQuestionId;
+            List<StudentAnswer> answerList = new List<StudentAnswer>(from q in db.StudentAnswers
+                where specificPaperQuestions.Contains(q.PaperQuestionId)
+                select q);
+            List<StudentAnswer> specificAnswerList = answerList.Where(x => x.EnrollmentId == username).ToList();
+            ViewBag.Answers = specificAnswerList;
+            ViewData["ExamId"] = examid;
 
-            
-            return View();
+            //now we get the subject
+            string subjectid = (from q in questionList select q.SubjectId).FirstOrDefault();
+            ViewBag.Subject = subjectid;
+
+            //return View(paper);
+            return paper;
         }
 
 

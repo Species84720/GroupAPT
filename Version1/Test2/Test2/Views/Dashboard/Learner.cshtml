@@ -27,7 +27,7 @@
             <div class="card-body">
                 <h5 class="card-title">Next Exam</h5>
                 <p class="card-text">Start Exam for Subject: @ViewBag.Subject</p>
-                @Html.ActionLink("Exam", "ValidateStudent", "Exams", new { examid = ViewBag.Exam }, new { @class="btn btn-primary" })
+                @Html.ActionLink("Exam", "Index", "Exams", new { examid = ViewBag.Exam }, new { @class="btn btn-primary" })
             </div>
         </div>
     }
