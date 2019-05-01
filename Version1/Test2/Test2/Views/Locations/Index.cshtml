@@ -9,6 +9,7 @@
         <h2 class="card-title">Location Index</h2>
     </div>
     <div class="card-body">
+        @Html.ActionLink("Cancel", "Dashboard", "Home", new { }, new { @class = "btn btn-primary style-margin-bottom" })
         @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-primary style-margin-bottom" })
         <table class="table table-bordered table-striped">
             <thead>
@@ -36,34 +37,34 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Campus)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Building)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Floor)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Block)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Room)
-                    </td>
-                    <td>
-                        <div class="col">
-                            @Html.ActionLink("Edit", "Edit", new { id = item.LocationId }, new { @class = "btn btn-primary btn-sm" })
-                        </div>
-                        <div class="col coltop10px">
-                            @Html.ActionLink("Details", "Details", new { id = item.LocationId }, new { @class = "btn btn-primary btn-sm" })
-                        </div>
-                        <div class="col coltop10px">
-                            @Html.ActionLink("Delete", "Delete", new { id = item.LocationId }, new { @class = "btn btn-primary btn-sm" })
-                        </div>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Campus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Building)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Floor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Block)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Room)
+                        </td>
+                        <td>
+                            <div class="col">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.LocationId }, new { @class = "btn btn-primary btn-sm" })
+                            </div>
+                            <div class="col coltop10px">
+                                @Html.ActionLink("Details", "Details", new { id = item.LocationId }, new { @class = "btn btn-primary btn-sm" })
+                            </div>
+                            <div class="col coltop10px">
+                                @Html.ActionLink("Delete", "Delete", new { id = item.LocationId }, new { @class = "btn btn-primary btn-sm" })
+                            </div>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

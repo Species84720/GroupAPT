@@ -5,115 +5,101 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
-
-<div>
-    @Html.ActionLink("Back to Dashboard", "Dashboard", "Home")
-</div>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>ExamSession</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ExamId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SubjectId, "SubjectId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Model.RelatedSubject.SubjectName
-                @Html.HiddenFor(model => model.SubjectId)
-                @Html.ValidationMessageFor(model => model.SubjectId, "", new {@class = "text-danger"})
-            </div>
+    <div class="card managementFooter">
+        <div class="card-header">
+            <h5 class="card-title">Edit Exam Session</h5>
         </div>
+        <div class="form">
+            <div class="card-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger form-style" })
+                @Html.HiddenFor(model => model.ExamId)
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.SubjectId, "Subject", htmlAttributes: new { @class = "col-control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Model.RelatedSubject.SubjectName
+                        @Html.HiddenFor(model => model.SubjectId)
+                        @Html.ValidationMessageFor(model => model.SubjectId, "", new { @class = "text-danger form-style" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LocationId, "LocationId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("LocationId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.LocationId, "Location", htmlAttributes: new { @class = "col-control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.DropDownList("LocationId", null, htmlAttributes: new { @class = "form-control form-style" })
+                        @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger form-style" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ExamDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @if (Model.ExamDateTime != null)
-                {
-                    @Html.HiddenFor(model => model.ExamDateTime)
-                    @Model.ExamDateTime
-                    @Html.ActionLink("Change" ,"ExamDateChange" , new { idd = Model.ExamId }, new { })
-                }
-                else
-                {@Html.Editor("ExamDateTime", new { htmlAttributes = new { @class = "form-control", type = "datetime-local", value = @Model.ExamDateTime } })}
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.ExamDateTime, htmlAttributes: new { @class = "col-control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @if (Model.ExamDateTime != null)
+                        {
+                            @Html.HiddenFor(model => model.ExamDateTime)
+                            @Model.ExamDateTime
+                            @Html.ActionLink("Change", "ExamDateChange", new { idd = Model.ExamId }, new { @class = "btn btn-primary" })
+                        } else {
+                            @Html.Editor("ExamDateTime", new { htmlAttributes = new { @class = "form-control form-style", type = "datetime-local", value = @Model.ExamDateTime } })}
+                            @Html.ValidationMessageFor(model => model.ExamDateTime, "", new { @class = "text-danger form-style" })
+                    </div>
+                </div>
 
-                @Html.ValidationMessageFor(model => model.ExamDateTime, "", new { @class = "text-danger" })
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.ExamEndTime, htmlAttributes: new { @class = "col-control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @if (Model.ExamEndTime != null)
+                        {
+                            @Html.HiddenFor(model => model.ExamEndTime)
+                            @Model.ExamEndTime
+                            @Html.ActionLink("Change", "ExamEndChange", new { idd = Model.ExamId }, new { @class = "btn btn-primary" })
+                        }
+                        else
+                        { @Html.EditorFor(model => model.ExamEndTime, new { htmlAttributes = new { @class = "form-control form-style", type = "datetime-local" } })}
+                        @Html.ValidationMessageFor(model => model.ExamEndTime, "", new { @class = "text-danger form-style" })
+                    </div>
+                </div>
 
-
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ExamEndTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10"> @if (Model.ExamEndTime != null)
-                                    {
-                                        @Html.HiddenFor(model => model.ExamEndTime)
-                                        @Model.ExamEndTime
-                                        @Html.ActionLink("Change" ,"ExamEndChange" , new { idd = Model.ExamId }, new { })
-            }
-            else { @Html.EditorFor(model => model.ExamEndTime,  new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })}
-                @Html.ValidationMessageFor(model => model.ExamEndTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-         
                 @Html.HiddenFor(model => model.QuestionAmount)
-                @Html.ValidationMessageFor(model => model.QuestionAmount, "", new { @class = "text-danger" })
-         
- 
-                @Html.HiddenFor(model => model.AccessCode )
-                @Html.ValidationMessageFor(model => model.AccessCode, "", new { @class = "text-danger" })
-            
+                @Html.ValidationMessageFor(model => model.QuestionAmount, "", new { @class = "text-danger form-style" })
 
-        @Html.HiddenFor(model => model.CodeIssueDateTime)
-                @Html.ValidationMessageFor(model => model.CodeIssueDateTime, "", new { @class = "text-danger" })
-            
+                @Html.HiddenFor(model => model.AccessCode)
+                @Html.ValidationMessageFor(model => model.AccessCode, "", new { @class = "text-danger form-style" })
 
-                    @Html.HiddenFor(model => model.FullyCorrected)
-                    @Html.ValidationMessageFor(model => model.FullyCorrected, "", new { @class = "text-danger" })
-               
+                @Html.HiddenFor(model => model.CodeIssueDateTime)
+                @Html.ValidationMessageFor(model => model.CodeIssueDateTime, "", new { @class = "text-danger form-style" })
 
-                @Html.HiddenFor(model => model.MaxMark )
-                @Html.ValidationMessageFor(model => model.MaxMark, "", new { @class = "text-danger" })
-     
-     
-                @Html.HiddenFor(model => model.MinMark )
-                @Html.ValidationMessageFor(model => model.MinMark, "", new { @class = "text-danger" })
-             
-         
-                @Html.HiddenFor(model => model.AvgMark )
-                @Html.ValidationMessageFor(model => model.AvgMark, "", new { @class = "text-danger" })
-              
-                @Html.HiddenFor(model => model.NumOfParticipants )
-                @Html.ValidationMessageFor(model => model.NumOfParticipants, "", new { @class = "text-danger" })
-             
-                @Html.HiddenFor(model => model.NumOfFails )
-                @Html.ValidationMessageFor(model => model.NumOfFails, "", new { @class = "text-danger" })
-     
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                @Html.HiddenFor(model => model.FullyCorrected)
+                @Html.ValidationMessageFor(model => model.FullyCorrected, "", new { @class = "text-danger form-style" })
+
+                @Html.HiddenFor(model => model.MaxMark)
+                @Html.ValidationMessageFor(model => model.MaxMark, "", new { @class = "text-danger form-style" })
+
+                @Html.HiddenFor(model => model.MinMark)
+                @Html.ValidationMessageFor(model => model.MinMark, "", new { @class = "text-danger form-style" })
+
+                @Html.HiddenFor(model => model.AvgMark)
+                @Html.ValidationMessageFor(model => model.AvgMark, "", new { @class = "text-danger form-style" })
+
+                @Html.HiddenFor(model => model.NumOfParticipants)
+                @Html.ValidationMessageFor(model => model.NumOfParticipants, "", new { @class = "text-danger form-style" })
+
+                @Html.HiddenFor(model => model.NumOfFails)
+                @Html.ValidationMessageFor(model => model.NumOfFails, "", new { @class = "text-danger form-style" })
+
+                <div class="form-group row">
+                    <div id="buttonPadding" class="col-sm-10">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                        @Html.ActionLink("Cancel", "ExamManager", "Clerk", new { }, new { @class = "btn btn-primary" })
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "ExamManager","Clerk")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
