@@ -267,11 +267,13 @@
             {
                 if ((questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionFormat.ToString()) != "MultipleChoice")
                 {
-                    <button id="@item.NumberInPaper" class='QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
-                                                                               {
-                                                                                   if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
-                                                                                   else {<text>Started</text>}
-                                                                               }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', ' ', ' ', ' ', ' ')" ;>
+                    <button id="@item.NumberInPaper" class='QuestionButton 
+                            @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+                                {
+                                    if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
+                                    else {<text>Started</text>}
+                                }' 
+                            style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', ' ', ' ', ' ', ' ')" ;>
                         @Html.DisplayFor(modelItem => item.NumberInPaper)
                     </button>
                 }
@@ -281,28 +283,29 @@
                         {
                             if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
                             else {<text>Started</text>}
-                        }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText1', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText2', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText3', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText4')" ;>
+                        }' 
+                        style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText1', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText2', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText3', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText4')" ;>
                         @Html.DisplayFor(modelItem => item.NumberInPaper)
                     </button>
                 }
 
-                <p hidden id="Answer @item.NumberInPaper" name="" submitted="@if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
-                                                                                 {
-                                                                                     @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent;
-                                                                                 }
-                                                                                 else {<text>False</text>}">
+                <p hidden id="Answer @item.NumberInPaper" name="" submitted="
+                   @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+                        {
+                            @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent;
+                        }
+                        else {<text>False</text>}">
                     @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
                     {
                         @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().Answer;
                     }
-                                                                            </p>
-                                                                        }
+                        </p>
+            }
         </th>
 
         <th>
             <p id="examStart">
                 Please choose the appropriate Question on the left. Good luck and May the odds be ever in your favour!
-
             </p>
             <p hidden id="QuestionTextShown"></p>
             <textarea hidden style="width: 100%; float: left; height: 100px" id="QuestionAnswer" name=""></textarea>
@@ -324,6 +327,5 @@
     <p hidden id="CurrentQuestion"></p>
     Submit
 </button>
-}
 
 
