@@ -92,6 +92,29 @@ namespace Test2.Controllers.DBControllers
 
             if (AccessCode == exam.AccessCode)
             {
+                //getting the amount of pictures he already took
+                //first we get the subject code
+                string[] idSplit = examid.Split('-');
+                //stick it to the user to get enrollment
+                string enrollment = User.Identity.GetUserName() + "-" + idSplit[0];
+                int imageAmount = db.Shots.Where(x => x.EnrollmentId == enrollment).Count() + 1;
+                //set the file name
+                string imageData = User.Identity.GetUserName() + "_" + examid + "_" + imageAmount;
+                //creating the file itself
+                string[] trimmedImageName = imagename.Split(',');
+                byte[] contents = Convert.FromBase64String(trimmedImageName[1]);
+                System.IO.File.WriteAllBytes(Server.MapPath("/Captures/" + imageData + ".png"), contents);
+
+                //placing location on database
+                var UserImageDetails = new Shot
+                {
+                    EnrollmentId = enrollment,
+                    ImageTitle = imageData,
+                    ImageLocation = "/Captures/" + imageData + ".png",
+                    ShotTiming = DateTime.Now
+                };
+                db.Shots.Add(UserImageDetails);
+                db.SaveChanges();
 
                 ViewData["ExamId"] = examid;
                 ViewData["Error"] = "";
