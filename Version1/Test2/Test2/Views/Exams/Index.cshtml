@@ -33,9 +33,9 @@
         {
             <div id="camera" style="width: 365px; float: left; margin: 10px">
                 <video autoplay="true" id="videoElement" style="float: left"></video>
-                <button id="startbutton" style="position: relative; bottom: 40px; margin-left: auto; margin-right: auto; display: block;">Take photo</button>
+                <button id="startbutton" style="position: relative; bottom: 40px; margin-left: auto; margin-right: auto; display: block;" hidden>Take photo</button>
             </div>
-            <canvas id="photo" width="365px" height="275px" style="float: left; margin: 10px" data-taken="false" data-imgSrc=""></canvas>
+            <canvas id="photo" width="365px" height="275px" style="float: left; margin: 10px" data-taken="false" data-imgSrc="" hidden></canvas>
 
             <script>
                 var video = document.querySelector("#videoElement");
@@ -44,27 +44,33 @@
                     navigator.mediaDevices.getUserMedia({ video: true })
                         .then(function (stream) {
                             video.srcObject = stream;
+
+                            //to show the canvas
+                            document.getElementById('photo').hidden = false;
+                            //to show the take screenshot button
+                            document.getElementById('startbutton').hidden = false;
+                            document.getElementById('startbutton').onclick =
+                                function () {
+                                    var canvas = document.getElementById('photo');
+                                    var context = canvas.getContext('2d');
+                                    var dw = canvas.width;
+                                    var dh = canvas.height;
+                                    var video = document.getElementById('videoElement');
+                                    context.drawImage(video, 0, 0, dw, dh);
+                                    var dataImage = canvas.toDataURL('image/png');
+                                    canvas.setAttribute('data-imgSrc', dataImage);
+                                    canvas.setAttribute('data-taken', 'true');
+
+                                    document.getElementById('imagename').setAttribute('value', dataImage);
+                                    document.getElementById('submitButton').hidden = false;
+                                }
+
                         })
                         .catch(function (error) {
                             console.log("Something went wrong!");
                         });
                 }
 
-                document.getElementById('startbutton').onclick =
-                    function () {
-                        var canvas = document.getElementById('photo');
-                        var context = canvas.getContext('2d');
-                        var dw = canvas.width;
-                        var dh = canvas.height;
-                        var video = document.getElementById('videoElement');
-                        context.drawImage(video, 0, 0, dw, dh);
-                        var dataImage = canvas.toDataURL('image/png');
-                        canvas.setAttribute('data-imgSrc', dataImage);
-                        canvas.setAttribute('data-taken', 'true');
-
-                        document.getElementById('imagename').setAttribute('value', dataImage);
-                        document.getElementById('submitButton').hidden = false;
-                    }
             </script>
 
             <div style="clear: left">
@@ -420,5 +426,11 @@ else
         <p hidden id="CurrentQuestion"></p>
         Submit
     </button>
+
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
 }
 </html>
