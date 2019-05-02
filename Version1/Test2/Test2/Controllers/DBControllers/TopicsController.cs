@@ -51,7 +51,7 @@ namespace Test2.Controllers.DBControllers
             
 
             IEnumerable<Subject> subjectchosen = new List<Subject>(from s in db.Subjects where s.SubjectId == subject select s);
-            ViewBag.Subject = subject;
+            ViewBag.Subject = db.Subjects.Where(s => s.SubjectId == subject).FirstOrDefault().SubjectName;
             ViewBag.SubjectId = new SelectList(subjectchosen, "SubjectId", "SubjectName");
 
             Topic t =new Topic();
