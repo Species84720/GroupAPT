@@ -97,8 +97,13 @@ namespace Test2.Models
         // if all exams are corrected
         public bool AllSessionsCorrected { get; set; }
 
+        public bool ExamNotEnded { get; set; }
+
+        public bool ExamFullyCorrected { get; set; }
+
         //if all questions from a subject are corrected
         public bool AllQsCorrected { get; set; }
+
 
     }
 

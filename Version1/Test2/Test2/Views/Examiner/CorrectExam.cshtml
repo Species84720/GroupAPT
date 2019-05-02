@@ -15,12 +15,24 @@
     if (Model.AllQsCorrected)
     {
 
-        <div>
-            No more Questions to Correct here.
+<div>
 
-            @Html.ActionLink("Go Back to Dashboard", "Dashboard", "Home", new { @class = "btn btn-primary" })
+    No questions to be corrected were found.
+    @if (Model.AllSessionsCorrected)
+    {
+        <text> The exam for this subject either hasn't ended or is fully corrected already.</text>
+        if (Model.ExamFullyCorrected)
+        { <text> The exam for this subject is fully corrected already.</text>}
 
-        </div>
+    if (Model.ExamNotEnded)
+    { <text> The exam for this subject has not finished yet.</text>}
+
+}
+    
+
+    @Html.ActionLink("Go Back to Dashboard", "Examiner", "Dashboard", new { @class = "btn btn-primary" }, new { })
+
+</div>
 
     }
     else
@@ -84,7 +96,7 @@
     } //end else
 }
 else
-{  //if subject not null
+{  //if subject happens to be null we ask for the examiner to select a subject to correct
     using (Html.BeginForm("CorrectExam", "Examiner", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         <div class="card managementFooter">

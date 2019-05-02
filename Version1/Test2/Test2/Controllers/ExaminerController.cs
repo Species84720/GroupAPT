@@ -35,6 +35,7 @@ namespace Test2.Controllers.DBControllers
             List<string> subjectNames =
                 new List<string>(from t in db.Teachings.Where(x => x.ExaminerId == teacher) select t.SubjectId);
 
+            
             List<Subject> subjects = new List<Subject>(from s in db.Subjects where subjectNames.Contains(s.SubjectId) select s);
 
 
@@ -106,14 +107,7 @@ namespace Test2.Controllers.DBControllers
 
         }
 
-
-
-        public ActionResult PickSubject() //function is redundant as fuck 
-        {
-
-            return RedirectToAction("EditPapers", "Examiner");
-        }
-
+         
 
 
 
@@ -235,16 +229,22 @@ namespace Test2.Controllers.DBControllers
             //and pass them to the viewmodel
                 viewmodel.Subjects = subjects;
                 
+                //if no subject has been selected the view is returned without querying for questions
               if(subject==null)
               {
                   return View(viewmodel);
               }
             
-            
-            string session  = (from e in db.ExamSessions where (e.SubjectId == subject  && e.FullyCorrected==false) select e.ExamId).SingleOrDefault();
+            //if a subject has been selected we find its last session provided it is in the past
+            string session  = (from e in db.ExamSessions where (e.SubjectId == subject  && e.FullyCorrected==false  && e.ExamEndTime>DateTime.Now && e.ExamEndTime!=null) select e.ExamId).SingleOrDefault();
 
             if (session == null)
             {
+
+                session = (from e in db.ExamSessions where (e.SubjectId == subject && e.FullyCorrected == false) select e.ExamId).SingleOrDefault();
+
+                if (session == null) viewmodel.ExamFullyCorrected = true;
+                else  viewmodel.ExamNotEnded = true;
 
                 viewmodel.AllQsCorrected = true;
                 viewmodel.AllSessionsCorrected = true;
@@ -252,48 +252,44 @@ namespace Test2.Controllers.DBControllers
                 return View(viewmodel);
             }
 
+            //if a session was found we find the PaperQuestions that are to be manually corrected
             List<PaperQuestion> paperquestions = new List<PaperQuestion>(from q in db.PaperQuestions
                 where q.ExamId == session && q.RelatedQuestion.QuestionFormat == Question.QuestionType.WrittenAnswer
                 select q);
 
 
-            //if there are no PaperQuestions go to Dashboard
-
-            if (paperquestions.Count == 0)
+            //if there are no PaperQuestions to be corrected manually
+            if (paperquestions.Count != 0)
             {
-               return RedirectToAction("Dashboard", "Home");
+                //  find   the student answer for this paper than need to be corrected manually
+                List<string> paperquestionid = new List<string>(from q in paperquestions select q.PaperQuestionId);
 
-            }
 
-            List<string> paperquestionid = new List<string>(from q in paperquestions select q.PaperQuestionId);
-            // List<int> questionid = new List<int>(from q in paperquestions select q.QuestionId);
+                StudentAnswer answer =
+                    (from a in db.StudentAnswers
+                        where paperquestionid.Contains(a.PaperQuestionId) && a.CorrectorId == null
+                        select a).FirstOrDefault();
 
-            // answers = new List<StudentAnswer>(from a in db.StudentAnswers where paperquestionid.Contains( a.PaperQuestionId) && a.CorrectorId==null select a );
-
-            StudentAnswer answer =
-                (from a in db.StudentAnswers
-                    where paperquestionid.Contains(a.PaperQuestionId) && a.CorrectorId == null
-                    select a).FirstOrDefault();
-
-            // List<Question> questions =new List<Question>(from q in db.Questions where questionid.Contains(q.QuestionId) select q);
-
-            if (answer != null)
-            {
-                answer.CorrectorId = teacher;
-                answer.CorrectedDateTime = DateTime.Now;
+                if (answer != null)
+                {
+                    answer.CorrectorId = teacher;
+                    answer.CorrectedDateTime = DateTime.Now;
+                    viewmodel.Answer = answer;
+                }
             }
             else
-            { //if there are no answers to correct
+                { //if there are no answers to correct
 
-                viewmodel.AllQsCorrected  = true;
+                    viewmodel.AllQsCorrected = true;
 
-                AutoCorrectMC(session);
-            }
+                    AutoCorrectMC(session);
+                }
+
 
             viewmodel.Subject = subject;
             viewmodel.Exam = session;
             //  viewmodel.Questions = questions;
-            viewmodel.Answer = answer;
+            
 
 
 
@@ -302,6 +298,7 @@ namespace Test2.Controllers.DBControllers
 
         } // end CorrectExam
 
+        
 
 
         public ActionResult Correct(CorrectingViewModel viewmodel)
@@ -330,12 +327,13 @@ namespace Test2.Controllers.DBControllers
             //return RedirectToAction("Examiner", "Dashboard");
         }
 
+
         public ActionResult AutoCorrectMC(string session)
         {// this function recieves the session for which all Written Answers have been corrected
          // it then automatically corrects Multiple CHoice questions
          // finally marking the exam as fully corrected
 
-            //first we get the PaperQuestions for the session
+            //first we get the MultipleChoice PaperQuestions for the session
             List<PaperQuestion> paperquestions = new List<PaperQuestion>(from q in db.PaperQuestions
                 where q.ExamId == session && q.RelatedQuestion.QuestionFormat == Question.QuestionType.MultipleChoice
                 select q);
@@ -347,10 +345,16 @@ namespace Test2.Controllers.DBControllers
             List<StudentAnswer> answers = new List<StudentAnswer>(from a in db.StudentAnswers where paperquestionid.Contains( a.PaperQuestionId) && a.CorrectedDateTime==null select a );
 
             // now we update each of them depending on the student's answer and whtether it corresponds to the right answer
-            StudentAnswer temp = new StudentAnswer();
-            foreach (StudentAnswer ans in answers)
+            
+
+            if (answers.Count != 0)
             {
-                temp = db.StudentAnswers.Find(ans.AnswerId);
+                StudentAnswer temp = new StudentAnswer();
+                foreach (StudentAnswer ans in answers)
+                {
+                
+
+                    temp = db.StudentAnswers.Find(ans.AnswerId);
 
                 temp.CorrectedDateTime=DateTime.Now;
 
@@ -369,11 +373,12 @@ namespace Test2.Controllers.DBControllers
                 db.Entry(temp).State = EntityState.Modified;
                 db.SaveChanges();
 
+                } //end for
 
-            }
+            }  //end if
 
 
-            //now we take all answers for this exam session to calculate the students total
+            //now we take all answers for this exam session to calculate the student's total
             answers = new List<StudentAnswer>(from a in db.StudentAnswers where a.RelatedPaperQuestion.RelatedExamSession.ExamId==session select a);
 
             Enrollment enrollment =new Enrollment();
@@ -472,5 +477,11 @@ namespace Test2.Controllers.DBControllers
 
 
 
+
+
     }
+
+
+   
+
 }
