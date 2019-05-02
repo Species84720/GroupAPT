@@ -23,6 +23,8 @@
                     @Html.ValidationMessageFor(model => model.TopicName, "", new { @class = "text-danger form-style" })
                 </div>
             </div>
+            
+            @Html.HiddenFor(model => model.SubjectId)
 
             <div class="form-group row">
                 <div id="buttonPadding" class="col-sm-10">
