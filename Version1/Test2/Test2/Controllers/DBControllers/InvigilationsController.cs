@@ -79,9 +79,15 @@ namespace Test2.Controllers.DBControllers
 
             }
 
-
-            ViewBag.UserId = new SelectList(invigilators, "Id", "FirstName");
-            ViewBag.ExamId  = new SelectList(exam, "ExamId", "SubjectId");
+            List<object> newList = new List<object>();
+            foreach (var member in invigilators)
+                newList.Add(new
+                {
+                    Id = member.Id,
+                    FirstName = member.UserName + ": " + member.FirstName + " " + member.Surname
+                });
+            ViewBag.UserId = new SelectList(newList, "Id", "FirstName");
+            ViewBag.ExamId = new SelectList(exam, "ExamId", "SubjectId");
             
             return View();
         }
