@@ -94,7 +94,15 @@ namespace Test2.Controllers
             //var user = new ApplicationUser { Email = model.Email, PasswordHash=model.Password };
             // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
+            //check if that email exists
+            var UserName = db.Users.Where(u => u.Email == model.UserName).FirstOrDefault();
+            if (UserName != null)
+            {
+                model.UserName = UserName.UserName;
+            }
+            
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
