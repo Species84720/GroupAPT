@@ -49,7 +49,7 @@ namespace Test2.Controllers
 
             if (session==null )
             {
-                code = "you are not suppose to be at any Active Exam  ";
+                code = "You do not have any Active Exam  ";
                  
 
                 ViewBag.Exam = "You are not during any exam right now";

@@ -11,6 +11,7 @@
         <h2 class="card-title">Upcoming Duties for: @ViewBag.Name</h2>
     </div>
     <div class="card-body">
+        @Html.ActionLink("Return", "Dashboard", "Home", new { }, new { @class = "btn btn-primary style-margin-bottom" })
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -26,23 +27,23 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td class="col">
-                        @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedSubject.SubjectName)
-                    </td>
-                    <td class="col">
-                        @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamDateTime)
-                    </td>
-                    <td class="col coltop10px">
-                        @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Campus)
-                        <br />
-                        @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Building)
-                        <br />
-                        @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Block) -
-                        @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Floor) -
-                        @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Room)
-                    </td>
-                </tr>
+                    <tr>
+                        <td class="col">
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedSubject.SubjectName)
+                        </td>
+                        <td class="col">
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamDateTime)
+                        </td>
+                        <td class="col coltop10px">
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Campus)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Building)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Block) -
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Floor) -
+                            @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Room)
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

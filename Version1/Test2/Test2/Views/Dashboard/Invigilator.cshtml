@@ -22,18 +22,18 @@
     </div>
 </div>
 <div class="card-deck managementFooter bottom-card-deck">
-    <!---<div class="card managementFooter">
+    <div class="card managementFooter">
         <div class="card-body">
             <h5 class="card-title">Identity Checking</h5>
             <p class="card-text">This is where you can compare the student's photos with their registration photos to make sure they are who they claim to be.</p>
-            @*Html.ActionLink("ID Checking", "Index", "Home", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })*@
+            @Html.ActionLink("ID Checking", "Dashboard", "Home", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
         </div>
-    </div>-->
+    </div>
     <div class="card managementFooter">
         <div class="card-body">
             <h5 class="card-title">Report Misbehaviour</h5>
             <p class="card-text">If you notice any student cheating or misbehaving during an exam report here!</p>
-            @Html.ActionLink("Report Here", "Index", "Home", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
+            @Html.ActionLink("Report Here", "Dashboard", "Home", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
         </div>
     </div>
 </div>
