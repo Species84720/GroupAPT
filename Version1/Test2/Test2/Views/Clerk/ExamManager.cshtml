@@ -37,7 +37,7 @@
                             @Html.DisplayFor(modelItem => item.RelatedLocation.Block)
                             @Html.DisplayFor(modelItem => item.RelatedLocation.Floor)
                             @Html.DisplayFor(modelItem => item.RelatedLocation.Room)
-                            @if (item.RelatedLocation.Room == null)
+                            @if (item.RelatedLocation == null || item.RelatedLocation.Room == null)
                             {<i style="color: red"> NO PLACE </i>}
                             @Html.ActionLink("Change", "Edit", "ExamSessions", new { id = item.ExamId }, new { @class = "btn btn-primary btn-sm" })
                         </td>

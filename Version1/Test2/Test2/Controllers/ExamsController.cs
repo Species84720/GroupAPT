@@ -42,6 +42,9 @@ namespace Test2.Controllers.DBControllers
 
             if (examid == null) { RedirectToAction("Index", "Home"); }
 
+            //we get the subject code
+            string[] idSplit = examid.Split('-');
+
             if (AccessCode != null)
             {
                 Log log = new Log();
@@ -55,13 +58,32 @@ namespace Test2.Controllers.DBControllers
             }
 
             ExamSession exam = new ExamSession();
-            exam = (from e in db.ExamSessions where e.AccessCode == AccessCode && e.ExamId == examid select e).FirstOrDefault();
+            exam = (from e in db.ExamSessions where e.ExamId == examid select e).FirstOrDefault();
 
+            Enrollment enroller = new Enrollment();
+            string enrollerid = User.Identity.GetUserName() + "-" + idSplit[0];
+            enroller = (from e in db.Enrollments where e.EnrollmentId == enrollerid select e).FirstOrDefault();
+
+            if (imagename == "")
+            {
+                ViewData["ExamId"] = examid;
+                ViewData["Error"] = "You have not submitted an image";
+                return View();
+            }
+
+            if (enroller == null)
+            {
+                ViewData["ExamId"] = examid;
+                ViewData["Error"] = "There was an error";
+                return View();
+            }
 
             if (exam == null)
-            { RedirectToAction("Index", "Home"); }
-
-           
+            {
+                ViewData["ExamId"] = examid;
+                ViewData["Error"] = "Exam not found";
+                return View();
+            }
 
             if (DateTime.Now.Minute > exam.CodeIssueDateTime.Value.Minute + 6 || (DateTime.Now.Hour > exam.CodeIssueDateTime.Value.Hour))
             {
@@ -93,8 +115,6 @@ namespace Test2.Controllers.DBControllers
             if (AccessCode == exam.AccessCode)
             {
                 //getting the amount of pictures he already took
-                //first we get the subject code
-                string[] idSplit = examid.Split('-');
                 //stick it to the user to get enrollment
                 string enrollment = User.Identity.GetUserName() + "-" + idSplit[0];
                 int imageAmount = db.Shots.Where(x => x.EnrollmentId == enrollment).Count() + 1;
