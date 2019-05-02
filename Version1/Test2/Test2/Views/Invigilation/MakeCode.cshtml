@@ -7,6 +7,7 @@
         <h2 class="card-title">Generate Code For Exam: <em>@ViewBag.Exam</em></h2>
     </div>
     <div class="card-body">
+        @Html.ActionLink("Return", "Dashboard", "Home", new { }, new { @class = "btn btn-primary style-margin-bottom" })
         @if (@ViewBag.Exam != null)
         {
             <p>Code: <b>@ViewBag.Code</b></p>
