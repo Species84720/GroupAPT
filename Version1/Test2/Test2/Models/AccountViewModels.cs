@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
 using System.Web.Security;
 using System.Web.UI.WebControls;
 using Test2.Models.DBModels;
@@ -114,6 +115,9 @@ namespace Test2.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Upload Image")]
+        public HttpPostedFileBase Image { get; set; }
     }
 
     public class ResetPasswordViewModel
