@@ -16,6 +16,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using Test2.Models;
 using Test2.Models.DBModels;
+ 
 
 namespace Test2.Controllers.DBControllers
 {
@@ -118,7 +119,7 @@ namespace Test2.Controllers.DBControllers
         {
             string teacher = User.Identity.GetUserId();
 
-
+            
 
             //We get a list of only subjects for this tutor
             List<string> subjectNames =
@@ -131,31 +132,40 @@ namespace Test2.Controllers.DBControllers
             if (subject == null)
             {
                 viewmodel = new SetPaperViewModel(){ Subjects = subjects};
-                
-                 
+
+                ViewBag.Alert = "";
 
                 return View(viewmodel);
             }
 
-            string session =
-                (from e in db.ExamSessions where (e.SubjectId == subject && !e.FullyCorrected) select e.ExamId)
+            ExamSession examsession =
+                (from e in db.ExamSessions where (e.SubjectId == subject && !e.FullyCorrected) select e)
                 .SingleOrDefault();
 
+            string session = examsession.ExamId;
             
             //if there is no session for this subject, a new ExamSession is Created.
             if (session == null)
             {
-                ExamSession examSession = new ExamSession();
+                ExamSession newExamSession = new ExamSession();
 
                 session = subject + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year;
 
-                examSession.ExamId = session;
-                examSession.SubjectId = subject;
+                newExamSession.ExamId = session;
+                newExamSession.SubjectId = subject;
 
-                db.ExamSessions.Add(examSession);
+                db.ExamSessions.Add(newExamSession);
                 await db.SaveChangesAsync();
-
                 
+            }
+
+            
+            //if the exam is in a day or less
+            if (examsession.ExamDateTime != null && examsession.ExamDateTime.Value.DayOfYear-DateTime.Now.DayOfYear <= 1  )
+            {
+                //we don't permit editting of the paper.
+                ViewBag.Alert = "Changing of a Paper is not permitted 24 hours prior to an exam. Call the Administrator if necessary";
+                return View();
             }
 
             List<PaperQuestion> paperQuestions = new List<PaperQuestion>(from p in db.PaperQuestions
@@ -191,7 +201,7 @@ namespace Test2.Controllers.DBControllers
             };
 
 
-
+             ViewBag.Alert = "";
 
 
             return View(viewmodel);
