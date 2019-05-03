@@ -45,7 +45,8 @@ namespace Test2.Controllers
 
             string name = (from u in db.Users where u.Id == student select u.FirstName + " " + u.Surname).SingleOrDefault();
 
-            List<Enrollment> studentResults = new List<Enrollment>(from e in db.Enrollments where e.StudentId == student && e.FinalAssessment > Enrollment.Assessment.Present && e.SessionStatus > Enrollment.Status.Dubious select e );
+            List<Enrollment> studentResults = new List<Enrollment>(from e in db.Enrollments
+                where e.StudentId == student && e.FinalAssessment > Enrollment.Assessment.Absent && e.SessionStatus >= Enrollment.Status.Dubious select e );
 
              
 

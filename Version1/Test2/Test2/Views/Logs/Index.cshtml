@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Test2.Models.DBModels.Log>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Logs</h2>
+
+<div class="card-body">
+    @Html.ActionLink("Back", "Dashboard", "Home", new { }, new { @class = "btn btn-primary style-margin-bottom" })
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.LogId)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.When)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.Activity)
+                </th>
+                <th scope="col">
+                    UserId
+
+                </th>
+                <th scope="col">
+                    Full Name
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LogId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.When)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Activity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WhoId)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.RelatedUser.FirstName)<text> </text>
+                    @Html.DisplayFor(modelItem => item.RelatedUser.Surname)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

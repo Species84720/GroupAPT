@@ -26,9 +26,9 @@
     <div class="card managementFooter">
         <div class="card-body">
             <h5 class="card-title">Access Logs</h5>
-            <p class="card-text">Check all of the actions of the users from here!</p>
-            @*<a class="btn btn-primary" href="@Url.Action("CorrectExam", "Examiner")">Corrections</a>*@
-            @Html.ActionLink("Access Logs", "Index", "ExamSessions", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
+            <p class="card-text">Check all of the logged actions of the users from here!</p>
+           
+            @Html.ActionLink("Access Logs", "Index", "Logs", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
         </div>
     </div>
 </div>

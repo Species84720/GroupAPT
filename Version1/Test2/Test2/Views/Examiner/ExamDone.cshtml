@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "ExamDone";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ExamDone</h2>
+
+All questions for the @ViewBag.Subject exam have been corrected.
+
+@Html.ActionLink("Go to Dashboard", "Dashboard", "Home", new { }, new { @class = "btn btn-primary style-margin-bottom" })
+@Html.ActionLink("View Statistics", "Statistics", "Examiner", new { }, new { @class = "btn btn-primary style-margin-bottom" })

@@ -344,7 +344,7 @@ namespace Test2.Controllers.DBControllers
             //then we get the StudentAnswers that match the paperquestions.  These need to be corrected
             List<StudentAnswer> answers = new List<StudentAnswer>(from a in db.StudentAnswers where paperquestionid.Contains( a.PaperQuestionId) && a.CorrectedDateTime==null select a );
 
-            // now we update each of them depending on the student's answer and whtether it corresponds to the right answer
+            // now we update each of them depending on the student's answer and whether it corresponds to the right answer
             
 
             if (answers.Count != 0)
@@ -381,10 +381,11 @@ namespace Test2.Controllers.DBControllers
             //now we take all answers for this exam session to calculate the student's total
             answers = new List<StudentAnswer>(from a in db.StudentAnswers where a.RelatedPaperQuestion.RelatedExamSession.ExamId==session select a);
 
-            Enrollment enrollment =new Enrollment();
 
+            Enrollment enrollment = new Enrollment();
             foreach (StudentAnswer ans in answers)
             {
+               
                 enrollment = ans.RelatedEnrollment;
 
                 if (enrollment.ExamMark == null) enrollment.ExamMark = 0;
@@ -392,8 +393,36 @@ namespace Test2.Controllers.DBControllers
                 int b =  ans.MarksGained;
                 int c = a + b;
                 enrollment.ExamMark = (byte) c;
+                 
+                db.Entry(enrollment).State = EntityState.Modified;
+                db.SaveChanges();
 
-                if (c >= 45) enrollment.FinalAssessment = Enrollment.Assessment.Passed;
+            }
+
+
+
+
+            //now we make sure all Enrollment's FinalAssesment is updated, including those students that were absent
+            //Absent students have their enrollment pending or Absent and have produced no StudentAnswer
+
+            string subject = (from x in db.ExamSessions where x.ExamId==session select x.SubjectId).FirstOrDefault() ; 
+
+            IEnumerable<Enrollment> enrollments = new List<Enrollment>(from e in db.Enrollments where e.SubjectId==subject && e.FinalAssessment<Enrollment.Assessment.Passed select e) ;
+
+            foreach (Enrollment e in enrollments)
+            {
+                enrollment = e;
+
+                if (enrollment.FinalAssessment == Enrollment.Assessment.Pending ||
+                    enrollment.FinalAssessment == Enrollment.Assessment.Absent)
+                {
+                    enrollment.ExamMark = 0;
+                    enrollment.SessionStatus = Enrollment.Status.Confirmed;
+                    enrollment.FinalAssessment = Enrollment.Assessment.Absent;
+                }
+                if (enrollment.ExamMark == null) enrollment.ExamMark = 0;
+
+                if (enrollment.ExamMark>= 45) enrollment.FinalAssessment = Enrollment.Assessment.Passed;
                 else enrollment.FinalAssessment = Enrollment.Assessment.Failed;
 
                 db.Entry(enrollment).State = EntityState.Modified;
@@ -401,10 +430,9 @@ namespace Test2.Controllers.DBControllers
 
             }
 
-            //now we find the MAX mark and other stats 
-           
 
-            IEnumerable<Enrollment> enrollments = new List<Enrollment>(from a in answers select a.RelatedEnrollment).Distinct();
+            //now we find the MAX mark and other stats using only those who sat for the exam
+            enrollments = new List<Enrollment>(from a in answers select a.RelatedEnrollment).Distinct();
 
             byte? max = (from e in enrollments select e.ExamMark).Max();
             byte? min = (from e in enrollments select e.ExamMark).Min();
@@ -451,7 +479,7 @@ namespace Test2.Controllers.DBControllers
             db.SaveChanges();
              
             
-            return RedirectToAction("Examiner", "Dashboard");
+            return RedirectToAction("ExamDone", new { id=subject});
 
 
         }
@@ -476,12 +504,21 @@ namespace Test2.Controllers.DBControllers
         }
 
 
+        [Authorize(Roles = "Examiner")]
+        public ActionResult ExamDone(string id)
+        {
+            ViewBag.Subject = id;
+
+
+
+            return View( );
+        }
 
 
 
     }
 
 
-   
+
 
 }
