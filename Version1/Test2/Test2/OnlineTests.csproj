@@ -177,6 +177,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DBControllers\DepartmentsController.cs" />
     <Compile Include="Controllers\DBControllers\EnrollmentsController.cs" />
+    <Compile Include="Controllers\DBControllers\LogsController.cs" />
     <Compile Include="Controllers\ExamsController.cs" />
     <Compile Include="Controllers\DBControllers\ExamSessionsController.cs" />
     <Compile Include="Controllers\DBControllers\InvigilationsController.cs" />
@@ -590,11 +591,15 @@
     <Content Include="Scripts\WebCam-Scripts\webcam.jquery.json" />
     <Content Include="Views\Exams\ValidateStudent.cshtml" />
     <Content Include="Views\Exams\Index.cshtml" />
+    <Content Include="Views\Logs\Index.cshtml" />
+    <Content Include="Views\Examiner\ExamDone.cshtml" />
+    <Content Include="Views\Invigilation\ShotsChecked.cshtml" />
+    <Content Include="Views\Invigilation\IdCheck.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="StudentImages\" />
     <Folder Include="App_Data\" />
     <Folder Include="Captures\" />
-    <Folder Include="StudentImages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

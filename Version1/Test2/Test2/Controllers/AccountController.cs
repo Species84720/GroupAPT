@@ -211,7 +211,7 @@ namespace Test2.Controllers
 
                 string IssuedUserName = IssuedNickName; //Generates the UserName
 
-                if (anumber>0) IssuedUserName=IssuedUserName+ "." +anumber.ToString(); //contignecy to avoid UserName being similar
+                if (anumber>0) IssuedUserName=IssuedUserName+ "_" +anumber.ToString(); //contignecy to avoid UserName being similar
 
                 var user = new ApplicationUser { UserName =IssuedUserName, Role = model.Role, DepartmentId=model.DepartmentId, FirstName = model.FirstName, Surname = model.Surname, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);

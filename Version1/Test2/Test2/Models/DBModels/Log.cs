@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Test2.Models.DBModels
 {
@@ -13,7 +14,6 @@ namespace Test2.Models.DBModels
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int LogId { get; set; }
-
 
         public string WhoId { get; set; }
         [ForeignKey("WhoId")]
