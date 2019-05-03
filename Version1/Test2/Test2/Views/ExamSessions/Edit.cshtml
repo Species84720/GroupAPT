@@ -29,7 +29,7 @@
                 <div class="form-group row">
                     @Html.LabelFor(model => model.LocationId, "Location", htmlAttributes: new { @class = "col-control-label col-sm-2" })
                     <div class="col-sm-10">
-                        @Html.DropDownList("LocationId", null, htmlAttributes: new { @class = "form-control form-style" })
+                        @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @class = "form-control form-style" })
                         @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger form-style" })
                     </div>
                 </div>

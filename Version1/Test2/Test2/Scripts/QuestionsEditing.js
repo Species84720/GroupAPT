@@ -35,16 +35,6 @@ function RadioChange(letter) {
     else if (letter === "D") {
         document.getElementById("CorrectChoiceSelect").selectedIndex = 4;
     }
-
-    //checking if there is a 0 or not
-    var Selected = document.getElementById("CorrectChoiceSelect");
-    var Result = Selected.options[Selected.selectedIndex];
-    if (Result === undefined) {
-        document.getElementById("CorrectChoiceSelect").selectedIndex = 3;
-    }
-    else if (Result.text !== letter) {
-        document.getElementById("CorrectChoiceSelect").selectedIndex = document.getElementById("CorrectChoiceSelect").selectedIndex - 1;
-    }
 }
 
 function ChoiceTextChange(letter) {
