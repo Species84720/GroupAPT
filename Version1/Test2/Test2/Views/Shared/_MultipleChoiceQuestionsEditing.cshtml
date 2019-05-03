@@ -1,0 +1,40 @@
+﻿@model Test2.Models.DBModels.MultipleChoiceQuestion
+
+    <!--Takes care if a multiple choice is chosen-->
+    <div hidden disabled id="MultipleChoice">
+        <div class="form-group row">
+            <div class="col-sm-2" style="width: 100%">
+                Options:
+            </div>
+            <div class="col-sm-10 row" style="margin-left: 0px">
+                <div class="col-sm-6 row">
+                    <input id="ChoiceA" type="radio" name="Choice" value="A" class="col-2" style="margin-top: auto; margin-bottom: auto" onclick="RadioChange('A')">
+                    @Html.EditorFor(model => model.MQuestions.OptionText1, new { htmlAttributes = new { @id = "Choice A", @class = "form-control col-10", placeholder = "option 1", onChange = "ChoiceTextChange('A')" } })
+                    @Html.ValidationMessageFor(model => model.MQuestions.OptionText1, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6 row">
+                    <input id="ChoiceB" type="radio" name="Choice" value="B" class="col-2" style="margin-top: auto; margin-bottom: auto" onclick="RadioChange('B')">
+                    @Html.EditorFor(model => model.MQuestions.OptionText2, new { htmlAttributes = new { @id = "Choice B", @class = "form-control col-10", placeholder = "option 2", onChange = "ChoiceTextChange('B')" } })
+                    @Html.ValidationMessageFor(model => model.MQuestions.OptionText2, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6 row">
+                    <input id="ChoiceC" type="radio" name="Choice" value="C" class="col-2" style="margin-top: auto; margin-bottom: auto" onclick="RadioChange('C')">
+                    @Html.EditorFor(model => model.MQuestions.OptionText3, new { htmlAttributes = new { @id = "Choice C", @class = "form-control col-10", placeholder = "option 3", onChange = "ChoiceTextChange('C')" } })
+                    @Html.ValidationMessageFor(model => model.MQuestions.OptionText3, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6 row">
+                    <input id="ChoiceD" type="radio" name="Choice" value="D" class="col-2" style="margin-top: auto; margin-bottom: auto" onclick="RadioChange('D')">
+                    @Html.EditorFor(model => model.MQuestions.OptionText4, new { htmlAttributes = new { @id = "Choice D", @class = "form-control col-10", placeholder = "option 4", onChange = "ChoiceTextChange('D')" } })
+                    @Html.ValidationMessageFor(model => model.MQuestions.OptionText4, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-2" style="width: 100%"></div>
+            <div class="col-sm-10">
+                @Html.EnumDropDownListFor(model => model.MQuestions.CorrectChoice, htmlAttributes: new { @id = "CorrectChoiceSelect", @class = "form-control", placeholder = "Correct Option", @readonly = "readonly", style = "pointer-events: none;" })
+                @Html.ValidationMessageFor(model => model.MQuestions.CorrectChoice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>

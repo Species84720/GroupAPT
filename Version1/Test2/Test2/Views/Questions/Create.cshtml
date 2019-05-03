@@ -1,79 +1,85 @@
-﻿@model Test2.Models.DBModels.Question
+﻿@model Test2.Models.DBModels.MultipleChoiceQuestion
 
-@{
-    ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    @{
+        ViewBag.Title = "Create";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div class="card managementFooter">
-        <div class="card-header">
-            <h5 class="card-title">Create Question for Subject: @ViewBag.Subject</h5>
-        </div>
-        <div class="form">
-            <div class="card-body">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger form-style" })
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="card managementFooter">
+            <div class="card-header">
+                <h5 class="card-title">Create Question for Subject: @ViewBag.Subject</h5>
+            </div>
+            <div class="form">
+                <div class="card-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger form-style" })
 
-                <div class="form-group row">
-                    @Html.LabelFor(model => model.TopicId, "Topic Name:", htmlAttributes: new { @class = "col-sm-2 col-control-label" })
-                    <div class="col-sm-10">
-                        @Html.DropDownList("TopicId", null, htmlAttributes: new { @class = "form-control form-style" })
-                        @Html.ValidationMessageFor(model => model.TopicId, "", new { @class = "text-danger form-style" })
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.question.TopicId, "Topic Name:", htmlAttributes: new { @class = "col-sm-2 col-control-label" })
+                        <div class="col-sm-10">
+                            @Html.DropDownList("question.TopicId", (SelectList)ViewBag.TopicId, htmlAttributes: new { @class = "form-control form-style" })
+                            @Html.ValidationMessageFor(model => model.question.TopicId, "", new { @class = "text-danger form-style" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        @Html.HiddenFor(model => model.SubjectId)
-                        @Html.ValidationMessageFor(model => model.SubjectId, "", new { @class = "text-danger form-style" })
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            @Html.HiddenFor(model => model.question.SubjectId)
+                            @Html.ValidationMessageFor(model => model.question.SubjectId, "", new { @class = "text-danger form-style" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    @Html.LabelFor(model => model.QuestionUsage, "Use In:",htmlAttributes: new { @class = "col-sm-2 col-control-label" })
-                    <div class="col-sm-10">
-                        @Html.EnumDropDownListFor(model => model.QuestionUsage, htmlAttributes: new { @class = "form-control form-style" })
-                        @Html.ValidationMessageFor(model => model.QuestionUsage, "", new { @class = "text-danger form-style" })
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.question.QuestionUsage, "Use In:", htmlAttributes: new { @class = "col-sm-2 col-control-label" })
+                        <div class="col-sm-10">
+                            @Html.EnumDropDownListFor(model => model.question.QuestionUsage, htmlAttributes: new { @class = "form-control form-style" })
+                            @Html.ValidationMessageFor(model => model.question.QuestionUsage, "", new { @class = "text-danger form-style" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    @Html.LabelFor(model => model.QuestionText, "Question Text:", htmlAttributes: new { @class = "col-sm-2 col-control-label" })
-                    <div class="col-sm-10">
-                        @Html.TextAreaFor(model => model.QuestionText, new { htmlAttributes = new { @class = "form-control form-style" }, rows = "10", cols = "50" })
-                        @Html.ValidationMessageFor(model => model.QuestionText, "", new { @class = "text-danger form-style" })
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.question.QuestionFormat, "Question Format:", htmlAttributes: new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-10">
+                            @Html.EnumDropDownListFor(model => model.question.QuestionFormat, htmlAttributes: new { @class = "form-control form-style", @id = "selectingType", onchange = "MultipleChoiceOption()" })
+                            @Html.ValidationMessageFor(model => model.question.QuestionFormat, "", new { @class = "text-danger form-style" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    @Html.LabelFor(model => model.SampleAnswer, "Sample Answer:", htmlAttributes: new { @class = "col-sm-2 col-control-label" })
-                    <div class="col-sm-10">
-                        @Html.EditorFor(model => model.SampleAnswer, new { htmlAttributes = new { @class = "form-control form-style" } })
-                        @Html.ValidationMessageFor(model => model.SampleAnswer, "", new { @class = "text-danger form-style" })
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.question.QuestionText, "Question Text:", htmlAttributes: new { @class = "col-sm-2 col-control-label" })
+                        <div class="col-sm-10">
+                            @Html.TextAreaFor(model => model.question.QuestionText, new { htmlAttributes = new { @class = "form-control form-style" }, rows = "5", style = "width: 100%; max-width: 100%" })
+                            @Html.ValidationMessageFor(model => model.question.QuestionText, "", new { @class = "text-danger form-style" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    @Html.LabelFor(model => model.QuestionFormat, "Question Format:", htmlAttributes: new { @class = "col-sm-2 control-label" })
-                    <div class="col-sm-10">
-                        @Html.EnumDropDownListFor(model => model.QuestionFormat, htmlAttributes: new { @class = "form-control form-style" })
-                        @Html.ValidationMessageFor(model => model.QuestionFormat, "", new { @class = "text-danger form-style" })
+                    @{
+                        Html.RenderPartial("_MultipleChoiceQuestionsEditing", Model);
+                    }
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.question.SampleAnswer, "Sample Answer:", htmlAttributes: new { @class = "col-sm-2 col-control-label" })
+                        <div class="col-sm-10">
+                            @Html.EditorFor(model => model.question.SampleAnswer, new { htmlAttributes = new { @class = "form-control form-style" } })
+                            @Html.ValidationMessageFor(model => model.question.SampleAnswer, "", new { @class = "text-danger form-style" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <div id="buttonPadding" class="col-sm-10">
-                        <input type="submit" value="Create" class="btn btn-primary" />
-                        @Html.ActionLink("Cancel", "EditQuestions", "Examiner", new { subject = Model.SubjectId }, new { @class = "btn btn-primary" })
+                    <div class="form-group row">
+                        <div id="buttonPadding" class="col-sm-10">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                            @Html.ActionLink("Cancel", "EditQuestions", "Examiner", new { subject = Model.question.SubjectId }, new { @class = "btn btn-primary" })
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-}
+    }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+<script src="/Scripts/QuestionsEditing.js"></script>

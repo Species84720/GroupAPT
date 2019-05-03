@@ -431,6 +431,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\QuestionsEditing.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
@@ -595,11 +596,12 @@
     <Content Include="Views\Examiner\ExamDone.cshtml" />
     <Content Include="Views\Invigilation\ShotsChecked.cshtml" />
     <Content Include="Views\Invigilation\IdCheck.cshtml" />
+    <Content Include="Views\Shared\_MultipleChoiceQuestionsEditing.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="StudentImages\" />
     <Folder Include="App_Data\" />
     <Folder Include="Captures\" />
+    <Folder Include="StudentImages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

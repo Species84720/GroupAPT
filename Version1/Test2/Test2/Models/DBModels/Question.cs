@@ -37,8 +37,18 @@ namespace Test2.Models.DBModels
         [DisplayName("Sample Answer")]
         public string SampleAnswer { get; set; }
         [Required] public QuestionType QuestionFormat { get; set; } 
+    }
 
-          
+    public class MultipleChoiceQuestion
+    {
+        public MultipleChoiceQuestion()
+        {
+            question = new Question();
+            MQuestions = new MultipleChoice();
+        }
+
+        public Question question { get; set; }
+        public MultipleChoice MQuestions { get; set; }
 
     }
 }

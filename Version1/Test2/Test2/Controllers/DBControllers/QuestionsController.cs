@@ -61,8 +61,8 @@ namespace Test2.Controllers.DBControllers
             ViewBag.SubjectId = new SelectList(subjectchosen, "SubjectId", "SubjectName");
             ViewBag.TopicId = new SelectList(topics, "TopicId", "TopicName");
 
-            Question q = new Question();
-            q.SubjectId = subject;
+            MultipleChoiceQuestion q = new MultipleChoiceQuestion();
+            q.question.SubjectId = subject;
             
             return View(q);
         }
@@ -72,20 +72,24 @@ namespace Test2.Controllers.DBControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "QuestionId,SubjectId,TopicId,QuestionUsage,QuestionText,SampleAnswer,QuestionFormat")] Question question)
+        public async Task<ActionResult> Create([Bind(Include = "QuestionId,SubjectId,TopicId,QuestionUsage,QuestionText,SampleAnswer,QuestionFormat")] Question question, [Bind(Include = "MultipleChoiceId,OptionText1,OptionText2,OptionText3,OptionText4,CorrectChoice,QuestionId")] MultipleChoice MQuestions)
         {
-            
             if (ModelState.IsValid)
             {
                 db.Questions.Add(question);
-                await db.SaveChangesAsync();
                 // if the question is a MultiChoice add the Multichoices else go back
 
-                if (question.QuestionFormat == Question.QuestionType.MultipleChoice ) { return RedirectToAction("Create", "MultipleChoices", new{ questionid = question.QuestionId}); }
+                if (question.QuestionFormat == Question.QuestionType.MultipleChoice)
+                {
+                    //this used to carry out a redirection - BUT NO MORE!!!
+                    //return RedirectToAction("Create", "MultipleChoices", new{ questionid = question.QuestionId});
+
+                    MQuestions.QuestionId = question.QuestionId;
+                    db.MultipleChoices.Add(MQuestions);
+                }
+                await db.SaveChangesAsync();
 
                 return RedirectToAction("EditQuestions","Examiner", new { subject = question.SubjectId });
-
-
             }
 
 
@@ -99,7 +103,10 @@ namespace Test2.Controllers.DBControllers
             ViewBag.SubjectId = question.SubjectId; // new SelectList(question.SubjectId, "SubjectId", "SubjectName", question.SubjectId);
             ViewBag.TopicId = new SelectList(topics, "TopicId", "TopicName", question.TopicId);
 
-            return View(question);
+            MultipleChoiceQuestion q = new MultipleChoiceQuestion();
+            q.question = question;
+            q.MQuestions = MQuestions;
+            return View(q);
         }
 
         // GET: Questions/Edit/5
@@ -116,7 +123,15 @@ namespace Test2.Controllers.DBControllers
             }
             ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", question.SubjectId);
             ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", question.TopicId);
-            return View(question);
+
+            MultipleChoiceQuestion q = new MultipleChoiceQuestion();
+            q.question = question;
+            if (question.QuestionFormat == Question.QuestionType.MultipleChoice)
+            {
+                q.MQuestions = db.MultipleChoices.Where(x => x.QuestionId == id).FirstOrDefault();
+            }
+
+            return View(q);
         }
 
         // POST: Questions/Edit/5
@@ -124,28 +139,39 @@ namespace Test2.Controllers.DBControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "QuestionId,SubjectId,TopicId,QuestionUsage,QuestionText,SampleAnswer,QuestionFormat")] Question question)
+        public async Task<ActionResult> Edit([Bind(Include = "QuestionId,SubjectId,TopicId,QuestionUsage,QuestionText,SampleAnswer,QuestionFormat")] Question question, [Bind(Include = "MultipleChoiceId,OptionText1,OptionText2,OptionText3,OptionText4,CorrectChoice,QuestionId")] MultipleChoice MQuestions)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(question).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                //await db.SaveChangesAsync();
 
                 if (question.QuestionFormat == Question.QuestionType.MultipleChoice)
                 {
-                    int multiplechoiceid =
-                        (from m in db.MultipleChoices
-                            where m.QuestionId == question.QuestionId
-                            select m.MultipleChoiceId).FirstOrDefault();
-                    
-                    return RedirectToAction("Edit", "MultipleChoices", new { id = multiplechoiceid });
+                    //int multiplechoiceid = (from m in db.MultipleChoices where m.QuestionId == question.QuestionId select m.MultipleChoiceId).FirstOrDefault();
+
+                    //return RedirectToAction("Edit", "MultipleChoices", new { id = multiplechoiceid });
+
+                    //editing the multiple choice questions
+                    MQuestions.QuestionId = question.QuestionId;
+                    MQuestions.MultipleChoiceId = db.MultipleChoices.AsNoTracking().Where(x => x.QuestionId == question.QuestionId).FirstOrDefault().MultipleChoiceId;
+                    db.Entry(MQuestions).State = EntityState.Modified;
                 }
+                await db.SaveChangesAsync();
 
                 return RedirectToAction("EditQuestions", "Examiner", new { subject = question.SubjectId});
             }
             ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", question.SubjectId);
             ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", question.TopicId);
-            return View(question);
+
+            MultipleChoiceQuestion q = new MultipleChoiceQuestion();
+            q.question = question;
+            if (question.QuestionFormat == Question.QuestionType.MultipleChoice)
+            {
+                q.MQuestions = MQuestions;
+            }
+
+            return View(q);
         }
 
         // GET: Questions/Delete/5
