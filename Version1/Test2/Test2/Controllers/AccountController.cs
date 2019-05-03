@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -237,7 +238,17 @@ namespace Test2.Controllers
                             UserId = user.Id
                             // no image being captured here (Should it be here?)
                     };
-                         
+
+                        if (model.Image != null && model.Image.ContentLength > 0)
+                        {
+                            var fileName = IssuedUserName + ".png";
+                            var path = Path.Combine(Server.MapPath("/StudentImages/"), fileName);
+                            model.Image.SaveAs(path);
+
+                            student.FacialImageDirectory = "/StudentImages/";
+                            student.FacialImageTitle = fileName;
+                        }
+
                         db.Students.Add(student);
                         await db.SaveChangesAsync();
 

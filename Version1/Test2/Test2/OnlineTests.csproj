@@ -596,6 +596,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Captures\" />
+    <Folder Include="StudentImages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

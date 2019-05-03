@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -76,6 +77,8 @@ namespace Test2.Controllers.DBControllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.UserName = student.StudentId;
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", student.UserId);
             return View(student);
         }
@@ -85,14 +88,31 @@ namespace Test2.Controllers.DBControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "StudentId,UserId,FacialImageDirectory,FacialImageTitle")] Student student)
+        public async Task<ActionResult> Edit([Bind(Include = "StudentId,UserId,FacialImageDirectory,FacialImageTitle")] Student student, HttpPostedFileBase EditUpload)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(student).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                if (EditUpload != null && EditUpload.ContentLength > 0)
+                {
+                    var fileName = student.StudentId + ".png";
+                    var path = Path.Combine(Server.MapPath("/StudentImages/"), fileName);
+                    EditUpload.SaveAs(path);
+
+                    //a change is only needed if an image is added without having any previous upload
+                    if (student.FacialImageTitle == null)
+                    {
+                        student.FacialImageDirectory = "/StudentImages/";
+                        student.FacialImageTitle = fileName;
+
+                        db.Entry(student).State = EntityState.Modified;
+                        await db.SaveChangesAsync();
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
+
+            ViewBag.UserName = student.StudentId;
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", student.UserId);
             return View(student);
         }

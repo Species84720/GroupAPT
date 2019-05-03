@@ -119,7 +119,7 @@ namespace Test2.Controllers.DBControllers
                 string enrollment = User.Identity.GetUserName() + "-" + idSplit[0];
                 int imageAmount = db.Shots.Where(x => x.EnrollmentId == enrollment).Count() + 1;
                 //set the file name
-                string imageData = User.Identity.GetUserName() + "_" + examid + "_" + imageAmount;
+                string imageData = enrollment + "_" + imageAmount;
                 //creating the file itself
                 string[] trimmedImageName = imagename.Split(',');
                 byte[] contents = Convert.FromBase64String(trimmedImageName[1]);
