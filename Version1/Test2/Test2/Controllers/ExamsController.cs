@@ -40,7 +40,10 @@ namespace Test2.Controllers.DBControllers
         {
             string username = User.Identity.GetUserId();
 
-            if (examid == null) { RedirectToAction("Index", "Home"); }
+            if (examid == null)
+            {
+                RedirectToAction("Index", "Home");
+            }
 
             //we get the subject code
             string[] idSplit = examid.Split('-');
@@ -85,12 +88,13 @@ namespace Test2.Controllers.DBControllers
                 return View();
             }
 
-            if (DateTime.Now.Minute > exam.CodeIssueDateTime.Value.Minute + 6 || (DateTime.Now.Hour > exam.CodeIssueDateTime.Value.Hour))
+            if (DateTime.Now.Minute > exam.CodeIssueDateTime.Value.Minute + 6 ||
+                (DateTime.Now.Hour > exam.CodeIssueDateTime.Value.Hour))
             {
-                    ViewData["ExamId"] = examid;
-                    ViewData["Error"] = "The last Access Code has expired. " +
-                                        "Ask the Invigilator for a new one";
-                    return View();
+                ViewData["ExamId"] = examid;
+                ViewData["Error"] = "The last Access Code has expired. " +
+                                    "Ask the Invigilator for a new one";
+                return View();
             }
             else
             {
@@ -106,11 +110,11 @@ namespace Test2.Controllers.DBControllers
 
             ViewData["ExamId"] = examid;
 
-                ViewData["AccessCode"] = AccessCode;
+            ViewData["AccessCode"] = AccessCode;
 
-                //now we get the subject
-                
-                ViewBag.Subject = exam.SubjectId;
+            //now we get the subject
+
+            ViewBag.Subject = exam.SubjectId;
 
             if (AccessCode == exam.AccessCode)
             {
@@ -148,8 +152,6 @@ namespace Test2.Controllers.DBControllers
             }
 
             return View();
-            
-            
         }
 
         /*
@@ -181,7 +183,7 @@ namespace Test2.Controllers.DBControllers
             ViewBag.Subject = exam.SubjectId;
             List<PaperQuestion> paper = new List<PaperQuestion>();
 
-            paper = db.PaperQuestions.Where(x => x.ExamId == examid).ToList();
+            paper = db.PaperQuestions.Where(x => x.ExamId == examid).OrderBy(x => x.NumberInPaper).ToList();
 
             //ViewBag.PaperQuestions = paper;
 
