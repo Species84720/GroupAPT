@@ -592,11 +592,13 @@
     <Content Include="Views\Exams\Index.cshtml" />
     <Content Include="Views\Logs\Index.cshtml" />
     <Content Include="Views\Examiner\ExamDone.cshtml" />
+    <Content Include="Views\Invigilation\ShotsChecked.cshtml" />
+    <Content Include="Views\Invigilation\IdCheck.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="StudentImages\" />
     <Folder Include="App_Data\" />
     <Folder Include="Captures\" />
-    <Folder Include="StudentImages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
