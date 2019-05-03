@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -94,6 +95,50 @@ namespace Test2.Controllers
             return View();
         }
 
+
+        [Authorize(Roles = "Invigilator,Clerk")]
+        public ActionResult IdCheck()
+        {
+             
+                Enrollment enrollment = (from e in db.Enrollments.Include(e => e.Shots).Include(e => e.RelatedStudent)
+                    where e.RelatedStudent.FacialImageTitle != null && e.Shots!=null && (e.SessionStatus == Enrollment.Status.Unchecked || e.SessionStatus == Enrollment.Status.Dubious)
+                    select e).OrderBy(e => e.SessionStatus).First();
+
+                if (enrollment == null) { return RedirectToAction("ShotsChecked", "Invigilation"); }
+
+                
+                return View(enrollment);
+             
+        }
+
+        [Authorize(Roles = "Invigilator,Clerk")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> IdCheck([Bind(Include = "EnrollmentId,StudentId,SubjectId,ExamMark,SeatNumber,SessionStatus,FinalAssessment")] Enrollment enrollment)
+        {
+             
+            if (ModelState.IsValid)
+            {
+                db.Entry(enrollment).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return View();
+            }
+
+
+            return View(enrollment);
+
+        }
+
+ 
+
+
+
+        [Authorize(Roles = "Invigilator,Clerk")]
+        public ActionResult ShotsChecked()
+        {
+            
+            return View( );
+        }
 
 
     }

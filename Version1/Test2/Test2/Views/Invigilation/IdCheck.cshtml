@@ -1,0 +1,53 @@
+﻿@using Test2.Models.DBModels
+@model Test2.Models.DBModels.Enrollment
+@{
+    ViewBag.Title = "IdCheck";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="form">
+        @Html.HiddenFor(model => model.EnrollmentId)
+        @Html.HiddenFor(model => model.FinalAssessment)
+        @Html.HiddenFor(model => model.ExamMark)
+        @Html.HiddenFor(model => model.SeatNumber)
+        @Html.HiddenFor(model => model.StudentId)
+        @Html.HiddenFor(model => model.SubjectId)
+
+        <table>
+            <tr>
+                <td>
+                    <img src="@Model.RelatedStudent.FacialImageDirectory/@Model.RelatedStudent.FacialImageTitle" width="500" height ="500" />
+                </td>
+                <td><img src="@Model.Shots.First().ImageLocation/@Model.Shots.First().ImageTitle"  width="500" height ="500" /></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.SessionStatus, htmlAttributes: new { @class = "col-sm-2 col-control-label" })
+                        <div class="col-sm-10">
+                            @Html.EnumDropDownListFor(model => model.SessionStatus, htmlAttributes: new { @class = "form-control form-style" })
+                            @Html.ValidationMessageFor(model => model.SessionStatus, "", new { @class = "text-danger form-style" })
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="form-group row">
+            <div id="buttonPadding" class="col-sm-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+        <div>
+            <p>If the person in the images match: Choose Confirmed</p>
+            <p>If the person in the images does not match: Choose Denied</p>
+            <p>If the person in the images match: Choose Dubious</p>
+            <p> </p>
+            <p>Dubious pictures will be re-appearing for re-checking later.</p>
+        </div>
+    </div>
+}
+@Html.ActionLink("Back To Dashboard", "Dashboard", "Home", new { }, new { @class = "btn btn-primary" })
