@@ -27,8 +27,8 @@
 border-radius: 3px;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);}
 .dtp_modal-time-line{ text-align: center; color: #7d7d7d; font-size: 20px; padding-top: 15px;  }
 .dtp_modal-time-mechanic{ padding-top: 16px;}
-.dtp_modal-append{ color: #7d7d7d; padding-left: 108px; font-weight: normal; }
+.dtp_modal-append{ color: #7d7d7d; padding-left: 70px; font-weight: normal; }
 .dtp_modal-midle{ display: inline-block; width: 40px; }
 .dtp_modal-midle-dig{display: inline-block; width: 16px; text-align: center; }
-.dtp_modal-digits{ font-size: 50px; padding-left: 96px;}
+.dtp_modal-digits{ font-size: 50px; padding-left: 48px;} 
 .dtp_modal-digit{  }
