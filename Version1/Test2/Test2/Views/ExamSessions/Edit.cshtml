@@ -95,33 +95,70 @@
 
                 <div class="form-group row">
                     @Html.LabelFor(model => model.ExamDateTime, htmlAttributes: new { @class = "col-control-label col-sm-2" })
-                    <div class="col-sm-10">
+
+                    @if (Model.ExamDateTime == null)
+                    {
+                        <div class="col-sm-4">
+                            <p style="color: red">Please select an exam start date: </p>
+                        </div>
+                        <div id="StartDate" class="col-sm-6" onchange="DateChange()">
+                            @Html.ValidationMessageFor(model => model.ExamDateTime, "", new { @class = "text-danger form-style" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="StartDate" class="col-sm-10" onchange="DateChange()">
+                            @Html.ValidationMessageFor(model => model.ExamDateTime, "", new { @class = "text-danger form-style" })
+                        </div>
+                    }
+                    @Html.HiddenFor(model => model.ExamDateTime)
+
+                    @*
                         @if (Model.ExamDateTime != null)
                         {
                             @Html.HiddenFor(model => model.ExamDateTime)
                             @Model.ExamDateTime
-                            @Html.ActionLink("Change", "ExamDateChange", new { idd = Model.ExamId }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Change", "ExamDateChange", new {idd = Model.ExamId}, new {@class = "btn btn-primary"})
                         }
                         else
                         {
-                            @Html.Editor("ExamDateTime", new { htmlAttributes = new { @class = "form-control form-style", type = "datetime-local", value = @Model.ExamDateTime } })}
-                        @Html.ValidationMessageFor(model => model.ExamDateTime, "", new { @class = "text-danger form-style" })
-                    </div>
+                            @Html.Editor("ExamDateTime", new {htmlAttributes = new {@class = "form-control form-style", type = "datetime-local", value = @Model.ExamDateTime}})
+                        }
+                    *@
                 </div>
 
                 <div class="form-group row">
                     @Html.LabelFor(model => model.ExamEndTime, htmlAttributes: new { @class = "col-control-label col-sm-2" })
-                    <div class="col-sm-10">
-                        @if (Model.ExamEndTime != null)
-                        {
-                            @Html.HiddenFor(model => model.ExamEndTime)
-                            @Model.ExamEndTime
-                            @Html.ActionLink("Change", "ExamEndChange", new { idd = Model.ExamId }, new { @class = "btn btn-primary" })
-                        }
-                        else
-                        { @Html.EditorFor(model => model.ExamEndTime, new { htmlAttributes = new { @class = "form-control form-style", type = "datetime-local" } })}
-                        @Html.ValidationMessageFor(model => model.ExamEndTime, "", new { @class = "text-danger form-style" })
-                    </div>
+
+                    @if (Model.ExamEndTime == null)
+                    {
+                        <div class="col-sm-4">
+                            <p style="color: red">Please select an exam end date: </p>
+                        </div>
+                        <div id="EndDate" class="col-sm-6">
+                            @Html.ValidationMessageFor(model => model.ExamEndTime, "", new { @class = "text-danger form-style" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="EndDate" class="col-sm-10">
+                            @Html.ValidationMessageFor(model => model.ExamEndTime, "", new { @class = "text-danger form-style" })
+                        </div>
+                    }
+                    @Html.HiddenFor(model => model.ExamEndTime)
+
+                    @*
+        @if (Model.ExamEndTime != null)
+        {
+            @Html.HiddenFor(model => model.ExamEndTime)
+            @Model.ExamEndTime
+            @Html.ActionLink("Change", "ExamEndChange", new {idd = Model.ExamId}, new {@class = "btn btn-primary"})
+        }
+        else
+        {
+            @Html.EditorFor(model => model.ExamEndTime, new {htmlAttributes = new {@class = "form-control form-style", type = "datetime-local"}})
+        }
+                    *@
                 </div>
 
                 @Html.HiddenFor(model => model.QuestionAmount)
@@ -167,3 +204,27 @@
 }
 
 <script src="/Scripts/LocationEdit.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#StartDate').dateTimePicker({
+            dateFormat: 'DD-MM-YYYY HH:mm:ss'
+            @if (Model.ExamDateTime != null)
+            {
+                <text>,selectData: "</text>@Html.DisplayTextFor(model => model.ExamDateTime)<text>"</text>
+            }
+        });
+        $('#EndDate').dateTimePicker({
+            dateFormat: 'DD-MM-YYYY HH:mm:ss'
+            @if (Model.ExamEndTime != null)
+            {
+                <text>,selectData: "</text>@Html.DisplayTextFor(model => model.ExamEndTime)<text>"</text>
+            }
+        });
+
+        //$("#StartDate").data("DateTimePicker").date(("@Html.DisplayTextFor(model => model.ExamDateTime)").format('DD/MM/YY hh:mm:ss'));
+    });
+
+    function DateChange() {
+        debugger;
+    }
+</script>
