@@ -89,7 +89,7 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamEndTime)
-                            @if (item.RelatedExamSession.ExamDateTime == null)
+                            @if (item.RelatedExamSession.ExamEndTime == null)
                             {<i style="color: red"> NOT SET </i>}
                             @Html.ActionLink("Change", "Edit", "ExamSessions", new { id = item.ExamId }, new { @class = "btn btn-primary btn-sm" })
                         </td>
