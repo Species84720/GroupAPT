@@ -101,17 +101,20 @@
                         <div class="col-sm-4">
                             <p style="color: red">Please select an exam start date: </p>
                         </div>
-                        <div id="StartDate" class="col-sm-6" onchange="DateChange()">
-                            @Html.ValidationMessageFor(model => model.ExamDateTime, "", new { @class = "text-danger form-style" })
+                        <div class="col-sm-6">
+                            <div id="StartDate"></div>
+                            @*@Html.ValidationMessageFor(model => model.ExamDateTime, "", new { @class = "text-danger form-style" })*@
+                            @Html.HiddenFor(model => model.ExamDateTime)
                         </div>
                     }
                     else
                     {
-                        <div id="StartDate" class="col-sm-10" onchange="DateChange()">
-                            @Html.ValidationMessageFor(model => model.ExamDateTime, "", new { @class = "text-danger form-style" })
+                        <div class="col-sm-10">
+                            <div id="StartDate"></div>
+                            @*@Html.ValidationMessageFor(model => model.ExamDateTime, "", new { @class = "text-danger form-style" })*@
+                            @Html.HiddenFor(model => model.ExamDateTime)
                         </div>
                     }
-                    @Html.HiddenFor(model => model.ExamDateTime)
 
                     @*
                         @if (Model.ExamDateTime != null)
@@ -135,17 +138,20 @@
                         <div class="col-sm-4">
                             <p style="color: red">Please select an exam end date: </p>
                         </div>
-                        <div id="EndDate" class="col-sm-6">
-                            @Html.ValidationMessageFor(model => model.ExamEndTime, "", new { @class = "text-danger form-style" })
+                        <div class="col-sm-6">
+                            <div id="EndDate"></div>
+                            @*@Html.ValidationMessageFor(model => model.ExamEndTime, "", new {@class = "text-danger form-style"})*@
+                            @Html.HiddenFor(model => model.ExamEndTime)
                         </div>
                     }
                     else
                     {
-                        <div id="EndDate" class="col-sm-10">
-                            @Html.ValidationMessageFor(model => model.ExamEndTime, "", new { @class = "text-danger form-style" })
+                        <div class="col-sm-10">
+                            <div id="EndDate"></div>
+                            @*@Html.ValidationMessageFor(model => model.ExamEndTime, "", new { @class = "text-danger form-style" })*@
+                            @Html.HiddenFor(model => model.ExamEndTime)
                         </div>
                     }
-                    @Html.HiddenFor(model => model.ExamEndTime)
 
                     @*
         @if (Model.ExamEndTime != null)
