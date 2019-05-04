@@ -170,10 +170,61 @@ namespace Test2.Controllers.DBControllers
 
             ViewBag.Start = examSession.ExamDateTime;
 
+            var Locations = db.Locations.Select(x => x.Campus).Distinct().ToList();
             ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName");
-            ViewBag.LocationId = new SelectList(db.Locations, "LocationId", "Campus", examSession.LocationId);
+            ViewBag.LocationId = new SelectList(Locations, examSession.LocationId);
 
             return View(examSession);
+        }
+
+        [Authorize(Roles = "Clerk")]
+        [HttpPost]
+        public async Task<ActionResult> AjaxPost(string campus, string building, string floor, string block, string room)
+        {
+            var Locations = db.Locations.Where(x => x.Campus == campus);
+            int LocationId = 0;
+            List<string> returnValue = new List<string>();
+            if (building != "")
+            {
+                Locations = Locations.Where(x => x.Building == building);
+                if (floor != "")
+                {
+                    Locations = Locations.Where(x => x.Floor == floor);
+                    if (block != "")
+                    {
+                        Locations = Locations.Where(x => x.Block == block);
+                        if (room != "")
+                        {
+                            LocationId = Locations.Where(x => x.Room == room).Select(x => x.LocationId).FirstOrDefault();
+                        }
+                        else
+                        {
+                            returnValue = Locations.Select(x => x.Room).ToList();
+                        }
+                    }
+                    else
+                    {
+                        returnValue = Locations.Select(x => x.Block).Distinct().ToList();
+                    }
+                }
+                else
+                {
+                    returnValue = Locations.Select(x => x.Floor).Distinct().ToList();
+                }
+            }
+            else
+            {
+                returnValue = Locations.Select(x => x.Building).Distinct().ToList();
+            }
+
+            var response = new
+            {
+                success = true,
+                location = returnValue,
+                Id = LocationId
+            };
+
+            return Json(response);
         }
 
         // POST: ExamSessions/Edit/5
@@ -188,10 +239,7 @@ namespace Test2.Controllers.DBControllers
             int? dept = (from u in db.Users where u.Id == user select u.DepartmentId).FirstOrDefault();
 
             List<int> depts = new List<int>(from d in db.Departments where d.DepartmentId == dept || d.DepartmentParentId == dept select d.DepartmentId);
-
-
-
-
+ 
             if (ModelState.IsValid)
             {
                
