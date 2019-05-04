@@ -137,9 +137,9 @@
                 //if the data is of the room itself
                 else {
                     var FinalChoice = document.getElementById("LocationChange5");
-                    //document.getElementById("LocationId").value = data.Id;
+                    document.getElementById("LocationId").value = data.Id;
                     FinalChoice.options[FinalChoice.selectedIndex].value = data.Id;
-                    FinalChoice.setAttribute("name", "LocationId");
+                    //FinalChoice.setAttribute("name", "LocationId");
                 }
             }
         });

@@ -25,7 +25,33 @@
                         @Html.ValidationMessageFor(model => model.SubjectId, "", new { @class = "text-danger form-style" })
                     </div>
                 </div>
-
+                
+                <div class="form-group row">
+                    <b class="col-sm-2">Current Location:</b>
+                    <div id="location1Dropdown" class="col-sm-10 row">
+                        <div class="col-sm-8">
+                            @if (ViewBag.LocationCall != null)
+                            {
+                                foreach (string location in ViewBag.LocationCall)
+                                {
+                                    @location<text> </text>
+                                }
+                                @*
+                                @ViewBag.LocationCall.Campus @ViewBag.LocationCall.Building @ViewBag.LocationCall.Block @ViewBag.LocationCall.Floor @ViewBag.LocationCall.Room
+                                *@                                                                                                                    
+                            }
+                            else
+                            {
+                                @Html.ValidationMessageFor(model => model.LocationId, "Please Select Locations Below to get the Location Id", new { @class = "text-danger form-style" })
+                            }
+                        </div>
+                        <div class="col-sm-4 row">
+                            <b class="col-8">new id: </b>
+                            @Html.TextBoxFor(model => model.LocationId, new {@readonly = "true", required = "true", style = "border: none; outline: none; width: 100%", @class=  "col-4" })
+                        </div>
+                    </div>
+                </div>
+                
                 <div id="location1" class="form-group row">
                     @Html.LabelFor(model => model.LocationId, "Select Campus", htmlAttributes: new { @class = "col-control-label col-sm-2" })
                     <div id="location1Dropdown" class="col-sm-10">

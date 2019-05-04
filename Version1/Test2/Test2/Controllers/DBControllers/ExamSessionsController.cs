@@ -174,6 +174,19 @@ namespace Test2.Controllers.DBControllers
             ViewBag.SubjectId = new SelectList(subjects, "SubjectId", "SubjectName");
             ViewBag.LocationId = new SelectList(Locations, examSession.LocationId);
 
+            if (examSession.LocationId != null)
+            {
+                var LocationCall = db.Locations.Where(x => x.LocationId == examSession.LocationId).FirstOrDefault();
+                ViewBag.LocationCall = new string[]
+                {
+                    LocationCall.Campus,
+                    LocationCall.Building,
+                    LocationCall.Floor,
+                    LocationCall.Block,
+                    LocationCall.Room
+                };
+            }
+
             return View(examSession);
         }
 
