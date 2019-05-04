@@ -4,7 +4,7 @@
 
         var settings = $.extend({
             selectData: "now",
-            dateFormat: "YYYY-MM-DD HH:mm",
+            dateFormat: "YYYY-MM-DD HH:mm:ss",
             showTime: true,
             locale: 'en',
             positionShift: { top: 20, left: 0},
@@ -13,7 +13,7 @@
         }, options);
         moment.locale(settings.locale);
         var elem = this;
-        var limitation = {"hour": 23, "minute": 59};
+        var limitation = {"hour": 23, "minute": 59, "second": 59};
         var mousedown = false;
         var timeout = 800;
         var selectDate = settings.selectData == "now" ? moment() : moment(settings.selectData, settings.dateFormat);
@@ -34,7 +34,7 @@
                 if (settings.showTime && arrF.length != 2) {
                     arrF.length = 2;
                     arrF[0] = 'DD/MM/YY';
-                    arrF[1] = 'HH:mm';
+                    arrF[1] = 'HH:mm:ss';
                 }
                 var $s = $('<span>');
                 $s.text(lastSelected.format(arrF[0]));
@@ -71,6 +71,7 @@
                     var $fieldTime = $('#field-time');
                     var $hour = $fieldTime.find('#d-hh');
                     var $minute = $fieldTime.find('#d-mm');
+                    var $second = $fieldTime.find('#d-ss');
                 }
 
                 function feelDates(selectM) {
@@ -163,8 +164,10 @@
                     if (settings.showTime) {
                         lastSelected.hour(parseInt($hour.text()));
                         lastSelected.minute(parseInt($minute.text()));
+                        lastSelected.second(parseInt($second.text()));
                         selectDate.hour(parseInt($hour.text()));
                         selectDate.minute(parseInt($minute.text()));
+                        selectDate.second(parseInt($second.text()));
                     }
                     updateDate();
                     $content.remove();
@@ -221,8 +224,17 @@
                 }
 
                 function appendIncrement(typeDigits, increment) {
-
-                    var $i = typeDigits == "hour" ? $hour : $minute;
+                    debugger;
+                    if (typeDigits == "hour") {
+                        var $i = $hour;
+                    }
+                    else if (typeDigits == "minute") {
+                        var $i = $minute;
+                    }
+                    else if (typeDigits == "second") {
+                        var $i = $second;
+                    }
+                    //var $i = typeDigits == "hour" ? $hour : $minute;
                     var val = parseInt($i.text()) + increment;
                     if (val < 0) {
                         val = limitation[typeDigits];
@@ -257,6 +269,13 @@
                     $i.attr('id', 'angle-up-minute');
                     $i.addClass('fa fa-angle-up ico-size-large cursorily hov');
                     $panel.append($i);
+                    $m = $('<span>');
+                    $m.addClass('dtp_modal-midle');
+                    $panel.append($m);
+                    $i = $('<i>');
+                    $i.attr('id', 'angle-up-second');
+                    $i.addClass('fa fa-angle-up ico-size-large cursorily hov');
+                    $panel.append($i);
                     $div.append($panel);
 
                     $panel = $('<div>');
@@ -275,6 +294,15 @@
                     $d.attr('id', 'd-mm');
                     $d.text(lastSelected.format('mm'));
                     $panel.append($d);
+                    $m = $('<span>');
+                    $m.addClass('dtp_modal-midle-dig');
+                    $m.html(':');
+                    $panel.append($m);
+                    $d = $('<span>');
+                    $d.addClass('dtp_modal-digit');
+                    $d.attr('id', 'd-ss');
+                    $d.text(lastSelected.format('ss'));
+                    $panel.append($d);
                     $div.append($panel);
 
                     $panel = $('<div>');
@@ -288,6 +316,13 @@
                     $panel.append($m);
                     $i = $('<i>');
                     $i.attr('id', 'angle-down-minute');
+                    $i.addClass('fa fa-angle-down ico-size-large cursorily hov');
+                    $panel.append($i);
+                    $m = $('<span>');
+                    $m.addClass('dtp_modal-midle');
+                    $panel.append($m);
+                    $i = $('<i>');
+                    $i.attr('id', 'angle-down-second');
                     $i.addClass('fa fa-angle-down ico-size-large cursorily hov');
                     $panel.append($i);
                     $div.append($panel);
@@ -350,7 +385,7 @@
                     if (settings.showTime && arrF.length != 2) {
                         arrF.length = 2;
                         arrF[0] = 'DD/MM/YY';
-                        arrF[1] = 'HH:mm';
+                        arrF[1] = 'HH:mm:ss';
                     }
                     var $s = $('<span>');
                     $s.text(lastSelected.format(arrF[0]));
