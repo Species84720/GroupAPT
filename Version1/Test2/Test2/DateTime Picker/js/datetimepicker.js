@@ -224,7 +224,7 @@
                 }
 
                 function appendIncrement(typeDigits, increment) {
-                    debugger;
+                    
                     if (typeDigits == "hour") {
                         var $i = $hour;
                     }
