@@ -13,7 +13,7 @@
     <div class="card managementFooter">
         <div class="card-header">
             <h2 class="card-title">Subject Code: @Model.Subject</h2>
-            <b>@ViewBag.Alert</b>
+            <b style="color: red">@ViewBag.Alert</b>
         </div>
         <div class="card-body">
             <div class="row">
@@ -112,6 +112,7 @@ else
                         <input class="btn btn-outline-primary" type="submit" value="Select" />
                     </div>
                 </div>
+                <b style="color: red">@ViewBag.Alert</b>
             </div>
         </div>
     }
