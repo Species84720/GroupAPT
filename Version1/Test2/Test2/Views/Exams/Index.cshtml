@@ -4,9 +4,10 @@
 @model IEnumerable<Test2.Models.DBModels.PaperQuestion>
 @{
     ViewBag.Title = "Index";
+    HttpContext.Current.Session["Username"] = User.Identity.GetUserName();
 }
 @if (Model == null)
-{   
+{
     if (ViewData["ExamId"] == null)
     {
         <b>You have not selected any exam!</b>
@@ -48,7 +49,7 @@
                         <input type="text" id="imagename" name="imagename" value="" />
                     </div>
 
-                    <div class="form-group row">
+                    <div hidden id="submitButton" class="form-group row">
                         <div id="buttonPadding" class="col-sm-10">
                             <input type="submit" value="Submit Code" class="btn btn-primary" />
                         </div>
@@ -56,7 +57,7 @@
                 </form>
             </div>
         </div>
-            
+
         <script>
             var video = document.querySelector("#videoElement");
 
@@ -141,35 +142,37 @@ else
                                 if ((questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionFormat.ToString()) != "MultipleChoice")
                                 {
                                     <button id="@item.NumberInPaper" class='QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
-                                                                               {
-                                                                                   if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
-                                                                                   else {<text>Started</text>}
-                                                                               }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', ' ', ' ', ' ', ' ')" ;>
+                                                                                           {
+                                                                                               if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
+                                                                                               else {<text>Started</text>}
+                                                                                           }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', ' ', ' ', ' ', ' ')" ;>
                                         @Html.DisplayFor(modelItem => item.NumberInPaper)
                                     </button>
                                 }
                                 else
                                 {
                                     <button id="@item.NumberInPaper" class='QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
-                        {
-                            if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
-                            else {<text>Started</text>}
-                        }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText1', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText2', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText3', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText4')" ;>
+                                                                                           {
+                                                                                               if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
+                                                                                               else {<text>Started</text>}
+                                                                                           }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText1', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText2', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText3', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText4')" ;>
                                         @Html.DisplayFor(modelItem => item.NumberInPaper)
                                     </button>
                                 }
 
                                 <p hidden id="Answer @item.NumberInPaper" name="" submitted="@if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
-                                                                                 {
-                                                                                     @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent;
-                                                                                 }
-                                                                                 else {<text>False</text>}">
-                                    @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
-                                    {
-                                        @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().Answer;
-                                    }
-                                </p>
-                            }
+                                                                                             {
+                                                                                                 @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent
+                                                                                             }
+                                                                                             else
+                                                                                             {
+                                                                                                 <text>False</text>
+
+                                                                                             }">@if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+                                                                                                {
+                                                                                                    @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().Answer;
+                                                                                                }</p>
+                                                                                    }
                         </th>
                         <th>
                             <p id="examStart">
@@ -188,21 +191,21 @@ else
                     </tr>
                 </tbody>
             </table>
+
+            <button hidden id="saveButton" style="float: left; width: 20%" OnClick="save('@User.Identity.GetUserName()','@examIdSplit[0]')">
+                Save
+            </button>
+
+            <button hidden id="submitButton" style="float: right; width: 20%" OnClick="submit('@User.Identity.GetUserName()','@examIdSplit[0]')">
+                <p hidden id="CurrentQuestion"></p>
+                Submit
+            </button>
         </div>
     </div>
 
-    <button hidden id="saveButton" style="float: left; width: 20%" OnClick="save()">
-        Save
-    </button>
-
-    <button hidden id="submitButton" style="float: right; width: 20%" OnClick="submit()">
-        <p hidden id="CurrentQuestion"></p>
-        Submit
-    </button>
-
     <script>
-        if ( window.history.replaceState ) {
-            window.history.replaceState( null, null, window.location.href );
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
         }
     </script>
 }

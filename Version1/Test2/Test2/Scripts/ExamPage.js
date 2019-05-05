@@ -32,13 +32,14 @@ function showChoices(a, b, c, d) {
 }
 
 
-function submit() {
+function submit(username, examId) {
     //getting the answer and number of question at the moment
     var answer;
     if (document.getElementById('Choice1').hidden === false) {
         answer = $("input[name='Choice']:checked").val();
     } else {
         answer = document.getElementById('QuestionAnswer').value;
+        answer = answer.trim();
     }
     var number = document.getElementById('QuestionAnswer').name;
 
@@ -47,7 +48,7 @@ function submit() {
     document.getElementById('Answer ' + number).setAttribute("submitted", "True");
 
     //sending the answer to the database
-    var enrollment = '@User.Identity.GetUserName()' + "-" + '@examIdSplit[0]';
+    var enrollment = username + "-" + examId;
     var paperQuestion = document.getElementById('CurrentQuestion').innerHTML;
     var studentAnswer = {
         EnrollmentId: enrollment,
@@ -102,7 +103,7 @@ function submit() {
     }
 }
 
-function save() {
+function save(username, examId) {
     //getting the answer and number of question at the moment
     var answer;
     if (document.getElementById('Choice1').hidden === false) {
@@ -119,7 +120,7 @@ function save() {
     if (document.getElementById('Choice1').hidden === false) {
         answer = $("input[name='Choice']:checked").val();
     }
-    var enrollment = '@User.Identity.GetUserName()' + "-" + '@examIdSplit[0]';
+    var enrollment = username + "-" + examId;
     var paperQuestion = document.getElementById('CurrentQuestion').innerHTML;
     var submitted = false;
     document.getElementById('Answer ' + number).setAttribute("submitted", "False");
