@@ -79,3 +79,36 @@
 .style-margin-bottom {
     margin-bottom: 10px;
 }
+
+#videoElement, #photo {
+    width: 365px;
+    height: 275px;
+    background-color: #666;
+}
+.QuestionButton {
+    color: white;
+    border-Color: white;
+    font-Weight: 600;
+    background-Color: lightslategray;
+}
+
+.QuestionButton.Started {
+    color: white;
+    border-Color: white;
+    font-Weight: 600;
+    background-Color: lightgrey;
+}
+
+.QuestionButton.Finished {
+    color: white;
+    border-Color: white;
+    font-Weight: 600;
+    background-Color: lightgreen;
+}
+
+.QuestionButton.Active {
+    color: green;
+    border-Color: lightgreen;
+    font-Weight: 900;
+    background-Color: lightcyan;
+}

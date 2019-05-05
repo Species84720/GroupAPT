@@ -5,83 +5,36 @@
 @{
     ViewBag.Title = "Index";
 }
-<!--<h2>Index</h2>-->
-<!DOCTYPE html>
-<html>
-
 @if (Model == null)
-{
-    <head>
-        <meta charset="utf-8">
-        <title>Display Webcam Stream</title>
-
-        <style>
-            #videoElement, #photo {
-                width: 365px;
-                height: 275px;
-                background-color: #666;
-            }
-        </style>
-    </head>
-
-    <body>
-        @if (ViewData["ExamId"] == null)
-        {
-            <b>You have not selected any exam!</b>
-        }
-        else
-        {
-            <div id="camera" style="width: 365px; float: left; margin: 10px">
-                <video autoplay="true" id="videoElement" style="float: left"></video>
-                <button id="startbutton" style="position: relative; bottom: 40px; margin-left: auto; margin-right: auto; display: block;" hidden>Take photo</button>
+{   
+    if (ViewData["ExamId"] == null)
+    {
+        <b>You have not selected any exam!</b>
+    }
+    else
+    {
+        <div class="card managementFooter">
+            <div class="card-header">
+                <h5 class="card-title">Take a snapshot!</h5>
             </div>
-            <canvas id="photo" width="365px" height="275px" style="float: left; margin: 10px" data-taken="false" data-imgSrc="" hidden></canvas>
+            <div class="card-body">
 
-            <script>
-                var video = document.querySelector("#videoElement");
-
-                if (navigator.mediaDevices.getUserMedia) {
-                    navigator.mediaDevices.getUserMedia({ video: true })
-                        .then(function (stream) {
-                            video.srcObject = stream;
-
-                            //to show the canvas
-                            document.getElementById('photo').hidden = false;
-                            //to show the take screenshot button
-                            document.getElementById('startbutton').hidden = false;
-                            document.getElementById('startbutton').onclick =
-                                function () {
-                                    var canvas = document.getElementById('photo');
-                                    var context = canvas.getContext('2d');
-                                    var dw = canvas.width;
-                                    var dh = canvas.height;
-                                    var video = document.getElementById('videoElement');
-                                    context.drawImage(video, 0, 0, dw, dh);
-                                    var dataImage = canvas.toDataURL('image/png');
-                                    canvas.setAttribute('data-imgSrc', dataImage);
-                                    canvas.setAttribute('data-taken', 'true');
-
-                                    document.getElementById('imagename').setAttribute('value', dataImage);
-                                    document.getElementById('submitButton').hidden = false;
-                                }
-
-                        })
-                        .catch(function (error) {
-                            console.log("Something went wrong!");
-                        });
-                }
-
-            </script>
-
-            <div style="clear: left">
-                <form method="POST" class="form-horizontal">
-
-                    <div class="form-group">
+                <div class="form-group row">
+                    <div id="camera" style="width: 365px; float: left; margin: 10px">
+                        <video autoplay="true" id="videoElement" style="float: left"></video>
+                        <button id="startbutton" class="btn btn-primary btn-sm" style="position: relative; bottom: 40px; margin-left: auto; margin-right: auto; display: block;" hidden>Take photo</button>
+                    </div>
+                    <canvas id="photo" width="365px" height="275px" style="float: left; margin: 10px" data-taken="false" data-imgSrc="" hidden></canvas>
+                </div>
+                <form method="POST">
+                    <div class="form-group row">
                         @Html.Hidden("ExamId")
                     </div>
 
-                    <div class="form-group">
-                        <input type="text" id="AccessCode" name="AccessCode" />
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <input type="text" id="AccessCode" name="AccessCode" />
+                        </div>
                     </div>
 
                     @if (ViewData["Error"] != null)
@@ -95,19 +48,55 @@
                         <input type="text" id="imagename" name="imagename" value="" />
                     </div>
 
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input id="submitButton" type="submit" value="Submit Code" class="btn btn-default" hidden />
+                    <div class="form-group row">
+                        <div id="buttonPadding" class="col-sm-10">
+                            <input type="submit" value="Submit Code" class="btn btn-primary" />
                         </div>
                     </div>
                 </form>
             </div>
-        }
-    </body>
+        </div>
+            
+        <script>
+            var video = document.querySelector("#videoElement");
+
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function (stream) {
+                        video.srcObject = stream;
+
+                        //to show the canvas
+                        document.getElementById('photo').hidden = false;
+                        //to show the take screenshot button
+                        document.getElementById('startbutton').hidden = false;
+                        document.getElementById('startbutton').onclick =
+                            function () {
+                                var canvas = document.getElementById('photo');
+                                var context = canvas.getContext('2d');
+                                var dw = canvas.width;
+                                var dh = canvas.height;
+                                var video = document.getElementById('videoElement');
+                                context.drawImage(video, 0, 0, dw, dh);
+                                var dataImage = canvas.toDataURL('image/png');
+                                canvas.setAttribute('data-imgSrc', dataImage);
+                                canvas.setAttribute('data-taken', 'true');
+
+                                document.getElementById('imagename').setAttribute('value', dataImage);
+                                document.getElementById('submitButton').hidden = false;
+                            }
+
+                    })
+                    .catch(function (error) {
+                        console.log("Something went wrong!");
+                    });
+            }
+
+        </script>
+    }
 }
 else
 {
-    ViewBag.Title = "ExamPage";
+    ViewBag.Title = "Exam Page";
     HttpContext.Current.Session["Username"] = User.Identity.GetUserName();
 
 
@@ -123,103 +112,84 @@ else
 
     string user = User.Identity.GetUserName();
 
-    <style>
-        .QuestionButton {
-            color: white;
-            border-Color: white;
-            font-Weight: 600;
-            background-Color: lightslategray;
-        }
-
-            .QuestionButton.Started {
-                color: white;
-                border-Color: white;
-                font-Weight: 600;
-                background-Color: lightgrey;
-            }
-
-            .QuestionButton.Finished {
-                color: white;
-                border-Color: white;
-                font-Weight: 600;
-                background-Color: lightgreen;
-            }
-
-            .QuestionButton.Active {
-                color: green;
-                border-Color: lightgreen;
-                font-Weight: 900;
-                background-Color: lightcyan;
-            }
-    </style>
-
     <script src="/Scripts/ExamPage.js"></script>
 
     <h2>@ViewBag.Subject</h2>
 
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RelatedQuestion.QuestionId)
-            </th>
-            <th width="70%">
-                @Html.DisplayNameFor(model => model.RelatedQuestion.QuestionText)
-            </th>
-        </tr>
-
-        <tr>
-            <th>
-                @foreach (PaperQuestion item in paperQuestions)
-                {
-                    if ((questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionFormat.ToString()) != "MultipleChoice")
-                    {
-                        <button id="@item.NumberInPaper" class='QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+    <div id="tableCard" class="card">
+        <div class="card-header">
+            <h2 class="card-title">The Exam Paper</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            @Html.DisplayNameFor(model => model.RelatedQuestion.QuestionId)
+                        </th>
+                        <th scope="col" width="70%">
+                            @Html.DisplayNameFor(model => model.RelatedQuestion.QuestionText)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>
+                            @foreach (PaperQuestion item in paperQuestions)
+                            {
+                                if ((questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionFormat.ToString()) != "MultipleChoice")
+                                {
+                                    <button id="@item.NumberInPaper" class='QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
                                                                                {
                                                                                    if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
                                                                                    else {<text>Started</text>}
                                                                                }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', ' ', ' ', ' ', ' ')" ;>
-                            @Html.DisplayFor(modelItem => item.NumberInPaper)
-                        </button>
-                    }
-                    else
-                    {
-                        <button id="@item.NumberInPaper" class='QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+                                        @Html.DisplayFor(modelItem => item.NumberInPaper)
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button id="@item.NumberInPaper" class='QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
                         {
                             if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
                             else {<text>Started</text>}
                         }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText1', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText2', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText3', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText4')" ;>
-                            @Html.DisplayFor(modelItem => item.NumberInPaper)
-                        </button>
-                    }
+                                        @Html.DisplayFor(modelItem => item.NumberInPaper)
+                                    </button>
+                                }
 
-                    <p hidden id="Answer @item.NumberInPaper" name="" submitted="@if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+                                <p hidden id="Answer @item.NumberInPaper" name="" submitted="@if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
                                                                                  {
                                                                                      @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent;
                                                                                  }
-                                                                                 else {<text>False</text>}">@if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
-                        {
-                            @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().Answer;
-                        }</p>
-                }
-            </th>
+                                                                                 else {<text>False</text>}">
+                                    @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+                                    {
+                                        @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().Answer;
+                                    }
+                                </p>
+                            }
+                        </th>
+                        <th>
+                            <p id="examStart">
+                                Please choose the appropriate Question on the left. Good luck and May the odds be ever in your favour!
 
-            <th>
-                <p id="examStart">
-                    Please choose the appropriate Question on the left. Good luck and May the odds be ever in your favour!
+                            </p>
+                            <p hidden id="QuestionTextShown"></p>
+                            <textarea hidden style="width: 100%; float: left; height: 100px" id="QuestionAnswer" name=""></textarea>
 
-                </p>
-                <p hidden id="QuestionTextShown"></p>
-                <textarea hidden style="width: 100%; float: left; height: 100px" id="QuestionAnswer" name=""></textarea>
-
-                <!--pargaraphs that show the multiple choice options-->
-                <input hidden id="Choice 1" type="radio" name="Choice" value="1"><h hidden id="Choice1"></h><br>
-                <input hidden id="Choice 2" type="radio" name="Choice" value="2"><h hidden id="Choice2"></h><br>
-                <input hidden id="Choice 3" type="radio" name="Choice" value="3"><h hidden id="Choice3"></h><br>
-                <input hidden id="Choice 4" type="radio" name="Choice" value="4"><h hidden id="Choice4"></h><br>
-            </th>
-        </tr>
-    </table>
+                            <!--pargaraphs that show the multiple choice options-->
+                            <input hidden id="Choice 1" type="radio" name="Choice" value="1"><h hidden id="Choice1"></h><br>
+                            <input hidden id="Choice 2" type="radio" name="Choice" value="2"><h hidden id="Choice2"></h><br>
+                            <input hidden id="Choice 3" type="radio" name="Choice" value="3"><h hidden id="Choice3"></h><br>
+                            <input hidden id="Choice 4" type="radio" name="Choice" value="4"><h hidden id="Choice4"></h><br>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <button hidden id="saveButton" style="float: left; width: 20%" OnClick="save()">
         Save
@@ -236,4 +206,3 @@ else
         }
     </script>
 }
-</html>

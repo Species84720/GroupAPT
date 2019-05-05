@@ -8,6 +8,7 @@
     </div>
     <div class="card-body">
         @Html.ActionLink("Return", "Dashboard", "Home", new { }, new { @class = "btn btn-primary style-margin-bottom" })
+        <input type="button" class="btn btn-primary style-margin-bottom" value="Reload Page" onclick="window.location.reload()" />
         @if (@ViewBag.Exam != null)
         {
             <p>Code: <b>@ViewBag.Code</b></p>
