@@ -75,6 +75,11 @@ namespace Test2.Controllers.DBControllers
         public async Task<ActionResult> Create([Bind(Include = "EnrollmentId,StudentId,SubjectId,ExamMark,SeatNumber,SessionStatus,FinalAssessment")] Enrollment enrollment)
         {
             enrollment.EnrollmentId = enrollment.StudentId + "-" + enrollment.SubjectId;
+
+            enrollment.SessionStatus = Enrollment.Status.Unchecked;
+            enrollment.FinalAssessment = Enrollment.Assessment.Pending;
+
+
             if (ModelState.IsValid)
             {
                 db.Enrollments.Add(enrollment);
