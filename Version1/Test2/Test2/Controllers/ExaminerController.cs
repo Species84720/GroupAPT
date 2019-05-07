@@ -119,8 +119,6 @@ namespace Test2.Controllers.DBControllers
         {
             string teacher = User.Identity.GetUserId();
 
-            
-
             //We get a list of only subjects for this tutor
             List<string> subjectNames =
                 new List<string>(from t in db.Teachings.Where(x => x.ExaminerId == teacher) select t.SubjectId);
@@ -134,6 +132,14 @@ namespace Test2.Controllers.DBControllers
                 viewmodel = new SetPaperViewModel(){ Subjects = subjects};
 
                 ViewBag.Alert = "";
+
+                return View(viewmodel);
+            }
+            else if (subject == "")
+            {
+                viewmodel = new SetPaperViewModel() { Subjects = subjects };
+
+                ViewBag.Alert = "Please select subject from the dropdown!";
 
                 return View(viewmodel);
             }
@@ -163,9 +169,11 @@ namespace Test2.Controllers.DBControllers
             //if the exam is in a day or less
             if (examsession.ExamDateTime != null && examsession.ExamDateTime.Value.DayOfYear-DateTime.Now.DayOfYear <= 1  )
             {
+                viewmodel = new SetPaperViewModel() { Subjects = subjects };
+
                 //we don't permit editting of the paper.
                 ViewBag.Alert = "Changing of a Paper is not permitted 24 hours prior to an exam. Call the Administrator if necessary";
-                return View();
+                return View(viewmodel);
             }
 
             List<PaperQuestion> paperQuestions = new List<PaperQuestion>(from p in db.PaperQuestions

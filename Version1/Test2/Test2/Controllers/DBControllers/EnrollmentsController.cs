@@ -78,8 +78,7 @@ namespace Test2.Controllers.DBControllers
 
             enrollment.SessionStatus = Enrollment.Status.Unchecked;
             enrollment.FinalAssessment = Enrollment.Assessment.Pending;
-
-
+             
             if (ModelState.IsValid)
             {
                 db.Enrollments.Add(enrollment);

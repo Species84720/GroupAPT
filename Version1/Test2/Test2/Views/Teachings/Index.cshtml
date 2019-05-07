@@ -35,13 +35,13 @@
                         </td>
                         <td>
                             <div class="col">
-                                @Html.ActionLink("Edit", "Edit", new { id = item.TeachingId })
+                                @Html.ActionLink("Edit", "Edit", new { id = item.TeachingId }, new { @class = "btn btn-primary btn-sm" })
                             </div>
                             <div class="col coltop10px">
-                                @Html.ActionLink("Details", "Details", new { id = item.TeachingId })
+                                @Html.ActionLink("Details", "Details", new { id = item.TeachingId }, new { @class = "btn btn-primary btn-sm" })
                             </div>
                             <div class="col coltop10px">
-                                @Html.ActionLink("Delete", "Delete", new { id = item.TeachingId })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.TeachingId }, new { @class = "btn btn-primary btn-sm" })
                             </div>
                         </td>
                     </tr>
