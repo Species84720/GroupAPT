@@ -112,3 +112,7 @@
     font-Weight: 900;
     background-Color: lightcyan;
 }
+
+.bottomButton {
+    margin-bottom:20px;
+}

@@ -115,22 +115,22 @@ else
 
     <script src="/Scripts/ExamPage.js"></script>
 
-    <h2>@ViewBag.Subject</h2>
-
-
     <div id="tableCard" class="card">
         <div class="card-header">
-            <h2 class="card-title">The Exam Paper</h2>
+            <h2 class="card-title">The Exam Paper of "@ViewBag.Subject"</h2>
         </div>
         <div class="card-body">
+            <button hidden id="saveButton" class="btn btn-primary bottomButton" OnClick="save('@User.Identity.GetUserName()','@examIdSplit[0]')">
+                Save
+            </button>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th scope="col">
-                            @Html.DisplayNameFor(model => model.RelatedQuestion.QuestionId)
+                            Question Number
                         </th>
                         <th scope="col" width="70%">
-                            @Html.DisplayNameFor(model => model.RelatedQuestion.QuestionText)
+                            Question Text
                         </th>
                     </tr>
                 </thead>
@@ -141,7 +141,7 @@ else
                             {
                                 if ((questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionFormat.ToString()) != "MultipleChoice")
                                 {
-                                    <button id="@item.NumberInPaper" class='QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+                                    <button id="@item.NumberInPaper" class='btn QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
                                                                                            {
                                                                                                if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
                                                                                                else {<text>Started</text>}
@@ -151,7 +151,7 @@ else
                                 }
                                 else
                                 {
-                                    <button id="@item.NumberInPaper" class='QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+                                    <button id="@item.NumberInPaper" class='btn QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
                                                                                            {
                                                                                                if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
                                                                                                else {<text>Started</text>}
@@ -168,10 +168,12 @@ else
                                                                                              {
                                                                                                  <text>False</text>
 
-                                                                                             }">@if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
-                                                                                                {
-                                                                                                    @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().Answer;
-                                                                                                }</p>
+                                                                                             }">
+                                    @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+                                    {
+                                        @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().Answer;
+                                    }
+                                                                                        </p>
                                                                                     }
                         </th>
                         <th>
@@ -183,20 +185,16 @@ else
                             <textarea hidden style="width: 100%; float: left; height: 100px" id="QuestionAnswer" name=""></textarea>
 
                             <!--pargaraphs that show the multiple choice options-->
-                            <input hidden id="Choice 1" type="radio" name="Choice" value="1"><h hidden id="Choice1"></h><br>
-                            <input hidden id="Choice 2" type="radio" name="Choice" value="2"><h hidden id="Choice2"></h><br>
-                            <input hidden id="Choice 3" type="radio" name="Choice" value="3"><h hidden id="Choice3"></h><br>
-                            <input hidden id="Choice 4" type="radio" name="Choice" value="4"><h hidden id="Choice4"></h><br>
+                            <input hidden id="Choice 1" type="radio" name="Choice" value="1"> <h hidden id="Choice1"></h><br>
+                            <input hidden id="Choice 2" type="radio" name="Choice" value="2"> <h hidden id="Choice2"></h><br>
+                            <input hidden id="Choice 3" type="radio" name="Choice" value="3"> <h hidden id="Choice3"></h><br>
+                            <input hidden id="Choice 4" type="radio" name="Choice" value="4"> <h hidden id="Choice4"></h><br>
                         </th>
                     </tr>
                 </tbody>
             </table>
 
-            <button hidden id="saveButton" style="float: left; width: 20%" OnClick="save('@User.Identity.GetUserName()','@examIdSplit[0]')">
-                Save
-            </button>
-
-            <button hidden id="submitButton" style="float: right; width: 20%" OnClick="submit('@User.Identity.GetUserName()','@examIdSplit[0]')">
+            <button hidden id="submitButton" class="btn btn-primary" OnClick="submit('@User.Identity.GetUserName()','@examIdSplit[0]')">
                 <p hidden id="CurrentQuestion"></p>
                 Submit
             </button>
