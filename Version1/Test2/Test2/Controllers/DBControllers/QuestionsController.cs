@@ -74,22 +74,45 @@ namespace Test2.Controllers.DBControllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "QuestionId,SubjectId,TopicId,QuestionUsage,QuestionText,SampleAnswer,QuestionFormat")] Question question, [Bind(Include = "MultipleChoiceId,OptionText1,OptionText2,OptionText3,OptionText4,CorrectChoice,QuestionId")] MultipleChoice MQuestions)
         {
-            if (ModelState.IsValid)
+            if (question.SubjectId != null && question.TopicId != null && question.QuestionText != null && question.SampleAnswer != null) //instead of ModelState.isValid
             {
-                db.Questions.Add(question);
+                bool acceptingMultiChoice = true;
+           
                 // if the question is a MultiChoice add the Multichoices else go back
-
                 if (question.QuestionFormat == Question.QuestionType.MultipleChoice)
                 {
                     //this used to carry out a redirection - BUT NO MORE!!!
                     //return RedirectToAction("Create", "MultipleChoices", new{ questionid = question.QuestionId});
 
-                    MQuestions.QuestionId = question.QuestionId;
-                    db.MultipleChoices.Add(MQuestions);
+                    if (MQuestions.OptionText1 != null && MQuestions.OptionText2 != null &&
+                        MQuestions.OptionText3 != null && MQuestions.OptionText4 != null &&
+                        MQuestions.CorrectChoice != 0)
+                    {
+                        MQuestions.QuestionId = question.QuestionId;
+                        db.MultipleChoices.Add(MQuestions);
+                    }
+                    else
+                    {
+                        acceptingMultiChoice = false;
+                        ViewBag.Error = "Incorrect Multiple Choice entry!!!";
+                    }
                 }
-                await db.SaveChangesAsync();
 
-                return RedirectToAction("EditQuestions","Examiner", new { subject = question.SubjectId });
+                if (acceptingMultiChoice)
+                {
+                    db.Questions.Add(question);
+                    await db.SaveChangesAsync();
+
+                    return RedirectToAction("EditQuestions", "Examiner", new {subject = question.SubjectId});
+                }
+            }
+            else if (question.SampleAnswer == null)
+            {
+                ViewBag.Error = "Please enter a sample answer or choose an option";
+            }
+            else
+            {
+                ViewBag.Error = "Incorrect Question entry!!!";
             }
 
 
@@ -141,9 +164,10 @@ namespace Test2.Controllers.DBControllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "QuestionId,SubjectId,TopicId,QuestionUsage,QuestionText,SampleAnswer,QuestionFormat")] Question question, [Bind(Include = "MultipleChoiceId,OptionText1,OptionText2,OptionText3,OptionText4,CorrectChoice,QuestionId")] MultipleChoice MQuestions)
         {
-            if (ModelState.IsValid)
+            if (question.SubjectId != null && question.TopicId != null && question.QuestionText != null && question.SampleAnswer != null) //instead of ModelState.IsValid
             {
-                db.Entry(question).State = EntityState.Modified;
+                bool acceptingMultiChoice = true;
+
                 //await db.SaveChangesAsync();
 
                 if (question.QuestionFormat == Question.QuestionType.MultipleChoice)
@@ -153,14 +177,34 @@ namespace Test2.Controllers.DBControllers
                     //return RedirectToAction("Edit", "MultipleChoices", new { id = multiplechoiceid });
 
                     //editing the multiple choice questions
-                    MQuestions.QuestionId = question.QuestionId;
-                    MQuestions.MultipleChoiceId = db.MultipleChoices.AsNoTracking().Where(x => x.QuestionId == question.QuestionId).FirstOrDefault().MultipleChoiceId;
-                    db.Entry(MQuestions).State = EntityState.Modified;
+                    if (MQuestions.OptionText1 != null && MQuestions.OptionText2 != null &&
+                        MQuestions.OptionText3 != null && MQuestions.OptionText4 != null &&
+                        MQuestions.CorrectChoice != 0)
+                    {
+                        MQuestions.QuestionId = question.QuestionId;
+                        MQuestions.MultipleChoiceId = db.MultipleChoices.AsNoTracking().Where(x => x.QuestionId == question.QuestionId).FirstOrDefault().MultipleChoiceId;
+                        db.Entry(MQuestions).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        acceptingMultiChoice = false;
+                        ViewBag.Error = "Incorrect Multiple Choice entry!!!";
+                    }
                 }
-                await db.SaveChangesAsync();
 
-                return RedirectToAction("EditQuestions", "Examiner", new { subject = question.SubjectId});
+                if (acceptingMultiChoice)
+                {
+                    db.Entry(question).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+
+                    return RedirectToAction("EditQuestions", "Examiner", new { subject = question.SubjectId});
+                }
             }
+            else
+            {
+                ViewBag.Error = "Incorrect Question entry!!!";
+            }
+
             ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", question.SubjectId);
             ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", question.TopicId);
 

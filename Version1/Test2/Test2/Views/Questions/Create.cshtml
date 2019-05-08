@@ -12,6 +12,9 @@
             <div class="card-header">
                 <h5 class="card-title">Create Question for Subject: @ViewBag.Subject</h5>
             </div>
+            
+            <b style="color: red">@ViewBag.Error</b>
+
             <div class="form">
                 <div class="card-body">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger form-style" })
