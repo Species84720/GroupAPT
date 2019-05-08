@@ -72,10 +72,11 @@ namespace Test2.Controllers.DBControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "EnrollmentId,StudentId,SubjectId,ExamMark,SeatNumber,SessionStatus,FinalAssessment")] Enrollment enrollment)
+        public async Task<ActionResult> Create([Bind(Include = "EnrollmentId,StudentId,SubjectId")] Enrollment enrollment)
         {
             enrollment.EnrollmentId = enrollment.StudentId + "-" + enrollment.SubjectId;
 
+            enrollment.SeatNumber = db.Enrollments.Where(x => x.SubjectId == enrollment.SubjectId).Count() + 1;
             enrollment.SessionStatus = Enrollment.Status.Unchecked;
             enrollment.FinalAssessment = Enrollment.Assessment.Pending;
              
