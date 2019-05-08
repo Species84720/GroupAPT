@@ -162,7 +162,7 @@ else
 
                             if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
                             {
-                                <p hidden id="Answer @item.NumberInPaper" name="" submitted="@answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent">@answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().Answer</p>
+                                <p hidden id="Answer @item.NumberInPaper" name="" submitted="@answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent.ToString()">@answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().Answer</p>
                             }
                             else
                             {
