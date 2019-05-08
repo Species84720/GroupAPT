@@ -148,10 +148,10 @@ namespace Test2.Controllers.DBControllers
                 (from e in db.ExamSessions where (e.SubjectId == subject && !e.FullyCorrected) select e)
                 .SingleOrDefault();
 
-            string session = examsession.ExamId;
-            
+            string session;
+
             //if there is no session for this subject, a new ExamSession is Created.
-            if (session == null)
+            if (examsession == null)
             {
                 ExamSession newExamSession = new ExamSession();
 
@@ -162,9 +162,16 @@ namespace Test2.Controllers.DBControllers
 
                 db.ExamSessions.Add(newExamSession);
                 await db.SaveChangesAsync();
-                
-            }
 
+                //regetting the examsession
+                examsession =
+                    (from e in db.ExamSessions where (e.SubjectId == subject && !e.FullyCorrected) select e)
+                    .SingleOrDefault();
+            }
+            else
+            {
+                session = examsession.ExamId;
+            }
             
             //if the exam is in a day or less
             if (examsession.ExamDateTime != null && examsession.ExamDateTime.Value.DayOfYear-DateTime.Now.DayOfYear <= 1  )
