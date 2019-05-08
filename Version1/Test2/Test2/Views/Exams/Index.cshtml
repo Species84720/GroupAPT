@@ -125,72 +125,66 @@ else
             </button>
             <table class="table table-bordered table-striped">
                 <thead>
-                    <tr>
-                        <th scope="col">
-                            Question Number
-                        </th>
-                        <th scope="col" width="70%">
-                            Question Text
-                        </th>
-                    </tr>
+                <tr>
+                    <th scope="col">
+                        Question Number
+                    </th>
+                    <th scope="col" width="70%">
+                        Question Text
+                    </th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>
-                            @foreach (PaperQuestion item in paperQuestions)
+                <tr>
+                    <th>
+                        @foreach (PaperQuestion item in paperQuestions)
+                        {
+                            if ((questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionFormat.ToString()) != "MultipleChoice")
                             {
-                                if ((questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionFormat.ToString()) != "MultipleChoice")
-                                {
-                                    <button id="@item.NumberInPaper" class='btn QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+                                <button id="@item.NumberInPaper" class='btn QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
                                                                                            {
                                                                                                if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
                                                                                                else {<text>Started</text>}
                                                                                            }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', ' ', ' ', ' ', ' ')" ;>
-                                        @Html.DisplayFor(modelItem => item.NumberInPaper)
-                                    </button>
-                                }
-                                else
-                                {
-                                    <button id="@item.NumberInPaper" class='btn QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+                                    @Html.DisplayFor(modelItem => item.NumberInPaper)
+                                </button>
+                            }
+                            else
+                            {
+                                <button id="@item.NumberInPaper" class='btn QuestionButton @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
                                                                                            {
                                                                                                if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
                                                                                                else {<text>Started</text>}
                                                                                            }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText1', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText2', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText3', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText4')" ;>
-                                        @Html.DisplayFor(modelItem => item.NumberInPaper)
-                                    </button>
-                                }
+                                    @Html.DisplayFor(modelItem => item.NumberInPaper)
+                                </button>
+                            }
 
-                                <p hidden id="Answer @item.NumberInPaper" name="" submitted="@if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
-                                                                                             {
-                                                                                                 @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent
-                                                                                             }
-                                                                                             else
-                                                                                             {
-                                                                                                 <text>False</text>
+                            if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
+                            {
+                                <p hidden id="Answer @item.NumberInPaper" name="" submitted="@answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent">@answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().Answer</p>
+                            }
+                            else
+                            {
+                                <p hidden id="Answer @item.NumberInPaper" name="" submitted="False"></p>
+                            }
+                        }
+                    </th>
+                    <th>
+                        <p id="examStart">
+                            Please choose the appropriate Question on the left. Good luck and May the odds be ever in your favour!
 
-                                                                                             }">
-                                    @if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault() != null)
-                                    {
-                                        @answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().Answer;
-                                    }
-                                                                                        </p>
-                                                                                    }
-                        </th>
-                        <th>
-                            <p id="examStart">
-                                Please choose the appropriate Question on the left. Good luck and May the odds be ever in your favour!
+                        </p>
+                        <p hidden id="QuestionTextShown"></p>
+                        <textarea hidden style="width: 100%; float: left; height: 100px" id="QuestionAnswer" name=""></textarea>
 
-                            </p>
-                            <p hidden id="QuestionTextShown"></p>
-                            <textarea hidden style="width: 100%; float: left; height: 100px" id="QuestionAnswer" name=""></textarea>
-
-                            <!--pargaraphs that show the multiple choice options-->
-                            <input hidden id="Choice 1" type="radio" name="Choice" value="1"> <h hidden id="Choice1"></h><br>
-                            <input hidden id="Choice 2" type="radio" name="Choice" value="2"> <h hidden id="Choice2"></h><br>
-                            <input hidden id="Choice 3" type="radio" name="Choice" value="3"> <h hidden id="Choice3"></h><br>
-                            <input hidden id="Choice 4" type="radio" name="Choice" value="4"> <h hidden id="Choice4"></h><br>
-                        </th>
-                    </tr>
+                        <!--pargaraphs that show the multiple choice options-->
+                        <input hidden id="Choice 1" type="radio" name="Choice" value="1"> <h hidden id="Choice1"></h><br>
+                        <input hidden id="Choice 2" type="radio" name="Choice" value="2"> <h hidden id="Choice2"></h><br>
+                        <input hidden id="Choice 3" type="radio" name="Choice" value="3"> <h hidden id="Choice3"></h><br>
+                        <input hidden id="Choice 4" type="radio" name="Choice" value="4"> <h hidden id="Choice4"></h><br>
+                    </th>
+                </tr>
                 </tbody>
             </table>
 
