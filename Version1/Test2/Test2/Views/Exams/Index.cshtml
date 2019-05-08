@@ -120,9 +120,6 @@ else
             <h2 class="card-title">The Exam Paper of "@ViewBag.Subject"</h2>
         </div>
         <div class="card-body">
-            <button hidden id="saveButton" class="btn btn-primary bottomButton" OnClick="save('@User.Identity.GetUserName()','@examIdSplit[0]')">
-                Save
-            </button>
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -131,6 +128,9 @@ else
                     </th>
                     <th scope="col" width="70%">
                         Question Text
+                        <button style="float: right" hidden id="saveButton" class="btn btn-primary bottomButton" OnClick="save('@User.Identity.GetUserName()','@examIdSplit[0]')">
+                            Save
+                        </button>
                     </th>
                 </tr>
                 </thead>
@@ -146,7 +146,7 @@ else
                                                                                                if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
                                                                                                else {<text>Started</text>}
                                                                                            }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', ' ', ' ', ' ', ' ')" ;>
-                                    @Html.DisplayFor(modelItem => item.NumberInPaper)
+                                    @Html.DisplayFor(modelItem => item.NumberInPaper) out of @paperQuestions.Count
                                 </button>
                             }
                             else
@@ -156,7 +156,7 @@ else
                                                                                                if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
                                                                                                else {<text>Started</text>}
                                                                                            }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText1', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText2', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText3', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText4')" ;>
-                                    @Html.DisplayFor(modelItem => item.NumberInPaper)
+                                    @Html.DisplayFor(modelItem => item.NumberInPaper) out of @paperQuestions.Count
                                 </button>
                             }
 
@@ -183,15 +183,15 @@ else
                         <input hidden id="Choice 2" type="radio" name="Choice" value="2"> <h hidden id="Choice2"></h><br>
                         <input hidden id="Choice 3" type="radio" name="Choice" value="3"> <h hidden id="Choice3"></h><br>
                         <input hidden id="Choice 4" type="radio" name="Choice" value="4"> <h hidden id="Choice4"></h><br>
+
+                        <button style="float: right" hidden id="submitButton" class="btn btn-primary" OnClick="submit('@User.Identity.GetUserName()','@examIdSplit[0]')">
+                            <p hidden id="CurrentQuestion"></p>
+                            Submit
+                        </button>
                     </th>
                 </tr>
                 </tbody>
             </table>
-
-            <button hidden id="submitButton" class="btn btn-primary" OnClick="submit('@User.Identity.GetUserName()','@examIdSplit[0]')">
-                <p hidden id="CurrentQuestion"></p>
-                Submit
-            </button>
         </div>
     </div>
 
