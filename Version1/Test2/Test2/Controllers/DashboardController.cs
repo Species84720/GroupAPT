@@ -31,7 +31,7 @@ namespace Test2.Controllers
             ExamSession currentexam = new ExamSession();
             currentexam= (from e in db.ExamSessions
                 where studentSubjects.Contains(e.SubjectId) && e.ExamDateTime <= DateTime.Now && e.ExamEndTime >= DateTime.Now
-                          select e).FirstOrDefault() ;
+                          select e).FirstOrDefault();
 
             ViewBag.Exam = null;
             ViewBag.Subject = null;
@@ -39,7 +39,7 @@ namespace Test2.Controllers
             if (currentexam !=null)
             {
                 ViewBag.Exam = currentexam.ExamId;
-                ViewBag.Subject = studentSubjects[0];
+                ViewBag.Subject = currentexam.RelatedSubject.SubjectName;
 
                 RedirectToAction("ValidateStudent", "Exams", new { examid = ViewBag.Exam }  );  //
             }
