@@ -21,7 +21,7 @@
                     <th scope="col">
                         @Html.DisplayNameFor(model => model.RelatedExamSession.ExamDateTime)
                     </th>
-                    <th scope="col">Place:</th>
+                    <th scope="col">Place</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,7 +34,7 @@
                         <td class="col">
                             @Html.DisplayFor(modelItem => item.RelatedExamSession.ExamDateTime)
                         </td>
-                        <td class="col coltop10px">
+                        <td class="col">
                             @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Campus)
                             <br />
                             @Html.DisplayFor(modelItem => item.RelatedExamSession.RelatedLocation.Building)
