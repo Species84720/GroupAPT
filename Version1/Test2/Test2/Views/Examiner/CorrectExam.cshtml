@@ -119,6 +119,12 @@ else
                         The exam sessions for this subject have been corrected.
                     </div>
                 }
+                else if (!Model.AllSessionsCorrected && ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @ViewBag.Error
+                    </div>
+                }
             </div>
         </div>
     }

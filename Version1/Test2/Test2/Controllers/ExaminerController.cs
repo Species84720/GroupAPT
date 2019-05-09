@@ -261,7 +261,7 @@ namespace Test2.Controllers.DBControllers
               }
             
             //if a subject has been selected we find its last session provided it is in the past
-            string session  = (from e in db.ExamSessions where (e.SubjectId == subject  && e.FullyCorrected==false  && e.ExamEndTime>DateTime.Now && e.ExamEndTime!=null) select e.ExamId).SingleOrDefault();
+            string session  = (from e in db.ExamSessions where (e.SubjectId == subject  && e.FullyCorrected==false  && e.ExamEndTime<DateTime.Now && e.ExamEndTime!=null) select e.ExamId).SingleOrDefault();
 
             if (session == null)
             {
@@ -271,8 +271,17 @@ namespace Test2.Controllers.DBControllers
                 if (session == null) viewmodel.ExamFullyCorrected = true;
                 else  viewmodel.ExamNotEnded = true;
 
-                viewmodel.AllQsCorrected = true;
-                viewmodel.AllSessionsCorrected = true;
+
+                string sessionCheck = (from e in db.ExamSessions where (e.SubjectId == subject && e.FullyCorrected == false && (e.ExamEndTime > DateTime.Now || e.ExamEndTime == null)) select e.ExamId).SingleOrDefault();
+                if (sessionCheck == null)
+                {
+                    viewmodel.AllQsCorrected = true;
+                    viewmodel.AllSessionsCorrected = true;
+                }
+                else
+                { 
+                    ViewBag.Error = "The exam sessions for this subject is still not yet finished.";
+                }
 
                 return View(viewmodel);
             }
