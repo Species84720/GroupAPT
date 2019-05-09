@@ -76,7 +76,7 @@ namespace Test2.Controllers.DBControllers
         {
             enrollment.EnrollmentId = enrollment.StudentId + "-" + enrollment.SubjectId;
 
-            enrollment.SeatNumber = db.Enrollments.Where(x => x.SubjectId == enrollment.SubjectId).Count() + 1;
+            enrollment.SeatNumber = db.Enrollments.Where(x => x.SubjectId == enrollment.SubjectId && x.FinalAssessment == Enrollment.Assessment.Pending).Count() + 1;
             enrollment.SessionStatus = Enrollment.Status.Unchecked;
             enrollment.FinalAssessment = Enrollment.Assessment.Pending;
              
