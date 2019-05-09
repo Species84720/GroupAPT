@@ -54,6 +54,7 @@
                     @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-2 col-control-label" })
                     <div class="col-sm-10">
                         @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control form-style" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @style = "color: red" } )
                     </div>
                 </div>
 
