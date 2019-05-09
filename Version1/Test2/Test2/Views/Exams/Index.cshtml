@@ -145,7 +145,7 @@ else
                                                                                            {
                                                                                                if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
                                                                                                else {<text>Started</text>}
-                                                                                           }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', ' ', ' ', ' ', ' ')" ;>
+                                                                                           }' style="width: 100%; float: left" OnClick="buttonAction(this, '@Html.Encode(questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString())', @item.NumberInPaper, '@item.PaperQuestionId', ' ', ' ', ' ', ' ')">
                                     @Html.DisplayFor(modelItem => item.NumberInPaper) out of @paperQuestions.Count
                                 </button>
                             }
@@ -155,7 +155,7 @@ else
                                                                                            {
                                                                                                if (answers.Where(x => x.PaperQuestionId == item.PaperQuestionId).SingleOrDefault().CommittedByStudent == true) {<text>Finished</text>}
                                                                                                else {<text>Started</text>}
-                                                                                           }' style="width: 100%; float: left" OnClick="buttonAction(this, '@questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString()', @item.NumberInPaper, '@item.PaperQuestionId', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText1', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText2', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText3', '@multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText4')" ;>
+                                                                                           }' style="width: 100%; float: left" OnClick="buttonAction(this, '@Html.Encode(questions.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().QuestionText.ToString())', @item.NumberInPaper, '@item.PaperQuestionId', '@Html.Encode(multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText1)', '@Html.Encode(multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText2)', '@Html.Encode(multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText3)', '@Html.Encode(multichoices.Where(x => x.QuestionId == item.QuestionId).SingleOrDefault().OptionText4)')">
                                     @Html.DisplayFor(modelItem => item.NumberInPaper) out of @paperQuestions.Count
                                 </button>
                             }
