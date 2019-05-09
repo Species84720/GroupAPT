@@ -310,14 +310,22 @@ namespace Test2.Controllers.DBControllers
                     answer.CorrectedDateTime = DateTime.Now;
                     viewmodel.Answer = answer;
                 }
-            }
-            else
+                else
                 { //if there are no answers to correct
 
                     viewmodel.AllQsCorrected = true;
 
                     AutoCorrectMC(session);
                 }
+            }
+            else
+            {
+                //if there are no answers to correct
+
+                viewmodel.AllQsCorrected = true;
+
+                AutoCorrectMC(session);
+            }
 
 
             viewmodel.Subject = subject;
