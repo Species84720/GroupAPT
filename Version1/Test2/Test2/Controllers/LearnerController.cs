@@ -23,13 +23,16 @@ namespace Test2.Controllers
         {
             string student = User.Identity.GetUserName();
 
-            string name = (from u in db.Users where u.Id == student select u.FirstName + " " + u.Surname).SingleOrDefault();
+            string name = (from u in db.Users where u.UserName==student select u.FirstName + " " + u.Surname).SingleOrDefault();
 
-            List<string> studentSubjects = new List<string> (from e in db.Enrollments where e.StudentId ==student && e.FinalAssessment==Enrollment.Assessment.Pending select  e.SubjectId);
+              
+           List<string> studentSubjects = new List<string> (from e in db.Enrollments where e.StudentId ==student && e.FinalAssessment==Enrollment.Assessment.Pending select  e.SubjectId);
 
             //we get the list of invigilations that have not yet happened, related to this invigilation
-            var timeTable = (from e in db.ExamSessions.Include(e => e.RelatedLocation).Include(e => e.RelatedSubject) where  studentSubjects.Contains(e.SubjectId)  && e.ExamDateTime >= DateTime.Now select e);
+            var timeTable = (from e in db.ExamSessions.Include(e => e.RelatedLocation).Include(e => e.RelatedSubject)
+                             where studentSubjects.Contains(e.SubjectId) && e.ExamDateTime >= DateTime.Now select e);
 
+            
 
             ViewBag.Name = name;
 
