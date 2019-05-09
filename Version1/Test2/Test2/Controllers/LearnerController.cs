@@ -46,9 +46,9 @@ namespace Test2.Controllers
         {
             string student = User.Identity.GetUserName();
 
-            string name = (from u in db.Users where u.Id == student select u.FirstName + " " + u.Surname).SingleOrDefault();
+            string name = (from u in db.Users where u.UserName == student select u.FirstName + " " + u.Surname).SingleOrDefault();
 
-            List<Enrollment> studentResults = new List<Enrollment>(from e in db.Enrollments
+            List<Enrollment> studentResults = new List<Enrollment>(from e in db.Enrollments .Include(e => e.RelatedSubject)
                 where e.StudentId == student && e.FinalAssessment > Enrollment.Assessment.Absent && e.SessionStatus >= Enrollment.Status.Dubious select e );
 
              
