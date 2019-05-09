@@ -101,8 +101,8 @@ namespace Test2.Controllers
         {
              
                 Enrollment enrollment = (from e in db.Enrollments.Include(e => e.Shots).Include(e => e.RelatedStudent)
-                    where e.RelatedStudent.FacialImageTitle != null && e.Shots!=null && (e.SessionStatus == Enrollment.Status.Unchecked || e.SessionStatus == Enrollment.Status.Dubious)
-                    select e).OrderBy(e => e.SessionStatus).First();
+                    where e.RelatedStudent.FacialImageTitle != null && e.Shots.Count > 0 && (e.SessionStatus == Enrollment.Status.Unchecked || e.SessionStatus == Enrollment.Status.Dubious)
+                    select e).OrderBy(e => e.SessionStatus).FirstOrDefault();
 
                 if (enrollment == null) { return RedirectToAction("ShotsChecked", "Invigilation"); }
 
