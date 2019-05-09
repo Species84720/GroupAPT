@@ -194,18 +194,25 @@ namespace Test2.Controllers.DBControllers
         [HttpPost]
         public async Task<ActionResult> AjaxPost(string campus, string building, string floor, string block, string room)
         {
-            var Locations = db.Locations.Where(x => x.Campus == campus);
+            IQueryable<Location> Locations = db.Locations;
+
+            if (campus != "null")
+                Locations = Locations.Where(x => x.Campus == campus);
+
             int LocationId = 0;
             List<string> returnValue = new List<string>();
             if (building != "")
             {
-                Locations = Locations.Where(x => x.Building == building);
+                if (building != "null")
+                    Locations = Locations.Where(x => x.Building == building);
                 if (floor != "")
                 {
-                    Locations = Locations.Where(x => x.Floor == floor);
+                    if (floor != "null")
+                        Locations = Locations.Where(x => x.Floor == floor);
                     if (block != "")
                     {
-                        Locations = Locations.Where(x => x.Block == block);
+                        if (block != "null")
+                            Locations = Locations.Where(x => x.Block == block);
                         if (room != "")
                         {
                             LocationId = Locations.Where(x => x.Room == room).Select(x => x.LocationId).FirstOrDefault();
