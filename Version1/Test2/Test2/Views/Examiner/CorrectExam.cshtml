@@ -47,6 +47,7 @@
                 <div class="card-body">
                     <table class="table table-bordered table-striped">
                         <tr>
+                            @Html.HiddenFor(model => model.Subject)
                             <th> Question</th>
                             <td>@Html.DisplayFor(model => model.Answer.RelatedPaperQuestion.RelatedQuestion.QuestionText)</td>
                         </tr>
