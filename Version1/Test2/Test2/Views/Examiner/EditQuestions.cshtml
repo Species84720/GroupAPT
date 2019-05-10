@@ -36,7 +36,7 @@
                     @Html.DisplayFor(model => model.Subject)
                 </div>
                 <div class="col-sm">
-                    @Html.DropDownListFor(model => model.Topic, new SelectList(Model.Topics, "TopicId", "TopicName"), "Select Topic", htmlAttributes: new { @class = "form-control form-style" })
+                    @Html.DropDownListFor(model => model.Topic, new SelectList(Model.Topics, "TopicId", "TopicName"), "All Topics", htmlAttributes: new { @class = "form-control form-style" })
                 </div>
                 <div class="col-sm">
                     <input class="btn btn-outline-primary" type="submit" value="Apply Topic Filter" />
@@ -54,16 +54,17 @@
                     <input class="btn btn-outline-primary" type="submit" value="Remove Filters" />
                 </div>
             </div>
-                <div class="col-sm coltop10px">
+                <div class="col-sm coltop10px" align="right">
                     @Html.ActionLink("Rename This Topic", "Edit", "Topics", new { id = Model.Topic }, new { subject = Model.Subject, @class = "btn btn-primary btn-sm" })
                     @*@Html.ActionLink("Delete This Topic", "Delete", "Topics", new { id = Model.Topic }, new { @class = "btn btn-primary btn-sm" })*@
-                </div>
+                    @Html.ActionLink("Create New Topic", "Create", "Topics", new { subject = Model.Subject }, new { @class = "btn btn-primary btn-sm" })
+                    </div>
                 }
             }
             @if (!Model.Subject.IsNullOrWhiteSpace())
             {
                   <div class="col-md-10 coltop10px">
-                        @Html.ActionLink("Create New Topic", "Create", "Topics", new { subject = Model.Subject }, new { @class = "btn btn-primary btn-sm" })
+                        
                         @Html.ActionLink("Create New Question", "Create", "Questions", new { subject = Model.Subject }, new { @class = "btn btn-primary btn-sm" })   
                   </div>
             }

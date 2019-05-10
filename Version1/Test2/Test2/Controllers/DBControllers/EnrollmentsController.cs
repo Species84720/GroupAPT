@@ -76,6 +76,15 @@ namespace Test2.Controllers.DBControllers
         {
             enrollment.EnrollmentId = enrollment.StudentId + "-" + enrollment.SubjectId;
 
+            //BEGIN Preventing error when the Student/Subject combo exists
+            Enrollment exists = new Enrollment();
+            exists=(from e in db.Enrollments where e.EnrollmentId==enrollment.EnrollmentId select e).SingleOrDefault();
+            if (exists != null)
+            {
+                return RedirectToAction("Index");
+            }
+            //END Preventing error when the Student/Subject combo exists
+
             enrollment.SeatNumber = db.Enrollments.Where(x => x.SubjectId == enrollment.SubjectId && x.FinalAssessment == Enrollment.Assessment.Pending).Count() + 1;
             enrollment.SessionStatus = Enrollment.Status.Unchecked;
             enrollment.FinalAssessment = Enrollment.Assessment.Pending;
