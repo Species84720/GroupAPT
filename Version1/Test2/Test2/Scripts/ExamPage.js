@@ -86,16 +86,16 @@ function submit(username, examId) {
         document.getElementById('Choice4').hidden = true;
 
         //clear the button selection
-        var x = document.getElementsByClassName("QuestionButton Active");
+        var x = document.getElementsByClassName("btn QuestionButton Active");
         if (x.length != 0) {
             if (document.getElementById("Answer " + x[0].id).innerHTML != "") {
                 if (document.getElementById("Answer " + x[0].id).getAttribute("submitted") === "True") {
-                    x[0].classList = "QuestionButton Finished";
+                    x[0].classList = "btn QuestionButton Finished";
                 } else {
-                    x[0].classList = "QuestionButton Started";
+                    x[0].classList = "btn QuestionButton Started";
                 }
             } else {
-                x[0].classList = "QuestionButton";
+                x[0].classList = "btn QuestionButton";
             }
         }
 
@@ -147,7 +147,7 @@ function save(username, examId) {
 
 function buttonAction(elmnt, question, number, paperQuestionId, a, b, c, d) {
 
-    var x = document.getElementsByClassName("QuestionButton Active");
+    var x = document.getElementsByClassName("btn QuestionButton Active");
     /*
     var i;
     for (i = 0; i < x.length; i++) {
@@ -158,16 +158,16 @@ function buttonAction(elmnt, question, number, paperQuestionId, a, b, c, d) {
     if (x.length != 0) {
         if (document.getElementById("Answer " + x[0].id).innerHTML != "") {
             if (document.getElementById("Answer " + x[0].id).getAttribute("submitted") === "True") {
-                x[0].classList = "QuestionButton Finished";
+                x[0].classList = "btn QuestionButton Finished";
             } else {
-                x[0].classList = "QuestionButton Started";
+                x[0].classList = "btn QuestionButton Started";
             }
         } else {
-            x[0].classList = "QuestionButton";
+            x[0].classList = "btn QuestionButton";
         }
     }
 
-    elmnt.classList = "QuestionButton Active";
+    elmnt.classList = "btn QuestionButton Active";
 
     //showing the question
     show(question, number, paperQuestionId, a);

@@ -87,31 +87,32 @@
 }
 
 .QuestionButton {
-    color: white;
+    /*color: white;
     border-Color: white;
-    font-Weight: 600;
-    background-Color: lightslategray;
+    font-Weight: 600;*/
+    margin: 1%;
+    background-Color: lightslategray !important;
 }
 
 .QuestionButton.Started {
-    color: white;
+    /*color: white;
     border-Color: white;
-    font-Weight: 600;
-    background-Color: lightgrey;
+    font-Weight: 600;*/
+    background-Color: lightgrey !important;
 }
 
 .QuestionButton.Finished {
-    color: white;
+    /*color: white;
     border-Color: white;
-    font-Weight: 600;
-    background-Color: lightgreen;
+    font-Weight: 600;*/
+    background-Color: lightgreen !important;
 }
 
 .QuestionButton.Active {
-    color: green;
+    /*color: green;
     border-Color: lightgreen;
-    font-Weight: 900;
-    background-Color: lightcyan;
+    font-Weight: 900;*/
+    background-Color: lightcyan !important;
 }
 
 .bottomButton {
