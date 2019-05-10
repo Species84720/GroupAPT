@@ -195,3 +195,75 @@ function buttonAction(elmnt, question, number, paperQuestionId, a, b, c, d) {
         document.getElementById('Choice4').hidden = true;
     }
 }
+
+function CountDown(Time) {
+    var countDownDate = new Date(Time).getTime();
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+        // Get todays date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for hours, minutes and seconds
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if (hours < 10) {
+            hours = 0 + hours.toString();
+        }
+        if (minutes < 10) {
+            minutes = 0 + minutes.toString();
+        }
+        if (seconds < 10) {
+            seconds = 0 + seconds.toString();
+        }
+
+        // Output the result in an element
+        document.getElementById("timer").innerHTML = hours + ":" + minutes + ":" + seconds;
+
+        //if less than 10 min remain
+        if (minutes < 10 && hours == "00") {
+            document.getElementById("timer").style.color = "red";
+        }
+        if (minutes == "00" && hours == "00" && seconds <= 59) {
+            document.getElementById("timer").style.fontWeight = "Bold";
+            document.getElementById("timerAlert").innerHTML = "Please Conclude";
+        }
+
+        // If the count down is over, write some text 
+        if (minutes == "00" && hours == "00" && seconds == "00") {
+            clearInterval(x);
+            var future = new Date();
+            future.setTime(now + (5 * 60 * 1000));
+            document.getElementById("timerAlert").style.color = "red";
+            document.getElementById("timerAlert").innerHTML = "Conclude!!!";
+
+            var y = setInterval(function () {
+                var now = new Date().getTime();
+                var distance = future - now;
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                if (hours < 10) hours = 0 + hours.toString();
+                if (minutes < 10) minutes = 0 + minutes.toString();
+                if (seconds < 10) seconds = 0 + seconds.toString();
+
+                document.getElementById("timer").innerHTML = minutes + ":" + seconds;
+
+                if (minutes == "00" && seconds <= 30) {
+                    document.getElementById("timerAlert").style.fontWeight = "Bold";
+                    document.getElementById("timerAlert").innerHTML = "ThankYou";
+                }
+                if (minutes == "00" && seconds == "00") {
+                    clearInterval(y);
+                    window.location = "/Dashboard/Learner";
+                }
+            }, 1000);
+
+        }
+    }, 1000);
+}

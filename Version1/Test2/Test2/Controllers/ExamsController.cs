@@ -181,6 +181,7 @@ namespace Test2.Controllers.DBControllers
 
             ViewData["ExamId"] = examid;
             ViewBag.Subject = exam.SubjectId;
+            ViewBag.ExamEnd = exam.ExamEndTime;
             List<PaperQuestion> paper = new List<PaperQuestion>();
 
             paper = db.PaperQuestions.Where(x => x.ExamId == examid).OrderBy(x => x.NumberInPaper).ToList();
