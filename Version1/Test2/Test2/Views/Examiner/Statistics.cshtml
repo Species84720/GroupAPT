@@ -53,13 +53,13 @@
                         @Html.DisplayFor(modelItem => item.MaxMark)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.NumOfParticipants - item.NumOfFails)
+                        @(item.NumOfParticipants - item.NumOfFails)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.NumOfParticipants)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.NumOfFails / item.NumOfParticipants * 100)%
+                        @(item.NumOfFails / item.NumOfParticipants * 100)%
                     </td>
                 </tr>
                 }
