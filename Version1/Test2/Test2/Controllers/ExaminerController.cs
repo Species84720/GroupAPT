@@ -427,7 +427,7 @@ namespace Test2.Controllers.DBControllers
             Enrollment enrollment = new Enrollment();
             foreach (StudentAnswer ans in answers)
             {
-               
+                 
                 enrollment = ans.RelatedEnrollment;
 
                 if (enrollment.ExamMark == null) enrollment.ExamMark = 0;
@@ -453,6 +453,8 @@ namespace Test2.Controllers.DBControllers
 
             foreach (Enrollment e in enrollments)
             {
+                 
+
                 enrollment = e;
 
                 if (enrollment.FinalAssessment == Enrollment.Assessment.Pending ||

@@ -129,6 +129,7 @@ namespace Test2.Controllers.DBControllers
                 byte[] contents = Convert.FromBase64String(trimmedImageName[1]);
                 System.IO.File.WriteAllBytes(Server.MapPath("/Captures/" + imageData + ".png"), contents);
 
+
                 //placing location on database
                 var UserImageDetails = new Shot
                 {
@@ -137,6 +138,13 @@ namespace Test2.Controllers.DBControllers
                     ImageLocation = "/Captures/" + imageData + ".png",
                     ShotTiming = DateTime.Now
                 };
+
+                //BEGIN we mark the student as present
+                Enrollment EnrollmentToChange=db.Enrollments.Find(enrollment);
+                EnrollmentToChange.FinalAssessment = Enrollment.Assessment.Present;
+                EnrollmentToChange.SessionStatus = Enrollment.Status.Unchecked;
+                //END we mark the student as present
+
                 db.Shots.Add(UserImageDetails);
                 db.SaveChanges();
 
