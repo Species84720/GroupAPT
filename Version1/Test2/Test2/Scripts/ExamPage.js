@@ -197,7 +197,18 @@ function buttonAction(elmnt, question, number, paperQuestionId, a, b, c, d) {
 }
 
 function CountDown(Time) {
-    var countDownDate = new Date(Time).getTime();
+    var parser = Time.split(" ");
+    var parsing = parser[0].split("/");
+    var parsing2 = parser[1].split(":");
+
+    var year = parsing[2];
+    var month = parsing[1];
+    var day = parsing[0];
+    var hour = parsing2[0];
+    var minute = parsing2[1];
+    var seconds = parsing2[2];
+
+    var countDownDate = new Date(year, month, day, hour, minute, seconds).getTime();
     // Update the count down every 1 second
     var x = setInterval(function () {
 
