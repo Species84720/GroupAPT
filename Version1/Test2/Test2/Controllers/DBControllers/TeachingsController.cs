@@ -53,7 +53,8 @@ var teachings = (from t in db.Teachings.Include(t=>t.Examinable).Include(t =>t.E
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Teaching teaching = await db.Teachings.FindAsync(id);
+            //Teaching teaching = await db.Teachings.FindAsync(id);
+            Teaching teaching = db.Teachings.Include(t => t.Examinable).Include(t => t.Examiner).FirstOrDefault(t => t.TeachingId == id);
             if (teaching == null)
             {
                 return HttpNotFound();
