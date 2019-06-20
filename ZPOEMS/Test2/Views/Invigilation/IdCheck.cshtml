@@ -7,6 +7,7 @@
 
 @using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken()
     <div class="form">
         @Html.HiddenFor(model => model.EnrollmentId)
         @Html.HiddenFor(model => model.FinalAssessment)
@@ -18,9 +19,9 @@
         <table>
             <tr>
                 <td>
-                    <img src="@Model.RelatedStudent.FacialImageDirectory/@Model.RelatedStudent.FacialImageTitle" width="500" height ="500" />
+                    <img src="@Model.RelatedStudent.FacialImageDirectory/@Model.RelatedStudent.FacialImageTitle" width="500" height="500" />
                 </td>
-                <td><img src="@Model.Shots.First().ImageLocation"  width="500" height ="500" /></td>
+                <td><img src="@Model.Shots.First().ImageLocation" width="500" height="500" /></td>
             </tr>
             <tr>
                 <td colspan="2">
